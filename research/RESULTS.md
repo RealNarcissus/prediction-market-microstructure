@@ -16,4 +16,7 @@ Every trial here counts toward deflated final statistics.
 | 9 | s008_lgbm_lr005 | +0.0329 | +0.0479 | +0.040364 | reset |  |  |
 | 10 | s009_lgbm_imbalance_split | +0.0316 | +0.0485 | +0.040067 | reset |  |  |
 | 11 | s010_lgbm_activity_z | +0.0300 | +0.0473 | +0.038624 | reset |  |  |
-| 12 | s011_lgbm_bar_position | +0.0309 | +0.0576 | +0.044257 | KEEP | **champion** | 8384ec9 |
+| 12 | s011_lgbm_bar_position | +0.0309 | +0.0576 | +0.044257 | KEEP |  | 8384ec9 |
+| 13 | s012_ensemble_lgbm_logit | +0.0286 | +0.0472 | +0.037895 | reset |  |  |
+| 14 | s013_lgbm_isotonic | +0.0298 | +0.0492 | +0.039505 | reset |  |  |
+| 15 | s014_lgbm_position_history | +0.5621 | +0.5804 | +0.571279 | KEEP | **champion** | f1b21fe |
