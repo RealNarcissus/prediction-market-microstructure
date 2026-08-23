@@ -1,11 +1,33 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import httpx
 
-PRICE_SCALE = 1_000_000  # docs: 1,000,000 = $1.00
+PRICE_SCALE = 1_000_000  # docs: 1,000,000 = $1.00 (pricing fields on /markets)
+
+# Verified live 2026-08-23: up/down epochs are discovered via
+# GET /events?category=crypto&tags=5m (or 15m); slug = {asset}-updown-{5m|15m}-{unix_start}
+_SLUG_RE = re.compile(r"^(?P<asset>[a-z]+)-updown-(?P<hz>5m|15m)-(?P<start>\d{10})$")
+_HORIZON_S = {"5m": 300, "15m": 900}
+
+
+@dataclass(frozen=True)
+class EpochEvent:
+    """One up/down epoch (an event with Up and Down markets)."""
+
+    event_id: str
+    asset: str  # BTC | ETH | SOL | XRP | DOGE (subcategory upper-cased)
+    horizon_s: int  # 300 | 900
+    slug: str
+    title: str
+    epoch_start_ms: int  # from slug timestamp
+    close_ms: int  # markets' closeTime (epoch end)
+    up_market_id: str | None
+    down_market_id: str | None
+    status: str  # from first market
+    result: str | None  # from first market ("Up"/"Down" resolved titles)
 
 
 @dataclass(frozen=True)
@@ -14,7 +36,7 @@ class JupiterMarket:
     event_id: str
     title: str
     status: str  # open | closed | cancelled
-    result: str | None  # null | yes | no
+    result: str | None
     open_time_ms: int
     close_time_ms: int
     buy_yes_usd: float | None
@@ -38,6 +60,41 @@ def _usd(raw) -> float | None:
 
 def _ms(seconds) -> int:
     return int(seconds) * 1000 if seconds is not None else 0
+
+
+def parse_epoch_event(d: dict) -> EpochEvent | None:
+    """Parse an up/down epoch event; returns None for non-updown events."""
+    meta = d.get("metadata") or {}
+    slug = meta.get("slug", "")
+    m = _SLUG_RE.match(slug)
+    if not m:
+        return None
+    markets = d.get("markets") or []
+    up_id = down_id = None
+    status, result, close_s = "", None, 0
+    for mk in markets:
+        title = (mk.get("title") or "").strip().lower()
+        if title == "up":
+            up_id = mk.get("marketId")
+        elif title == "down":
+            down_id = mk.get("marketId")
+        if not status:
+            status = mk.get("status", "")
+            result = mk.get("result")
+        close_s = max(close_s, int(mk.get("closeTime") or 0))
+    return EpochEvent(
+        event_id=d.get("eventId") or "",
+        asset=m["asset"].upper(),
+        horizon_s=_HORIZON_S[m["hz"]],
+        slug=slug,
+        title=meta.get("title", ""),
+        epoch_start_ms=int(m["start"]) * 1000,
+        close_ms=close_s * 1000,
+        up_market_id=up_id,
+        down_market_id=down_id,
+        status=status,
+        result=result,
+    )
 
 
 def parse_market(d: dict) -> JupiterMarket:
@@ -110,19 +167,27 @@ class JupiterClient:
 
     @staticmethod
     def _unwrap(data, key: str):
-        # Response envelope ({"events": [...]} vs bare list) confirmed in recon.
+        # Verified live 2026-08-23: envelope is {"data": [...], "pagination": {...}}.
         if isinstance(data, dict) and key in data:
             return data[key]
         return data
 
     async def get_events(
-        self, event_filter: str = "live", include_markets: bool = True
+        self,
+        category: str | None = None,
+        tags: str | None = None,
+        event_filter: str | None = None,
+        include_markets: bool = True,
     ) -> list[dict]:
-        data = await self._get(
-            "/events",
-            {"filter": event_filter, "includeMarkets": str(include_markets).lower()},
-        )
-        return self._unwrap(data, "events")
+        params: dict[str, str] = {"includeMarkets": str(include_markets).lower()}
+        if category:
+            params["category"] = category
+        if tags:
+            params["tags"] = tags
+        if event_filter:
+            params["filter"] = event_filter
+        data = await self._get("/events", params)
+        return self._unwrap(data, "data")
 
     async def get_market(self, market_id: str) -> dict:
         return await self._get(f"/markets/{market_id}")

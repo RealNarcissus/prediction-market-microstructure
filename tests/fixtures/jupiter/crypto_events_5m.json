@@ -1,0 +1,1139 @@
+{
+  "data": [
+    {
+      "eventId": "POLY-796422",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1785941700",
+        "title": "Bitcoin Up or Down - August 5, 10:55AM-11:00AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-796422",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-05T15:00:00Z"
+      },
+      "volumeUsd": "41000000",
+      "volume24hr": "41000000",
+      "beginAt": "1785941700",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3338013-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1785855748,
+          "closeTime": 1785942000,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the Bitcoin price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD data stream available at https://data.chain.link/streams/btc-usd.\nPlease note that this market is about the price according to Chainlink data stream BTC/USD, not according to other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 1000000,
+            "sellYesPriceUsd": 990000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 59814
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "21868083805094158510913669418970204878053767147144752010941824995808337280099",
+            "34204894709106076514818505983999353252900579876945738361880424840782221384580"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3338013-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1785855748,
+          "closeTime": 1785942000,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the Bitcoin price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD data stream available at https://data.chain.link/streams/btc-usd.\nPlease note that this market is about the price according to Chainlink data stream BTC/USD, not according to other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 10000,
+            "sellYesPriceUsd": 0,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 59814
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "21868083805094158510913669418970204878053767147144752010941824995808337280099",
+            "34204894709106076514818505983999353252900579876945738361880424840782221384580"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890267",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787498100",
+        "title": "Bitcoin Up or Down - August 23, 11:15AM-11:20AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890267",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T15:20:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787498100",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779573-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787412222,
+          "closeTime": 1787498400,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "163181157967801405033472768472711421389432189197517450419260620640984000985",
+            "82751992052635507764559005662702872357009282842165238353888194148982917368105"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779573-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787412222,
+          "closeTime": 1787498400,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "163181157967801405033472768472711421389432189197517450419260620640984000985",
+            "82751992052635507764559005662702872357009282842165238353888194148982917368105"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890258",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787497800",
+        "title": "Bitcoin Up or Down - August 23, 11:10AM-11:15AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890258",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T15:15:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787497800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779564-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787411916,
+          "closeTime": 1787498100,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "67677176250483786491408516978023049712099201844361384213625683389899269721002",
+            "67268353845772373552944561250442354568230457831138009930183959351481921197654"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779564-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787411916,
+          "closeTime": 1787498100,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "67677176250483786491408516978023049712099201844361384213625683389899269721002",
+            "67268353845772373552944561250442354568230457831138009930183959351481921197654"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890247",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787497500",
+        "title": "Bitcoin Up or Down - August 23, 11:05AM-11:10AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890247",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T15:10:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787497500",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779533-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787411622,
+          "closeTime": 1787497800,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "64013419047151005001747402450606874942806305331919163246068373595116929619123",
+            "101609552421389494539129671783694621179560008254765206370226393536566396387313"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779533-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787411622,
+          "closeTime": 1787497800,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "64013419047151005001747402450606874942806305331919163246068373595116929619123",
+            "101609552421389494539129671783694621179560008254765206370226393536566396387313"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890187",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787496300",
+        "title": "Bitcoin Up or Down - August 23, 10:45AM-10:50AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890187",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T14:50:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787496300",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779427-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787410408,
+          "closeTime": 1787496600,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "88212807702758232394296723559201511082818378146538150455037629708338831101689",
+            "77156086521310211611642606442237596082566149981396270468977839981723882107500"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779427-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787410408,
+          "closeTime": 1787496600,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "88212807702758232394296723559201511082818378146538150455037629708338831101689",
+            "77156086521310211611642606442237596082566149981396270468977839981723882107500"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890159",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787495400",
+        "title": "Bitcoin Up or Down - August 23, 10:30AM-10:35AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890159",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T14:35:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787495400",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779270-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787409517,
+          "closeTime": 1787495700,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "63931389732541678568127169716900865472070886021700185909311510900988444697775",
+            "7295780931084900724006400419396987050932651300059193087902215807350283178423"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779270-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787409517,
+          "closeTime": 1787495700,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "63931389732541678568127169716900865472070886021700185909311510900988444697775",
+            "7295780931084900724006400419396987050932651300059193087902215807350283178423"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890139",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787495100",
+        "title": "Bitcoin Up or Down - August 23, 10:25AM-10:30AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890139",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T14:30:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787495100",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779242-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787409217,
+          "closeTime": 1787495400,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "111945009338998617319784210011772844291523977287593288452031459959433315540604",
+            "87552712853449302587642119017834212321431392427944935059920261556824427828558"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779242-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787409217,
+          "closeTime": 1787495400,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "111945009338998617319784210011772844291523977287593288452031459959433315540604",
+            "87552712853449302587642119017834212321431392427944935059920261556824427828558"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890118",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787494800",
+        "title": "Bitcoin Up or Down - August 23, 10:20AM-10:25AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890118",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T14:25:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787494800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779098-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787408986,
+          "closeTime": 1787495100,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "79717588796171624680652678139912333013707056588700256408884656287547247161967",
+            "11171735413390089196952851593599041543357040772086108473654754929425114086353"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779098-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787408986,
+          "closeTime": 1787495100,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "79717588796171624680652678139912333013707056588700256408884656287547247161967",
+            "11171735413390089196952851593599041543357040772086108473654754929425114086353"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890026",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787492700",
+        "title": "Bitcoin Up or Down - August 23, 9:45AM-9:50AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-890026",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T13:50:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787492700",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3778754-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787406817,
+          "closeTime": 1787493000,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "42001542615378382271229801134493931014882107296167218962121862849835311081623",
+            "71981930351860722067227359707880288288676863029906326359557531971388546463640"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3778754-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787406817,
+          "closeTime": 1787493000,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "42001542615378382271229801134493931014882107296167218962121862849835311081623",
+            "71981930351860722067227359707880288288676863029906326359557531971388546463640"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-889963",
+      "isActive": true,
+      "isLive": false,
+      "category": "crypto",
+      "subcategory": "btc",
+      "tags": [
+        "crypto",
+        "5m"
+      ],
+      "metadata": {
+        "slug": "btc-updown-5m-1787491800",
+        "title": "Bitcoin Up or Down - August 23, 9:30AM-9:35AM ET",
+        "isLive": false,
+        "series": "polymarket",
+        "eventId": "POLY-889963",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T13:35:00Z"
+      },
+      "volumeUsd": "60000000",
+      "volume24hr": "30000000",
+      "beginAt": "1787491800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3778469-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Up",
+          "openTime": 1787405939,
+          "closeTime": 1787492100,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 500000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "39639547721001396851480898079787735523085525938664103641922524360713121495385",
+            "2092204204033314364175956293705926166127684323859161415522366879567753021110"
+          ],
+          "marketOptions": [
+            {
+              "label": "Up",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3778469-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Down",
+          "openTime": 1787405939,
+          "closeTime": 1787492100,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 500000,
+            "sellYesPriceUsd": 490000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 30
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+          "team": null,
+          "outcomes": [
+            "Up",
+            "Down"
+          ],
+          "clobTokenIds": [
+            "39639547721001396851480898079787735523085525938664103641922524360713121495385",
+            "2092204204033314364175956293705926166127684323859161415522366879567753021110"
+          ],
+          "marketOptions": [
+            {
+              "label": "Down",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": null,
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    }
+  ],
+  "pagination": {
+    "start": 0,
+    "end": 10,
+    "hasNext": true
+  }
+}
