@@ -52,12 +52,23 @@ class ResearchConfig:
 
 
 @dataclass(frozen=True)
+class PaperConfig:
+    assets: tuple[str, ...] = ("BTC",)
+    entry_window_s: float = 60.0
+    theta: float = 0.05
+    contracts: int = 10
+    max_ask: float = 0.55
+    train_days: int = 90
+
+
+@dataclass(frozen=True)
 class Config:
     fees: FeesConfig = FeesConfig()
     jupiter: JupiterConfig = JupiterConfig()
     binance: BinanceConfig = BinanceConfig()
     storage: StorageConfig = StorageConfig()
     research: ResearchConfig = ResearchConfig()
+    paper: PaperConfig = PaperConfig()
 
 
 def _as_tuple(value: object, key: str) -> tuple[str, ...]:
@@ -79,6 +90,11 @@ def load_config(path: str | Path = "config/config.yaml") -> Config:
     bnc = BinanceConfig(**bnc_raw)
     storage = StorageConfig(**(raw.get("storage") or {}))
     research = ResearchConfig(**(raw.get("research") or {}))
+    paper_raw = dict(raw.get("paper") or {})
+    if "assets" in paper_raw:
+        paper_raw["assets"] = _as_tuple(paper_raw["assets"], "paper.assets")
+    paper = PaperConfig(**paper_raw)
     return Config(
-        fees=fees, jupiter=jup, binance=bnc, storage=storage, research=research
+        fees=fees, jupiter=jup, binance=bnc, storage=storage,
+        research=research, paper=paper,
     )
