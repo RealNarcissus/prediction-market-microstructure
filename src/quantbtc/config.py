@@ -43,16 +43,22 @@ class Config:
     storage: StorageConfig = StorageConfig()
 
 
+def _as_tuple(value: object, key: str) -> tuple[str, ...]:
+    if not isinstance(value, (list, tuple)):
+        raise ValueError(f"config {key} must be a list, got {type(value).__name__}")
+    return tuple(value)
+
+
 def load_config(path: str | Path = "config/config.yaml") -> Config:
     raw = yaml.safe_load(Path(path).read_text()) or {}
-    fees = FeesConfig(**raw.get("fees", {}))
-    jup_raw = dict(raw.get("jupiter", {}))
+    fees = FeesConfig(**(raw.get("fees") or {}))
+    jup_raw = dict(raw.get("jupiter") or {})
     if "asset_patterns" in jup_raw:
-        jup_raw["asset_patterns"] = tuple(jup_raw["asset_patterns"])
+        jup_raw["asset_patterns"] = _as_tuple(jup_raw["asset_patterns"], "jupiter.asset_patterns")
     jup = JupiterConfig(**jup_raw)
-    bnc_raw = dict(raw.get("binance", {}))
+    bnc_raw = dict(raw.get("binance") or {})
     if "symbols" in bnc_raw:
-        bnc_raw["symbols"] = tuple(bnc_raw["symbols"])
+        bnc_raw["symbols"] = _as_tuple(bnc_raw["symbols"], "binance.symbols")
     bnc = BinanceConfig(**bnc_raw)
-    storage = StorageConfig(**raw.get("storage", {}))
+    storage = StorageConfig(**(raw.get("storage") or {}))
     return Config(fees=fees, jupiter=jup, binance=bnc, storage=storage)
