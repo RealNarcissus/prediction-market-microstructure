@@ -47,7 +47,25 @@ A six-experiment series on 54 months of Binance BTCUSDT perp data (2022-01 → 2
 - Trading fees: Jupiter charges an additional fee equal to the Polymarket fee, so total fee ≈ 2× Polymarket's, scaling with contract price. No fee on claiming payouts.
 - The Jupiter Prediction API (open beta) provides programmatic access to markets and prices; liquidity is aggregated from Polymarket and Kalshi.
 
-**Phase 0 obligation:** extract the exact current fee schedule and per-market resolution source from official docs, hard-code nothing — all venue parameters live in config.
+**Phase 0 obligation:** extract the exact current fee schedule and per-market resolution source from official docs, hard-code nothing — all venue parameters live in config. Note: Polymarket activated taker fees on crypto markets in January 2026 (documented in arXiv:2606.04217), so both legs of the fee model are nonzero; Jupiter total ≈ 2× the Polymarket taker fee.
+
+### 3.2 Documented inefficiencies and formulas (literature, verified 2026-08-23)
+
+Three inefficiencies are documented in exactly our market type, in order of expected value:
+
+1. **Quote staleness / underreaction ("hug fifty-fifty").** 5-minute crypto Up/Down quotes on Polymarket are calibrated but not *sharp* — they hover near 50¢ while the underlying's realized path implies lopsided probabilities (Gruener, SSRN 6863546, 209k contracts on BTC/ETH/SOL/DOGE). Compression-toward-50 is structural across Kalshi and Polymarket (Le, arXiv:2602.19520). Live bots exploiting the Binance-feed-vs-quote lag report ~70% win rates; late-window momentum loading in the final 90s is documented. **This is the primary edge hypothesis: reprice faster than the aggregated book.**
+
+2. **Digital-option fair value as the reference price.** An Up contract is a cash-or-nothing binary; with r ≈ 0 at these tenors its fair value is `F = Φ(d₂)`, `d₂ = [ln(S/K) − σ²τ/2] / (σ√τ)`, where S = live spot, K = epoch strike, τ = time to settlement, σ = short-window realized volatility. Near ATM, fair probability moves ≈ `φ(0)/(σ√τ)` per unit of ln(S/K) — at 5m with σ√τ ≈ 8 bps, **1 bp of spot displacement ≈ ±4.8 probability points** (≈ ±2.8 at 15m). A quote that has not repriced after a 1–2 bp move is mispriced by 5–10 points — several times the fee hurdle. This yields a model-free reference price to trade against, independent of the ML model.
+
+3. **Settlement-window distortion.** Manipulation concentrated in the final ~50 s of 5-minute contracts: near-settlement flow spikes up to 3.9×, near-even outcomes flip 65% of the time under pushes, and the median absolute 5-min BTC move is only 6.6 bps (Dai–Jia–Yu, arXiv:2606.31675). The effect is **much attenuated at 15 minutes**. Rules adopted: no near-ATM entries in the final minute of 5m epochs (configurable cutoff); 15m is the primary horizon, 5m secondary.
+
+Microstructure features with literature backing, all computable from the planned collector:
+
+- **Order flow imbalance (OFI):** ΔP = λ·OFI over short windows, slope λ inversely proportional to depth; explains ~65% of contemporaneous price changes in equities (Cont–Kukanov–Stoikov, arXiv:1011.6402 / JFEC 2014); multi-level extension MLOFI (Xu & Gould 2020). OFI and liquidity shocks are documented predictors of near-term crypto returns (arXiv:2602.00776; crypto LOB predictability: arXiv:2403.09267, arXiv:2312.16190).
+- **Micro-price (imbalance-weighted mid):** `m = (V_bid·ask + V_ask·bid)/(V_bid + V_ask)` — leans toward the side with less size; high-frequency fair-price estimator (Stoikov, "The Micro-Price", SSRN 3158995 / Quantitative Finance).
+- **Honest ML ceiling:** peer-reviewed out-of-sample short-horizon direction accuracy is low-to-mid 50s percent (meta-analysis arXiv:2606.00071; walk-forward-with-costs protocol arXiv:2606.00060). This matches the prior attempt's ~52% and confirms the ML model's role is *blending and sharpening* the above signals, not replacing them.
+
+Two cautions from the literature that shape methodology: apparent cross-venue mispricing often evaporates once observation timing is controlled ("Mistiming is not Arbitrage", SSRN 7170178) — so all staleness measurement must use millisecond-synchronized timestamps on both feeds, never hindsight sampling. And spurious profitability appears easily under naive pooled inference on overlapping windows (Gruener) — significance tests must use trade-level, time-clustered (block) bootstrap.
 
 ### 3.1 Economics
 
@@ -78,38 +96,39 @@ quant-btc/
 
 ### 4.1 Data collector
 
-- Sources: Binance public API (1s klines and/or aggTrades for BTC/ETH/SOL, depth snapshots) and Jupiter Prediction API (live bid/ask per contract side, epoch metadata: strike, open/close times, official resolution).
+- Sources: Binance public API (1s klines and/or aggTrades for BTC/ETH/SOL, top-of-book depth snapshots) and Jupiter Prediction API (live bid/ask per contract side, epoch metadata: strike, open/close times, official resolution).
+- **All records carry millisecond timestamps from the source feed** — quote-staleness measurement is only valid with synchronized clocks on both feeds (see §3.2 caution).
 - Runs as a daemon on the local machine, restart-safe; backfills gaps from Binance historical endpoints where possible. Jupiter intra-epoch quotes cannot be backfilled — gaps are recorded, never fabricated.
 - Labels come exclusively from official settled resolutions, never recomputed from exchange data.
 
 ### 4.2 Feature & label builder
 
-- Feature families (all computed as-of decision time, no lookahead): multi-lookback returns; realized volatility; **taker-buy volume imbalance (proven best feature from prior attempt)**; volume/trade imbalance; bid-ask spread; BTC↔SOL lead-lag; Jupiter implied-probability trajectory within the epoch; **distance of spot from strike (available because entry happens mid-epoch)**; time-of-day. Open-interest change is excluded (proven uninformative).
+- Feature families (all computed as-of decision time, no lookahead): **live digital-option fair value Φ(d₂) and its gap vs the Jupiter quote** (§3.2); multi-lookback returns; realized volatility; **taker-buy volume imbalance (proven best feature from prior attempt)**; **order flow imbalance (OFI) and micro-price from depth snapshots**; bid-ask spread; BTC↔SOL lead-lag; Jupiter implied-probability trajectory within the epoch; distance of spot from strike (native to the fair-value formula); time-of-day; time remaining in epoch. Open-interest change is excluded (proven uninformative).
 - One row per (asset, horizon, epoch), keyed and versioned so features can be rebuilt without re-collection.
 
 ### 4.3 Model
 
-- One calibrated (isotonic) LightGBM classifier per (asset × horizon); initial scope: BTC and SOL × {5m, 15m} = 4 models.
+- One calibrated (isotonic) LightGBM classifier per (asset × horizon); initial scope: BTC and SOL × {5m, 15m} = 4 models — **15m primary, 5m secondary** (per §3.2 settlement findings).
 - Isotonic calibration chosen over Platt specifically because the prior attempt showed tail overconfidence that Platt scaling could not fix; tail-region calibration is a first-class metric, not a footnote.
-- **Jupiter implied probability enters the model as a feature** — the model's job is to blend market information with exchange microstructure, and it is evaluated against the implied probability as the baseline to beat.
+- **The model's job is sharpening, not solo prediction:** inputs blend the Φ(d₂) fair value, Jupiter implied probability, and microstructure features; baselines to beat are fair-value-alone and implied-alone.
 - Walk-forward training: fit on trailing window, predict subsequent epochs, roll forward. No random splits — time order is sacred.
-- Baselines evaluated first and reported alongside: always-up, momentum, contrarian, market-implied probability (Jupiter's own quote as forecast).
+- Baselines evaluated first and reported alongside: always-up, momentum, contrarian, implied probability alone, Φ(d₂) fair value alone.
 
 ### 4.4 Paper trader (venue simulator)
 
-Per epoch, at a configurable offset after epoch open:
-1. Compute model P(up) from features as-of that moment.
+Per epoch, at a configurable offset after epoch open (entries blocked in the final configurable window of 5m epochs when near ATM, per §3.2):
+1. Compute Φ(d₂) fair value and model P(up) from features as-of that moment.
 2. Read Jupiter's live ask for the chosen side; implied probability = ask.
-3. Apply the fee schedule from config; compute per-contract EV.
+3. Apply the fee schedule from config; compute per-contract EV using the model probability (with fair-value gap as the primary screen).
 4. Enter only if EV exceeds the configured hurdle.
 5. Size with fractional Kelly (¼-Kelly on model-vs-implied edge, hard cap per trade), fill simulated at the live ask at decision time (slippage = ask − mid recorded).
 6. Write every round — including skipped ones and the skip reason — to the ledger.
 
 ### 4.5 Evaluation & reporting
 
-- Forecast quality: Brier score and log loss, model vs market-implied probability, per asset/horizon.
+- Forecast quality: Brier score and log loss, model vs market-implied probability vs Φ(d₂) fair value, per asset/horizon.
 - Trading outcomes: hit rate (Wilson CI), per-trade net EV, cumulative P&L, edge-vs-outcome calibration.
-- Significance: bootstrap (10k resamples) 95% CI on mean per-trade EV over executed trades.
+- Significance: **block (time-clustered) bootstrap** (10k resamples) 95% CI on mean per-trade EV over executed trades — dependence-robust per Gruener's caution on overlapping windows.
 - A daily report script renders a markdown summary from the ledger (no dashboard server in scope).
 
 ## 5. Phases & kill criteria
@@ -148,8 +167,24 @@ Per epoch, at a configurable offset after epoch open:
 
 ## Sources (verified 2026-08-23)
 
+Venue mechanics:
 - [Jupiter Prediction Markets — user docs](https://docs.jup.ag/user-docs/trade/predict) (fees: total = 2× Polymarket fee; free claims)
 - [Jupiter Prediction — developer platform](https://dev.jup.ag/docs/prediction) (Prediction API open beta, Polymarket/Kalshi liquidity)
 - [Chainlink × Jupiter announcement](https://x.com/chainlink/status/2031354239474176035) (5m/15m BTC/ETH/SOL markets secured by Chainlink Data Streams)
 - [Pyth Pro × Jupiter Predict](https://www.pyth.network/success-stories/jupiter-predict-uses-pyth-pro-to-power-its-btc-and-spcx-markets) (Pyth Pro as real-time pricing layer for BTC markets)
-- [Settlement Manipulation in Prediction Markets (arXiv)](https://arxiv.org/pdf/2606.31675) (settlement-time order flow effects)
+
+Prediction-market efficiency and microstructure:
+- [Dai, Jia, Yu — Settlement Manipulation in Prediction Markets](https://arxiv.org/abs/2606.31675) (final-50s manipulation of 5-min BTC contracts; median |5m move| 6.6 bps; attenuated at 15m)
+- [Gruener — Calibrated but Not Sharp: 5-Minute Crypto Markets on Polymarket](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6863546) (quotes hug 50/50; dependence-robust inference caution)
+- [Qin & Yang — Polymarket-v1 database](https://arxiv.org/abs/2606.04217) (1.2B trades; favorite-longshot bias; VPIN↔Brier; crypto taker fees since Jan 2026)
+- [Saguillo et al. — Arbitrage in Prediction Markets](https://arxiv.org/abs/2508.03474) (NegRisk arb $29M, bot-dominated) and [Mistiming is not Arbitrage](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7170178) (cross-venue gaps vs observation timing)
+- [Akey et al. — Who Wins and Who Loses in Prediction Markets](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6443103) (69% of traders lose; top 1% take 76.5% of gains)
+- [Le — Decomposing Crowd Wisdom](https://arxiv.org/abs/2602.19520) (compression-toward-50 across Kalshi/Polymarket)
+- [Cont, Kukanov, Stoikov — The Price Impact of Order Book Events](https://arxiv.org/abs/1011.6402) (OFI: ΔP = λ·OFI, R² ≈ 65%)
+- [Stoikov — The Micro-Price](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3158995) (imbalance-weighted mid; SSRN/QF)
+- [Briola et al. — Deep Limit Order Book Forecasting: A Microstructural Guide](https://arxiv.org/abs/2403.09267); [Hawkes-based Cryptocurrency Forecasting via LOB](https://arxiv.org/abs/2312.16190)
+
+ML reality check:
+- [Bitcoin Price Prediction: Peer-Reviewed Evidence and Meta-Analysis](https://arxiv.org/abs/2606.00071) (honest short-horizon direction accuracy: low-to-mid 50s)
+- [Machine Learning-Based Bitcoin Trading Under Realistic Conditions](https://arxiv.org/abs/2606.00060) (27-fold walk-forward, net-of-cost evaluation)
+- [Regime-Aware Multi-Model Bitcoin Direction](https://arxiv.org/abs/2607.23370); [LightGBM vs LSTM on Bitcoin](https://arxiv.org/abs/2511.00665)
