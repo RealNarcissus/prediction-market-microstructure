@@ -35,9 +35,10 @@ One file in `research/strategies/sNNN_name.py` exposing:
 
 ## Current champion
 
-See `research/RESULTS.md`. **s018_lgbm_weighted_imbalance** (primary
-0.045434; 5m MCC +0.0326, 15m MCC +0.0583) — LGBM + imbalance + bar
-position + range-weighted imbalance. +39% over the R4 baseline.
+See `research/RESULTS.md`. **s023_lgbm_pos_lag23** (primary 0.046396;
+5m MCC +0.0319, 15m MCC +0.0609) — LGBM + imbalance + bar position +
+range-weighted imbalance + position history (pos_{t-2}, pos_{t-3}).
+**+42% over the R4 baseline** across 27 counted trials.
 
 ### Batch-1 findings (trials 1–7)
 
@@ -77,15 +78,30 @@ now BLOCKS any auto-keep above MCC 0.15 pending human review
 - Range dynamics (ratr6, narrowest-of-5), wick asymmetry, open-gap,
   imbalance-as-two-columns: all no help (RESET).
 
-## Idea backlog (agent: work top-down, one change per experiment)
+### Batch-4 findings (trials 23–27)
 
-1. Combine s018 + s020 features (weighted imbalance + causal streak +
-   pos_prev) — both individually beat s011.
-2. Streak x imbalance interaction: causal streak of pos AND of imb>0.
-3. pos at multiple horizons: pos_{t-2}, pos_{t-3} (decay structure).
-4. Multi-horizon ratr: ratr12, ratr48 (only 6/24 tested).
-5. If gains flatten (<0.0005 over 3 trials): declare Phase-A plateau,
-   summarize for the human, and hold for Jupiter-side Phase B.
+- Position history is the vein: pos_{t-2}/pos_{t-3} KEEP (0.0454 → 0.0464);
+  the s021 combo (causal streak + pos_prev) also KEEP (0.0457).
+- Full merge of all additions (s025) RESET — beyond pos lags, the extra
+  streak/pos_prev features overlap and add noise. Feature set is saturating.
+- imb-sign streak and ratr12/48: no help.
+
+### Phase-A status: PLATEAU REACHED
+
+Gains have flattened (batch-4 keeps: +0.0002 and +0.0007; batch-1 keeps
+averaged +0.003) and the backlog below the noise floor is exhausted.
+**Decision: Phase A closed.** Standing plan:
+1. Hold the sealed-holdout verdict until Phase B is modeled — one clean
+   verdict covering the Phase-A champion and the Phase-B (Jupiter) strategy
+   together is worth more than spending it twice.
+2. Wait for ~3 weeks of Jupiter collection (running; see data/collector.db).
+3. Phase B: metric switches to net-EV-after-fees vs market-implied baseline;
+   this file gets a new Phase-B section from the human at that point.
+
+## Idea backlog (FROZEN — Phase A closed; reopen only by human edit)
+
+1. (low priority) Hour-of-day interactions with pos/imb features.
+2. (low priority) LGBM monotone constraints on imb features.
 
 After each batch of ~10 experiments, STOP and summarize findings for the
 human (diminishing returns are expected; report honestly).
