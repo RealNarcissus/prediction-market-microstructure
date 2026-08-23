@@ -12,7 +12,9 @@ Predict whether BTC (and later SOL) will close above or below its epoch strike p
 
 **Valid "failure" outcome:** "no exploitable edge found" is an acceptable and cheap result. The project is designed to discover the truth, not to justify trading.
 
-## 2. Fixed decisions (from brainstorming)
+## 2. Context
+
+### 2.1 Fixed decisions (from brainstorming)
 
 | Decision | Choice |
 |---|---|
@@ -20,6 +22,22 @@ Predict whether BTC (and later SOL) will close above or below its epoch strike p
 | Go-live bar | Statistical significance: positive net EV, CI lower bound > 0. |
 | Infrastructure | Local machine first, architect for one-config-change VPS migration later. |
 | Approach | Classical ML (LightGBM) + fee-aware selective trading (Approach 1). |
+
+### 2.2 Prior findings from the earlier attempt (`~/Desktop/agentProjects/Herdr/quant-btc`, Aug 2026)
+
+A six-experiment series on 54 months of Binance BTCUSDT perp data (2022-01 → 2026-06, walk-forward 2025 validation, Holm-corrected gates, locked H1-2026 holdout) established:
+
+1. **A small but real direction signal exists.** L2 logistic on trailing returns: 52.07% balanced accuracy (5m) / 52.52% (15m) on the locked holdout; contrarian effect at 15m similar (52.57%). Statistically significant after multiple-comparison correction and replicated out-of-sample.
+2. **Best feature: taker-buy volume imbalance.** Adding it lifted 5m test gross edge from +0.87 to +3.74 bps/trade and tail win rate from 53.3% to 57.4%. Open-interest change (k=1 bar) added nothing.
+3. **Selectivity works but thins out:** at θ=0.10 only 0.5–0.9% of bars trade; win rates on traded subsets 54–61%, but fold-to-fold variance is large (one 15m fold had 14 trades).
+4. **Tail calibration is the key weakness.** In exactly the region where trades fire (P<0.40 or P>0.60), the model is systematically overconfident (predicts ~63%, observes ~51–56%). Platt scaling barely helped (slope ≈ 0.98).
+5. **The old venue's fees killed it, not the signal.** Gross edge of 1–4 bps/trade vs 4–10 bps exchange fees → every configuration net-negative.
+
+**What that attempt never tested:** Jupiter as venue (binary-contract economics), market-implied probability as feature/benchmark, mid-epoch entry timing (distance-to-strike), cross-asset signals (SOL), order-book depth, and intra-epoch quote trajectories. All of these are this project's reason to exist — this is a **venue pivot with a proven signal core**, not a from-scratch modeling effort.
+
+**Directly reusable assets:** the frozen canonical dataset (1m raw + 5m/15m + OI parquets, referenced by config path, not copied), and the evaluation harness pattern (pre-registered windows, walk-forward folds, locked holdout, selectivity framework, calibration diagnostics).
+
+**Caution it forces into the design:** 52% accuracy was measured against a 50/50 coin-flip baseline. On Jupiter we buy at the *implied* probability, so the bar is beating the market's own forecast — strictly harder. Hence the market-efficiency baseline measurement in Phase 2 is the true go/no-go, and §4.3's model must combine exchange features with market-implied probability rather than compete alone.
 
 ## 3. Market mechanics (verified 2026-08-23)
 
@@ -66,14 +84,16 @@ quant-btc/
 
 ### 4.2 Feature & label builder
 
-- Feature families (all computed as-of decision time, no lookahead): multi-lookback returns; realized volatility; volume/trade imbalance; bid-ask spread; BTC↔SOL lead-lag; Jupiter implied-probability trajectory within the epoch; distance of spot from strike; time-of-day.
+- Feature families (all computed as-of decision time, no lookahead): multi-lookback returns; realized volatility; **taker-buy volume imbalance (proven best feature from prior attempt)**; volume/trade imbalance; bid-ask spread; BTC↔SOL lead-lag; Jupiter implied-probability trajectory within the epoch; **distance of spot from strike (available because entry happens mid-epoch)**; time-of-day. Open-interest change is excluded (proven uninformative).
 - One row per (asset, horizon, epoch), keyed and versioned so features can be rebuilt without re-collection.
 
 ### 4.3 Model
 
 - One calibrated (isotonic) LightGBM classifier per (asset × horizon); initial scope: BTC and SOL × {5m, 15m} = 4 models.
+- Isotonic calibration chosen over Platt specifically because the prior attempt showed tail overconfidence that Platt scaling could not fix; tail-region calibration is a first-class metric, not a footnote.
+- **Jupiter implied probability enters the model as a feature** — the model's job is to blend market information with exchange microstructure, and it is evaluated against the implied probability as the baseline to beat.
 - Walk-forward training: fit on trailing window, predict subsequent epochs, roll forward. No random splits — time order is sacred.
-- Baselines evaluated first and reported alongside: always-up, momentum, and market-implied probability (Jupiter's own quote as forecast).
+- Baselines evaluated first and reported alongside: always-up, momentum, contrarian, market-implied probability (Jupiter's own quote as forecast).
 
 ### 4.4 Paper trader (venue simulator)
 
@@ -97,15 +117,16 @@ Per epoch, at a configurable offset after epoch open:
 | Phase | Deliverable | Duration | Exit / kill |
 |---|---|---|---|
 | 0. Recon | Jupiter API access confirmed; exact fee schedule + resolution source in config; fee calculator with unit tests; breakeven tables | 2–4 days | Fee math verified against docs; API reliably queryable |
-| 1. Collect | Collector daemon running unattended; backtest harness built in parallel | 2–3 weeks | Dataset of thousands of epochs with quotes + resolutions |
-| 2. Model | Baselines + LightGBM walk-forward results | ~1 week | **Kill:** if the model cannot beat market-implied Brier/log loss out-of-sample, stop and write the no-edge report |
+| 1. Collect | Collector daemon running unattended (Jupiter quotes/resolutions cannot be backfilled — this phase starts day one and gates everything Jupiter-specific); in parallel, port the prior attempt's BTC dataset + harness and rerun the proven feature core as the exchange-only baseline | 2–3 weeks | Dataset of thousands of epochs with quotes + resolutions |
+| 2. Model | Market-efficiency baseline first (Brier of Jupiter implied prob vs outcomes), then LightGBM walk-forward: model-with-implied vs implied-alone | ~1 week | **Kill:** if model+implied cannot beat implied-alone Brier/log loss out-of-sample, stop and write the no-edge report |
 | 3. Paper trade | Live model vs live Jupiter quotes; simulated fills; full ledger | ≥2 weeks AND ≥1,000 executed trades (whichever is later) | Complete ledger; no code changes to strategy during run |
 | 4. Verdict | Go/no-go memo with bootstrap CI, capacity notes, risk list | 1 day | Explicit user decision |
 
 ## 6. Stack & testing
 
 - Python 3.11+, `httpx`, `websockets`, `polars`, `LightGBM`, `scikit-learn` (calibration), SQLite. No GPU.
-- Config-driven (single `config.yaml`): local→VPS migration must be a config/env change, not code.
+- Config-driven (single `config.yaml`): local→VPS migration must be a config/env change, not code. The prior attempt's dataset (`Herdr/quant-btc/data/`) is referenced by config path, never copied or mutated.
+- Methodology ported from the prior attempt: pre-registered evaluation windows, frozen parameters, locked holdout, repro verification scripts per experiment.
 - Unit tests: fee calculator, EV/hurdle logic, Kelly sizing, ledger arithmetic (all pure functions).
 - Integration tests: collector against live APIs (marked, rate-limited); walk-forward determinism test (same inputs → same metrics).
 
