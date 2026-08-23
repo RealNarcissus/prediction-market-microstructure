@@ -119,3 +119,37 @@ def test_hourly_writer_flushes_one_file_per_stream_hour(tmp_path):
     w.flush()
     assert pl.read_parquet(path).height == 3
     assert w.flush() == 0  # nothing buffered
+
+
+def test_collector_flushes_on_cancel(tmp_path):
+    # A cancelled run() must still flush buffered rows (try/finally).
+    import asyncio
+
+    import quantbtc.binance_ws as bw
+
+    class FakeWS:
+        async def recv(self):
+            await asyncio.sleep(3600)
+
+    class FakeConnect:
+        async def __aenter__(self):
+            return FakeWS()
+
+        async def __aexit__(self, *a):
+            return False
+
+    bw.websockets.connect = lambda *a, **k: FakeConnect()
+    w = HourlyParquetWriter(tmp_path)
+    ts = 1784773200123
+    w.add("BTCUSDT", "aggTrade", {"ts_ms": ts, "price": 1.0, "qty": 2.0})
+    col = bw.BinanceCollector(("btcusdt",), "wss://x", w)
+
+    async def scenario():
+        task = asyncio.create_task(col.run())
+        await asyncio.sleep(0.05)
+        task.cancel()
+        await asyncio.gather(task, return_exceptions=True)
+
+    asyncio.run(scenario())
+    files = list(tmp_path.rglob("*.parquet"))
+    assert files, "cancel() must flush buffered rows to parquet"

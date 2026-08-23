@@ -113,22 +113,26 @@ class BinanceCollector:
         self.ws_url = ws_url
         self.writer = writer
         self._stop = asyncio.Event()
+        self._last_flush = time.monotonic()
 
     async def run(self) -> None:
         url = f"{self.ws_url}?streams={'/'.join(streams_for(self.symbols))}"
         backoff = 1.0
-        while not self._stop.is_set():
-            try:
-                async with websockets.connect(url, ping_interval=20) as ws:
-                    backoff = 1.0
-                    async for raw in ws:
-                        self._handle(json.loads(raw))
-                        if self._stop.is_set():
-                            break
-            except (websockets.ConnectionClosed, OSError):
-                await asyncio.sleep(backoff)
-                backoff = min(backoff * 2, 60.0)
-        self.writer.flush()
+        try:
+            while not self._stop.is_set():
+                try:
+                    async with websockets.connect(url, ping_interval=20) as ws:
+                        backoff = 1.0
+                        async for raw in ws:
+                            self._handle(json.loads(raw))
+                            if self._stop.is_set():
+                                break
+                except (websockets.ConnectionClosed, OSError):
+                    await asyncio.sleep(backoff)
+                    backoff = min(backoff * 2, 60.0)
+        finally:
+            # Runs on stop, cancel, and error alike: never lose buffered rows.
+            self.writer.flush()
 
     def _handle(self, msg: dict) -> None:
         stream: str = msg.get("stream", "")
@@ -147,6 +151,11 @@ class BinanceCollector:
                 "depth20",
                 parse_depth(data, fallback_ts_ms=int(time.time() * 1000)),
             )
+        # Periodic flush: bound in-memory buffering to ~60s of data.
+        now = time.monotonic()
+        if now - self._last_flush > 60.0:
+            self.writer.flush()
+            self._last_flush = now
 
     def stop(self) -> None:
         self._stop.set()
