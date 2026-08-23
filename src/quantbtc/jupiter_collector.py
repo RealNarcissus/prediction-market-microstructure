@@ -164,6 +164,9 @@ class JupiterPoller:
             and ep.status == "open"
             and ep.up_market_id
         ]
+        # freshest epochs first: just-opened windows get the first cut of
+        # the quote budget (the paper trader races the open)
+        active.sort(key=lambda ep: -ep.epoch_start_ms)
         fetched = 0
         n = len(active)
         while fetched < self.orderbook_budget and fetched < n:
@@ -176,10 +179,11 @@ class JupiterPoller:
             await self._maybe_resolve(ep, now_ms)
 
     async def _slug_probe(self, now_ms: int) -> None:
-        """Deterministically fetch the CURRENT epoch per asset x horizon.
-
-        Steady state costs zero requests (slug already cached); a couple of
-        targeted calls only when a fresh window opens.
+        """Deterministically fetch the CURRENT and NEXT epoch per asset x
+        horizon. Pre-caching the next window means quoting (and paper
+        decisions) can start on the FIRST poll after open — the entry race
+        is won before it begins. Steady state costs zero requests (slug
+        already cached); a couple of targeted calls only at window opens.
         """
         now_s = now_ms // 1000
         cached = {ep.slug for ep in self._epochs}
@@ -187,26 +191,29 @@ class JupiterPoller:
             if asset not in self.assets:
                 continue
             for hz, seconds in HORIZON_S.items():
-                slug = f"{prefix}-updown-{hz}-{(now_s // seconds) * seconds}"
-                if slug in cached:
-                    continue
-                try:
-                    events = await self.client.get_event_search(slug, limit=3)
-                    for event in events:
-                        ep = parse_epoch_event(event)
-                        if ep is None or ep.slug != slug:
-                            continue
-                        if ep.up_market_id is None and ep.event_id:
-                            full = await self.client.get_event(ep.event_id)
-                            hydrated = parse_epoch_event(full)
-                            if hydrated is not None:
-                                ep = hydrated
-                        if ep.up_market_id is not None:
-                            self._epochs.append(ep)
-                            print(f"[jupiter] slug-probe found {slug}")
-                        break
-                except Exception as exc:
-                    print(f"[jupiter] slug-probe {slug} failed: {exc!r}")
+                win_start = (now_s // seconds) * seconds
+                for start in (win_start, win_start + seconds):  # current, next
+                    slug = f"{prefix}-updown-{hz}-{start}"
+                    if slug in cached:
+                        continue
+                    try:
+                        events = await self.client.get_event_search(slug, limit=3)
+                        for event in events:
+                            ep = parse_epoch_event(event)
+                            if ep is None or ep.slug != slug:
+                                continue
+                            if ep.up_market_id is None and ep.event_id:
+                                full = await self.client.get_event(ep.event_id)
+                                hydrated = parse_epoch_event(full)
+                                if hydrated is not None:
+                                    ep = hydrated
+                            if ep.up_market_id is not None:
+                                self._epochs.append(ep)
+                                cached.add(slug)
+                                print(f"[jupiter] slug-probe found {slug}")
+                            break
+                    except Exception as exc:
+                        print(f"[jupiter] slug-probe {slug} failed: {exc!r}")
 
     async def _record_quotes(self, ep, now_ms: int) -> None:
         # The Up market's yes/no arrays are BID LADDERS (buying no-Up == betting
