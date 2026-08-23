@@ -35,11 +35,11 @@ One file in `research/strategies/sNNN_name.py` exposing:
 
 ## Current champion
 
-See `research/RESULTS.md`. **s005_lgbm_plus_imbalance** (primary 0.042270;
-5m MCC +0.0327, 15m MCC +0.0518) — LightGBM + taker-buy imbalance, +29% over
-the R4 baseline after 7 trials.
+See `research/RESULTS.md`. **s011_lgbm_bar_position** (primary 0.044257;
+5m MCC +0.0309, 15m MCC +0.0576) — LGBM + imbalance + intra-bar position,
++35% over the R4 baseline after 14 trials.
 
-### Batch-1 findings (2026-08-23, 7 trials)
+### Batch-1 findings (trials 1–7)
 
 - LightGBM >> logistic on the same 5 features (0.0395 vs 0.0327) — nonlinear
   structure is real out-of-sample, not capacity noise (heavier-regularized
@@ -47,20 +47,31 @@ the R4 baseline after 7 trials.
 - Taker-buy imbalance helps both models (logit: +0.0013; LGBM: +0.0028).
 - Realized-vol features and longer lookbacks + time-of-day: no help (RESET).
 
+### Batch-2 findings (trials 8–14)
+
+- **Intra-bar position ((close-low)/(high-low)) + range/ATR is the win**:
+  0.0423 -> 0.0443, driven by 15m (+0.0518 -> +0.0576). Bar-level
+  microstructure carries signal beyond close-to-close returns.
+- Hyperparameter neighborhood (capacity up, lr 0.05): no help — s002's spec
+  sits at a local optimum. Stop tuning; features are where the gains are.
+- Imbalance-as-two-columns, activity z-scores: no help.
+- LGBM+logit ensemble: logit drags the LGBM down. Drop it.
+- Isotonic (inner temporal split): slightly HURT MCC (0.5-crossing shifts);
+  tail calibration did not improve enough to justify. Keep uncalibrated for
+  MCC; calibration revisited only when the metric becomes net EV.
+
 ## Idea backlog (agent: work top-down, one change per experiment)
 
-1. LGBM hyperparameter neighborhood around s002 (num_leaves 31 worked;
-   try 63 / min_child_samples 1000 / lr 0.05 with n_est 200 — capacity
-   frontier).
-2. Interactions: give LGBM the imbalance split by up/down volume separately
-   (TBV and V-TBV as two columns) instead of the single ratio.
-3. Volume/count activity z-scores (rolling 24-bar z).
-4. Intra-bar position features: close position within bar range
-   (close-low)/(high-low), and bar range / ATR.
-5. Ensemble: average s005 with the R4 logit probabilities (variance
-   reduction; cheap).
-6. Calibration-aware variant: isotonic on fold-internal holdout; expect no
-   MCC change — check tail calibration error improves without hurting MCC.
+1. More bar microstructure on top of s011: position of close in range over
+   the LAST TWO bars each (pos_t, pos_{t-1}), and consecutive same-direction
+   close-position streak length.
+2. Range dynamics: range/ATR over {6, 24} bars; range compression
+   (narrow-range-N pattern indicator).
+3. Wick asymmetry: upper wick vs lower wick share of total range.
+4. Open-gap within bar: (open - close_prev)/ATR (overnight/intra-bar gap).
+5. Volume-weighted position: imbalance weighted by range/ATR.
+6. Re-check imbalance ratio vs split AFTER bar-position is in the feature
+   set (interactions may have changed what helps).
 
 After each batch of ~10 experiments, STOP and summarize findings for the
 human (diminishing returns are expected; report honestly).
