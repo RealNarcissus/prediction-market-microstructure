@@ -16,17 +16,20 @@ class FeesConfig:
 class JupiterConfig:
     base_url: str = "https://api.jup.ag/prediction/v1"
     api_key_env: str = "JUP_API_KEY"
-    poll_interval_s: float = 2.0
+    poll_interval_s: float = 10.0
     result_delay_s: float = 5.0
-    event_filter: str = "live"
+    discovery_interval_s: float = 60.0
+    orderbook_budget: int = 5
     asset_patterns: tuple[str, ...] = ("BTC", "ETH", "SOL")
 
 
 @dataclass(frozen=True)
 class BinanceConfig:
     symbols: tuple[str, ...] = ("btcusdt", "ethusdt", "solusdt")
-    ws_url: str = "wss://fstream.binance.com/stream"
-    rest_url: str = "https://fapi.binance.com"
+    # Spot streams: futures WS (fstream) is blocked in some environments;
+    # spot works and tracks the Chainlink oracle's aggregate spot feeds.
+    ws_url: str = "wss://stream.binance.com:9443/stream"
+    rest_url: str = "https://api.binance.com"
 
 
 @dataclass(frozen=True)

@@ -35,22 +35,31 @@ def parse_kline(d: dict) -> dict:
     }
 
 
-def parse_depth(d: dict) -> dict:
-    """Binance FUTURES partial depth payload: event time E, sides b/a."""
+def parse_depth(d: dict, fallback_ts_ms: int | None = None) -> dict:
+    """Top-of-book from either Binance WS depth format.
 
-    def lvl(side: str, i: int) -> tuple[float | None, float | None]:
-        rows = d.get(side, [])
+    Futures partial depth: {"E": ts, "s": sym, "b": [...], "a": [...]}.
+    Spot partial depth: {"lastUpdateId": .., "bids": [...], "asks": [...]}
+    (no event time -- fall back to local receive time).
+    """
+
+    def lvl(rows: list, i: int) -> tuple[float | None, float | None]:
         if len(rows) <= i:
             return None, None
         return float(rows[i][0]), float(rows[i][1])
 
-    b1p, b1q = lvl("b", 0)
-    b2p, b2q = lvl("b", 1)
-    a1p, a1q = lvl("a", 0)
-    a2p, a2q = lvl("a", 1)
+    if "b" in d or "a" in d:
+        bids, asks, ts, sym = d.get("b", []), d.get("a", []), d.get("E"), d.get("s", "")
+    else:
+        bids, asks, ts, sym = d.get("bids", []), d.get("asks", []), None, ""
+
+    b1p, b1q = lvl(bids, 0)
+    b2p, b2q = lvl(bids, 1)
+    a1p, a1q = lvl(asks, 0)
+    a2p, a2q = lvl(asks, 1)
     return {
-        "ts_ms": d.get("E", int(time.time() * 1000)),
-        "symbol": d.get("s", ""),
+        "ts_ms": ts if ts is not None else (fallback_ts_ms or int(time.time() * 1000)),
+        "symbol": sym,
         "bid1_px": b1p,
         "bid1_qty": b1q,
         "bid2_px": b2p,
@@ -134,7 +143,9 @@ class BinanceCollector:
             )
         elif "@depth" in stream:
             self.writer.add(
-                stream.split("@")[0].upper(), "depth20", parse_depth(data)
+                stream.split("@")[0].upper(),
+                "depth20",
+                parse_depth(data, fallback_ts_ms=int(time.time() * 1000)),
             )
 
     def stop(self) -> None:

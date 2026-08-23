@@ -74,6 +74,20 @@ def test_parse_depth_uses_futures_ws_format():
     assert row["ask2_px"] is None
 
 
+def test_parse_depth_spot_format_uses_fallback_ts():
+    row = parse_depth(
+        {
+            "lastUpdateId": 7,
+            "bids": [["49999.5", "1.5"]],
+            "asks": [["50000.5", "0.8"]],
+        },
+        fallback_ts_ms=1784773200200,
+    )
+    assert row["ts_ms"] == 1784773200200
+    assert row["bid1_px"] == 49999.5
+    assert row["ask1_px"] == 50000.5
+
+
 def test_streams_for_all_symbols():
     streams = streams_for(("btcusdt", "solusdt"))
     assert "btcusdt@aggTrade" in streams

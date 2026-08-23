@@ -5,15 +5,16 @@ fees:
 jupiter:
   base_url: https://api.jup.ag/prediction/v1
   api_key_env: JUP_API_KEY
-  poll_interval_s: 2.0
+  poll_interval_s: 10.0
   result_delay_s: 5.0        # wait after closeTime before fetching final result
-  event_filter: live
+  discovery_interval_s: 60.0 # refresh event discovery at most once a minute
+  orderbook_budget: 5        # max orderbook fetches per poll cycle (429 safety)
   asset_patterns: ["BTC", "ETH", "SOL"]
 
 binance:
   symbols: [btcusdt, ethusdt, solusdt]
-  ws_url: wss://fstream.binance.com/stream
-  rest_url: https://fapi.binance.com
+  ws_url: wss://stream.binance.com:9443/stream   # spot (fstream blocked here)
+  rest_url: https://api.binance.com
 
 storage:
   sqlite_path: data/collector.db
