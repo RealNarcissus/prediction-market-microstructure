@@ -28,4 +28,7 @@ Every trial here counts toward deflated final statistics.
 | 21 | s015_lgbm_range_dynamics | +0.0306 | +0.0484 | +0.039490 | reset |  |  |
 | 22 | s016_lgbm_wick_asymmetry | +0.0329 | +0.0514 | +0.042138 | reset |  |  |
 | 23 | s017_lgbm_open_gap | +0.0330 | +0.0547 | +0.043861 | reset |  |  |
-| 24 | s018_lgbm_weighted_imbalance | +0.0326 | +0.0583 | +0.045434 | KEEP | **champion** | 3f1f0ec |
+| 24 | s018_lgbm_weighted_imbalance | +0.0326 | +0.0583 | +0.045434 | KEEP |  | 3f1f0ec |
+| 25 | s019_lgbm_imb_split_with_pos | +0.0311 | +0.0568 | +0.043932 | reset |  |  |
+| 26 | s020_lgbm_causal_streak | +0.0314 | +0.0582 | +0.044813 | reset |  |  |
+| 27 | s021_lgbm_s018_plus_causal_streak | +0.0321 | +0.0592 | +0.045680 | KEEP | **champion** | aadb06b |
