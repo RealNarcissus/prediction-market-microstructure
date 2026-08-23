@@ -178,6 +178,7 @@ class JupiterClient:
         tags: str | None = None,
         event_filter: str | None = None,
         include_markets: bool = True,
+        start: int | None = None,
     ) -> list[dict]:
         params: dict[str, str] = {"includeMarkets": str(include_markets).lower()}
         if category:
@@ -186,6 +187,8 @@ class JupiterClient:
             params["tags"] = tags
         if event_filter:
             params["filter"] = event_filter
+        if start is not None:
+            params["start"] = start
         data = await self._get("/events", params)
         return self._unwrap(data, "data")
 

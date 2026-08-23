@@ -35,6 +35,7 @@ def build_runtime(
                 poll_interval_s=cfg.jupiter.poll_interval_s,
                 discovery_interval_s=cfg.jupiter.discovery_interval_s,
                 orderbook_budget=cfg.jupiter.orderbook_budget,
+                discovery_pages=cfg.jupiter.discovery_pages,
             )
 
     if binance_factory is None:

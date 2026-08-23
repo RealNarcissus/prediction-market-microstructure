@@ -20,6 +20,7 @@ class JupiterConfig:
     result_delay_s: float = 5.0
     discovery_interval_s: float = 60.0
     orderbook_budget: int = 5
+    discovery_pages: int = 3
     asset_patterns: tuple[str, ...] = ("BTC", "ETH", "SOL")
 
 

@@ -35,6 +35,7 @@ class JupiterPoller:
         poll_interval_s: float = 10.0,
         discovery_interval_s: float = 60.0,
         orderbook_budget: int = 5,
+        discovery_pages: int = 3,
     ):
         self.client = client
         self.store = store
@@ -43,6 +44,7 @@ class JupiterPoller:
         self.poll_interval_s = poll_interval_s
         self.discovery_interval_s = discovery_interval_s
         self.orderbook_budget = orderbook_budget
+        self.discovery_pages = discovery_pages
         self._epochs: list = []  # cached EpochEvent list
         self._last_discovery_ms = 0
         self._rr_index = 0
@@ -57,13 +59,23 @@ class JupiterPoller:
             return
         epochs = []
         for tag in HORIZON_TAGS:
-            events = await self.client.get_events(
-                category="crypto", tags=tag, include_markets=True
-            )
-            for event in events:
-                ep = parse_epoch_event(event)
-                if ep is not None and ep.asset in self.assets:
-                    epochs.append(ep)
+            # The listing mixes past and pre-listed future epochs across
+            # pages; paginate so the currently-active epoch is never missed.
+            for offset in range(0, self.discovery_pages * 10, 10):
+                events = await self.client.get_events(
+                    category="crypto",
+                    tags=tag,
+                    include_markets=True,
+                    start=offset,
+                )
+                for event in events:
+                    ep = parse_epoch_event(event)
+                    if ep is not None and ep.asset in self.assets:
+                        epochs.append(ep)
+                if not events or not (
+                    isinstance(events, list) and len(events) >= 10
+                ):
+                    break
         self._epochs = epochs
         self._last_discovery_ms = now_ms
 
