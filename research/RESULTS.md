@@ -31,4 +31,6 @@ Every trial here counts toward deflated final statistics.
 | 24 | s018_lgbm_weighted_imbalance | +0.0326 | +0.0583 | +0.045434 | KEEP |  | 3f1f0ec |
 | 25 | s019_lgbm_imb_split_with_pos | +0.0311 | +0.0568 | +0.043932 | reset |  |  |
 | 26 | s020_lgbm_causal_streak | +0.0314 | +0.0582 | +0.044813 | reset |  |  |
-| 27 | s021_lgbm_s018_plus_causal_streak | +0.0321 | +0.0592 | +0.045680 | KEEP | **champion** | aadb06b |
+| 27 | s021_lgbm_s018_plus_causal_streak | +0.0321 | +0.0592 | +0.045680 | KEEP |  | aadb06b |
+| 28 | s022_lgbm_pos_and_imb_streaks | +0.0307 | +0.0580 | +0.044342 | reset |  |  |
+| 29 | s023_lgbm_pos_lag23 | +0.0319 | +0.0609 | +0.046396 | KEEP | **champion** | 2ba00a4 |
