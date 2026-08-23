@@ -71,6 +71,11 @@ class JupiterPoller:
                 ep = parse_epoch_event(event)
                 if ep is None or ep.asset not in self.assets:
                     continue
+                # keep current/upcoming epochs AND recently-closed ones
+                # (resolution pickup needs them); skip deep history —
+                # search returns old events and hydrating wastes requests
+                if ep.close_ms < now_ms - 15 * 60_000:
+                    continue
                 if ep.up_market_id is None and ep.event_id:
                     # search payload omits market fields: hydrate once
                     try:
@@ -82,6 +87,7 @@ class JupiterPoller:
                         print(f"[jupiter] hydrate {ep.event_id} failed: {exc!r}")
                 if ep.up_market_id is not None:
                     by_event.setdefault(ep.event_id, ep)
+                await asyncio.sleep(0.3)  # pace: never burst the API
 
         # 1) recency-ranked search per asset: catches the LIVE epoch even
         #    when the tags listing buries it under past ones
@@ -93,6 +99,7 @@ class JupiterPoller:
                     )
                 except Exception as exc:
                     print(f"[jupiter] search {asset} failed: {exc!r}")
+                await asyncio.sleep(0.3)
         # 2) paginated tags listing: breadth (pre-listed future epochs)
         for tag in HORIZON_TAGS:
             for offset in range(0, self.discovery_pages * 10, 10):
@@ -103,6 +110,7 @@ class JupiterPoller:
                     start=offset,
                 )
                 await collect(events)
+                await asyncio.sleep(0.3)
                 if not (isinstance(events, list) and len(events) >= 10):
                     break
         # keep only epochs relevant around now (bounded memory)

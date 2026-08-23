@@ -18,9 +18,9 @@ class JupiterConfig:
     api_key_env: str = "JUP_API_KEY"
     poll_interval_s: float = 10.0
     result_delay_s: float = 5.0
-    discovery_interval_s: float = 60.0
+    discovery_interval_s: float = 120.0
     orderbook_budget: int = 5
-    discovery_pages: int = 3
+    discovery_pages: int = 2
     asset_patterns: tuple[str, ...] = ("BTC", "ETH", "SOL")
 
 
