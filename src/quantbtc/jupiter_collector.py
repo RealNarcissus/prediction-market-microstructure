@@ -22,6 +22,12 @@ ASSET_QUERY = {
     "ETH": "ethereum up or down",
     "SOL": "solana up or down",
 }
+# Slug prefixes per asset: {prefix}-updown-{5m|15m}-{epoch_start_unix}.
+# Windows align to the clock, so the current slug is pure arithmetic —
+# deterministic discovery immune to listing order (RECON: listings buried
+# the active epoch past page 3 before).
+SLUG_PREFIX = {"BTC": "btc", "ETH": "eth", "SOL": "sol"}
+HORIZON_S = {"5m": 300, "15m": 900}
 
 
 class JupiterPoller:
@@ -64,7 +70,18 @@ class JupiterPoller:
             < self.discovery_interval_s * 1000
         ):
             return
-        by_event: dict[str, object] = {}
+        # retention window: keep epochs until 15 min after close (resolution
+        # pickup) and no further than 2h pre-listed; seed the new cache from
+        # the old one so once-seen epochs are never evicted by listing roulette
+        def _keep(ep) -> bool:
+            return (
+                ep.close_ms >= now_ms - 15 * 60_000
+                and ep.epoch_start_ms <= now_ms + 2 * 3600_000
+            )
+
+        by_event: dict[str, object] = {
+            ep.event_id: ep for ep in self._epochs if _keep(ep)
+        }
 
         async def collect(events: list) -> None:
             for event in events:
@@ -114,18 +131,13 @@ class JupiterPoller:
                 if not (isinstance(events, list) and len(events) >= 10):
                     break
         # keep only epochs relevant around now (bounded memory)
-        horizon_max = 900_000
-        cutoff = now_ms - 3_600_000
-        self._epochs = [
-            ep
-            for ep in by_event.values()
-            if ep.close_ms >= cutoff and ep.epoch_start_ms <= now_ms + horizon_max * 8
-        ]
+        self._epochs = [ep for ep in by_event.values() if _keep(ep)]
         self._last_discovery_ms = now_ms
 
     async def poll_once(self, now_ms: int | None = None, force: bool = False) -> None:
         now_ms = now_ms if now_ms is not None else int(time.time() * 1000)
         await self._discover(now_ms, force=force)
+        await self._slug_probe(now_ms)
 
         for ep in self._epochs:
             for market_id in (ep.up_market_id, ep.down_market_id):
@@ -162,6 +174,39 @@ class JupiterPoller:
 
         for ep in self._epochs:
             await self._maybe_resolve(ep, now_ms)
+
+    async def _slug_probe(self, now_ms: int) -> None:
+        """Deterministically fetch the CURRENT epoch per asset x horizon.
+
+        Steady state costs zero requests (slug already cached); a couple of
+        targeted calls only when a fresh window opens.
+        """
+        now_s = now_ms // 1000
+        cached = {ep.slug for ep in self._epochs}
+        for asset, prefix in SLUG_PREFIX.items():
+            if asset not in self.assets:
+                continue
+            for hz, seconds in HORIZON_S.items():
+                slug = f"{prefix}-updown-{hz}-{(now_s // seconds) * seconds}"
+                if slug in cached:
+                    continue
+                try:
+                    events = await self.client.get_event_search(slug, limit=3)
+                    for event in events:
+                        ep = parse_epoch_event(event)
+                        if ep is None or ep.slug != slug:
+                            continue
+                        if ep.up_market_id is None and ep.event_id:
+                            full = await self.client.get_event(ep.event_id)
+                            hydrated = parse_epoch_event(full)
+                            if hydrated is not None:
+                                ep = hydrated
+                        if ep.up_market_id is not None:
+                            self._epochs.append(ep)
+                            print(f"[jupiter] slug-probe found {slug}")
+                        break
+                except Exception as exc:
+                    print(f"[jupiter] slug-probe {slug} failed: {exc!r}")
 
     async def _record_quotes(self, ep, now_ms: int) -> None:
         # The Up market's yes/no arrays are BID LADDERS (buying no-Up == betting

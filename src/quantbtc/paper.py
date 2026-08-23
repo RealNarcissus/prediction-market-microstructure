@@ -311,10 +311,14 @@ class PaperTrader:
         return settled
 
     async def run_forever(self) -> None:
+        n = 0
         while True:
             try:
                 self.step()
                 self.settle()
+                n += 1
+                if n % 12 == 1:  # ~once a minute: ops heartbeat
+                    print(f"[paper] alive: {n} steps", flush=True)
             except Exception as exc:
-                print(f"[paper] error: {exc!r}")
+                print(f"[paper] error: {exc!r}", flush=True)
             await asyncio.sleep(5)

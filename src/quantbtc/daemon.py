@@ -85,6 +85,11 @@ async def _run(poller, binance, paper=None) -> None:
 
 def main() -> None:
     poller, binance, store, paper = build_runtime()
+    print(
+        f"[daemon] jupiter=poller binance=collector "
+        f"paper={'armed' if paper is not None else 'OFF (no models found)'}",
+        flush=True,
+    )
     try:
         asyncio.run(_run(poller, binance, paper))
     finally:
