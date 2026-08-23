@@ -66,10 +66,21 @@ class JupiterPoller:
             return
         by_event: dict[str, object] = {}
 
-        def collect(events: list) -> None:
+        async def collect(events: list) -> None:
             for event in events:
                 ep = parse_epoch_event(event)
-                if ep is not None and ep.asset in self.assets:
+                if ep is None or ep.asset not in self.assets:
+                    continue
+                if ep.up_market_id is None and ep.event_id:
+                    # search payload omits market fields: hydrate once
+                    try:
+                        full = await self.client.get_event(ep.event_id)
+                        hydrated = parse_epoch_event(full)
+                        if hydrated is not None:
+                            ep = hydrated
+                    except Exception as exc:
+                        print(f"[jupiter] hydrate {ep.event_id} failed: {exc!r}")
+                if ep.up_market_id is not None:
                     by_event.setdefault(ep.event_id, ep)
 
         # 1) recency-ranked search per asset: catches the LIVE epoch even
@@ -77,7 +88,7 @@ class JupiterPoller:
         for asset in self.assets:
             if asset in ASSET_QUERY:
                 try:
-                    collect(
+                    await collect(
                         await self.client.get_event_search(ASSET_QUERY[asset])
                     )
                 except Exception as exc:
@@ -91,7 +102,7 @@ class JupiterPoller:
                     include_markets=True,
                     start=offset,
                 )
-                collect(events)
+                await collect(events)
                 if not (isinstance(events, list) and len(events) >= 10):
                     break
         # keep only epochs relevant around now (bounded memory)

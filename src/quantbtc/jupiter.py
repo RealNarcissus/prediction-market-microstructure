@@ -198,6 +198,12 @@ class JupiterClient:
         data = await self._get("/events/search", {"query": query, "limit": limit})
         return self._unwrap(data, "data")
 
+    async def get_event(self, event_id: str) -> dict:
+        """Full event incl. complete embedded markets (search results return
+        a markets list WITHOUT marketIds/status)."""
+        data = await self._get(f"/events/{event_id}")
+        return self._unwrap(data, "data")
+
     async def get_market(self, market_id: str) -> dict:
         return await self._get(f"/markets/{market_id}")
 
