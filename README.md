@@ -36,10 +36,21 @@ in `.env` (gitignored):
 
 ## Run the collector (always-on)
 
-    set -a; . ./.env; set +a
-    nohup .venv/bin/python -m quantbtc.daemon >> data/collector.log 2>&1 &
+Managed by a systemd **user service** (auto-starts at boot, restarts on crash,
+resumes after suspend):
 
-Graceful stop: `kill -TERM <pid>` (flushes parquet buffers, closes sqlite).
+    systemctl --user status quantbtc     # check health
+    systemctl --user restart quantbtc    # restart manually
+    systemctl --user stop quantbtc       # stop (graceful, flushes buffers)
+    journalctl --user -u quantbtc -f     # live output
+
+Unit file: `~/.config/systemd/user/quantbtc.service` (linger enabled, so it
+starts at boot without login). Log also appended to `data/collector.log`.
+
+If the unit file is ever missing (fresh machine), recreate it and run:
+
+    systemctl --user daemon-reload && systemctl --user enable --now quantbtc
+    loginctl enable-linger   # start at boot without login
 
 What it collects:
 
