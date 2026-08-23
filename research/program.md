@@ -35,15 +35,15 @@ One file in `research/strategies/sNNN_name.py` exposing:
 
 ## Current champion
 
-See `research/RESULTS.md`. **s011_lgbm_bar_position** (primary 0.044257;
-5m MCC +0.0309, 15m MCC +0.0576) — LGBM + imbalance + intra-bar position,
-+35% over the R4 baseline after 14 trials.
+See `research/RESULTS.md`. **s018_lgbm_weighted_imbalance** (primary
+0.045434; 5m MCC +0.0326, 15m MCC +0.0583) — LGBM + imbalance + bar
+position + range-weighted imbalance. +39% over the R4 baseline.
 
 ### Batch-1 findings (trials 1–7)
 
 - LightGBM >> logistic on the same 5 features (0.0395 vs 0.0327) — nonlinear
-  structure is real out-of-sample, not capacity noise (heavier-regularized
-  variant s006 also beat the logit but lost to s002: keep mid-capacity).
+  structure is real out-of-sample. Mid-capacity spec (s002) is the sweet
+  spot; heavier regularization also beat the logit but lost to s002.
 - Taker-buy imbalance helps both models (logit: +0.0013; LGBM: +0.0028).
 - Realized-vol features and longer lookbacks + time-of-day: no help (RESET).
 
@@ -52,26 +52,40 @@ See `research/RESULTS.md`. **s011_lgbm_bar_position** (primary 0.044257;
 - **Intra-bar position ((close-low)/(high-low)) + range/ATR is the win**:
   0.0423 -> 0.0443, driven by 15m (+0.0518 -> +0.0576). Bar-level
   microstructure carries signal beyond close-to-close returns.
-- Hyperparameter neighborhood (capacity up, lr 0.05): no help — s002's spec
-  sits at a local optimum. Stop tuning; features are where the gains are.
-- Imbalance-as-two-columns, activity z-scores: no help.
-- LGBM+logit ensemble: logit drags the LGBM down. Drop it.
-- Isotonic (inner temporal split): slightly HURT MCC (0.5-crossing shifts);
-  tail calibration did not improve enough to justify. Keep uncalibrated for
-  MCC; calibration revisited only when the metric becomes net EV.
+- Hyperparameter neighborhood: no help — s002's spec is at a local optimum.
+  Stop tuning; features are where the gains are.
+- LGBM+logit ensemble: logit drags the LGBM down. Isotonic slightly HURT
+  MCC (0.5-crossing shifts); calibration deferred until net-EV metric.
+
+### ⚠️ INCIDENT LOG — trial 8 (s014): accidental leakage, caught and reversed
+
+s014 reported MCC 0.5713 (impossible; ceiling ~0.05). Root cause: its
+"streak" feature used ex-post run lengths — a row's value encoded how long
+the run *became*, i.e. future bars. Feature-target correlation confirmed
+(+0.145 vs ±0.04 for legit features). Response: s014 invalidated in the
+ledger and quarantined to `research/archive/`; s011 champion restored;
+batch-3 verdicts re-adjudicated (fresh trials, honestly counted); runner
+now BLOCKS any auto-keep above MCC 0.15 pending human review
+(`--accept-implausible` overrides). Lesson: implausibility IS a test.
+
+### Batch-3 findings (re-adjudicated, trials 15–22)
+
+- **s018 KEEP**: imbalance weighted by range/ATR adds real signal
+  (0.0443 → 0.0454) — directional pressure matters more in wide bars.
+- **s020 reset-vs-s018 but beats old champion** (0.0448): CAUSAL position
+  streak + pos_{t-1} help; combine with s018 in batch 4.
+- Range dynamics (ratr6, narrowest-of-5), wick asymmetry, open-gap,
+  imbalance-as-two-columns: all no help (RESET).
 
 ## Idea backlog (agent: work top-down, one change per experiment)
 
-1. More bar microstructure on top of s011: position of close in range over
-   the LAST TWO bars each (pos_t, pos_{t-1}), and consecutive same-direction
-   close-position streak length.
-2. Range dynamics: range/ATR over {6, 24} bars; range compression
-   (narrow-range-N pattern indicator).
-3. Wick asymmetry: upper wick vs lower wick share of total range.
-4. Open-gap within bar: (open - close_prev)/ATR (overnight/intra-bar gap).
-5. Volume-weighted position: imbalance weighted by range/ATR.
-6. Re-check imbalance ratio vs split AFTER bar-position is in the feature
-   set (interactions may have changed what helps).
+1. Combine s018 + s020 features (weighted imbalance + causal streak +
+   pos_prev) — both individually beat s011.
+2. Streak x imbalance interaction: causal streak of pos AND of imb>0.
+3. pos at multiple horizons: pos_{t-2}, pos_{t-3} (decay structure).
+4. Multi-horizon ratr: ratr12, ratr48 (only 6/24 tested).
+5. If gains flatten (<0.0005 over 3 trials): declare Phase-A plateau,
+   summarize for the human, and hold for Jupiter-side Phase B.
 
 After each batch of ~10 experiments, STOP and summarize findings for the
 human (diminishing returns are expected; report honestly).

@@ -24,13 +24,15 @@ from locked.harness import evaluate_strategy  # noqa: E402
 from quantbtc.config import load_config  # noqa: E402
 
 EPS = 1e-4  # improvements must exceed float-noise
+IMPLAUSIBLE_MCC = 0.15  # no legit 5m/15m crypto MCC comes close; above this
+                        # the run is presumed leaky until a human overrides.
 
 
 def load_strategy(module_name: str):
     return importlib.import_module(f"strategies.{module_name}")
 
 
-def run_experiment(module_name: str, description: str = "") -> None:
+def run_experiment(module_name: str, description: str = "", accept_implausible: bool = False) -> None:
     guard.verify()
     cfg = load_config()
     strat = load_strategy(module_name)
@@ -39,9 +41,18 @@ def run_experiment(module_name: str, description: str = "") -> None:
     )
     ledger = Ledger()
     champ = ledger.champion()
-    kept = champ is None or result.primary > champ["primary_metric"] + EPS
-    exp_id = ledger.record(result, description or module_name, kept,
-                           notes=f"champion={champ['strategy']} primary={champ['primary_metric']:.6f}" if champ else "first champion")
+    suspect = result.primary > IMPLAUSIBLE_MCC and not accept_implausible
+    kept = (
+        champ is None or result.primary > champ["primary_metric"] + EPS
+    ) and not suspect
+    note = (
+        f"champion={champ['strategy']} primary={champ['primary_metric']:.6f}"
+        if champ else "first champion"
+    )
+    if suspect:
+        note += " | BLOCKED: implausible MCC, suspected leakage " \
+                "(rerun with --accept-implausible only after human review)"
+    exp_id = ledger.record(result, description or module_name, kept, notes=note)
     strat_file = RESEARCH / "strategies" / f"{module_name}.py"
 
     if kept:
@@ -101,8 +112,8 @@ def verdict(module_name: str, notes: str = "") -> None:
 def write_results_md(ledger: Ledger) -> None:
     rows = ledger.conn.execute(
         "SELECT id, ts, strategy, description, mcc_5m, mcc_15m, "
-        "primary_metric, kept, is_champion, git_commit FROM experiments "
-        "ORDER BY id"
+        "primary_metric, kept, invalid, is_champion, git_commit "
+        "FROM experiments ORDER BY id"
     ).fetchall()
     lines = [
         "# Autoresearch results ledger",
@@ -114,8 +125,9 @@ def write_results_md(ledger: Ledger) -> None:
         "|---|---|---|---|---|---|---|---|",
     ]
     for r in rows:
+        flag = "**INVALID** " if r["invalid"] else ""
         lines.append(
-            f"| {r['id']} | {r['strategy']} | {r['mcc_5m']:+.4f} | "
+            f"| {r['id']} | {flag}{r['strategy']} | {r['mcc_5m']:+.4f} | "
             f"{r['mcc_15m']:+.4f} | {r['primary_metric']:+.6f} | "
             f"{'KEEP' if r['kept'] else 'reset'} | "
             f"{'**champion**' if r['is_champion'] else ''} | "
@@ -133,7 +145,7 @@ def main() -> None:
         desc = ""
         if "--desc" in args:
             desc = args[args.index("--desc") + 1]
-        run_experiment(args[1], desc)
+        run_experiment(args[1], desc, accept_implausible="--accept-implausible" in args)
     elif args[0] == "list":
         ledger = Ledger()
         write_results_md(ledger)

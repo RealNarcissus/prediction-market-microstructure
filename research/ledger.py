@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS experiments (
     tail_5m REAL, tail_15m REAL,
     n_val_5m INTEGER, n_val_15m INTEGER, n_tail_5m INTEGER, n_tail_15m INTEGER,
     kept INTEGER NOT NULL,          -- 1 = became champion, 0 = reset
+    invalid INTEGER NOT NULL DEFAULT 0,  -- 1 = invalidated post-hoc (leakage etc.)
     is_champion INTEGER NOT NULL DEFAULT 0,
     git_commit TEXT,
     notes TEXT
