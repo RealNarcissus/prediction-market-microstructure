@@ -75,14 +75,14 @@ def test_poll_captures_quotes_for_active_epoch(tmp_path):
     assert up["close_time_ms"] == ep.close_ms
     assert store.market(ep.down_market_id) is not None
 
-    # both sides from the single Up-market orderbook (yes=up, no=down)
+    # bid = max of each ladder; ask = 1 - opposite best bid (mirror)
     assert store.quote_count_since(0) == 2
     rows = store.conn.execute(
         "SELECT side, bid, ask FROM quotes ORDER BY side"
     ).fetchall()
     by_side = {r["side"]: r for r in rows}
-    assert by_side["up"]["bid"] == 0.51 and by_side["up"]["ask"] == 0.48
-    assert by_side["down"]["bid"] == 0.48 and by_side["down"]["ask"] == 0.47
+    assert by_side["up"]["bid"] == 0.51 and by_side["up"]["ask"] == 0.52
+    assert by_side["down"]["bid"] == 0.48 and by_side["down"]["ask"] == 0.49
     assert client.orderbook_calls == [ep.up_market_id]
 
 

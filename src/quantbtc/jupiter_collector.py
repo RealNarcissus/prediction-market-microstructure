@@ -156,28 +156,35 @@ class JupiterPoller:
             await self._maybe_resolve(ep, now_ms)
 
     async def _record_quotes(self, ep, now_ms: int) -> None:
-        # The Up market's yes/no ladders ARE both sides (buying no-Up
-        # == betting Down), so one orderbook call covers the epoch.
+        # The Up market's yes/no arrays are BID LADDERS (buying no-Up == betting
+        # Down). Best bid per side = max(ladder); the ask to BUY a side is the
+        # mirror: 1 - best bid of the opposite side. One orderbook call covers
+        # the epoch.
         ob = parse_orderbook(await self.client.get_orderbook(ep.up_market_id))
-        rows = []
-        for side, levels in (("up", ob["yes"]), ("down", ob["no"])):
-            bid, ask = best_bid_ask(levels)
-            rows.append(
+        bid_up = max((lv.price for lv in ob["yes"]), default=None)
+        bid_down = max((lv.price for lv in ob["no"]), default=None)
+        qty_up = max(ob["yes"], key=lambda lv: lv.price).qty if ob["yes"] else None
+        qty_down = max(ob["no"], key=lambda lv: lv.price).qty if ob["no"] else None
+
+        def ask(side_bid: float | None, opp_bid: float | None):
+            if side_bid is None or opp_bid is None:
+                return None
+            return min(1.0, 1.0 - opp_bid)
+
+        self.store.insert_quotes(
+            [
                 {
-                    "ts_ms": now_ms,
-                    "market_id": ep.up_market_id,
-                    "side": side,
-                    "bid": bid,
-                    "ask": ask,
-                    "bid_qty": max(levels, key=lambda lv: lv.price).qty
-                    if levels
-                    else None,
-                    "ask_qty": min(levels, key=lambda lv: lv.price).qty
-                    if levels
-                    else None,
-                }
-            )
-        self.store.insert_quotes(rows)
+                    "ts_ms": now_ms, "market_id": ep.up_market_id, "side": "up",
+                    "bid": bid_up, "ask": ask(bid_up, bid_down),
+                    "bid_qty": qty_up, "ask_qty": qty_down,
+                },
+                {
+                    "ts_ms": now_ms, "market_id": ep.up_market_id, "side": "down",
+                    "bid": bid_down, "ask": ask(bid_down, bid_up),
+                    "bid_qty": qty_down, "ask_qty": qty_up,
+                },
+            ]
+        )
 
     async def _maybe_resolve(self, ep, now_ms: int) -> None:
         if (
