@@ -5,4 +5,5 @@ Every trial here counts toward deflated final statistics.
 
 | # | strategy | 5m MCC | 15m MCC | primary | kept | champion | commit |
 |---|---|---|---|---|---|---|---|
-| 1 | s000_r4_baseline | +0.0236 | +0.0418 | +0.032710 | KEEP | **champion** | 27938e7 |
+| 1 | s000_r4_baseline | +0.0236 | +0.0418 | +0.032710 | KEEP |  | 27938e7 |
+| 2 | s001_r4_plus_imbalance | +0.0228 | +0.0452 | +0.033983 | KEEP | **champion** | c6edacb |
