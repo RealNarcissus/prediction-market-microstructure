@@ -59,11 +59,14 @@ def build_report(collector_db: str, paper_db: str, now_ms: int) -> str:
         wins = [t for t in settled if t["outcome"] == "won"]
         pnl = sum(t["pnl"] or 0.0 for t in settled)
         n_contracts = sum(t["contracts"] for t in settled)
+        win_line = (
+            f"- win rate: **{len(wins)}/{len(settled)}"
+            + (f" = {len(wins)/len(settled):.1%}**" if settled else " (none settled)**")
+        )
         lines += [
             f"- executed: **{len(executed)}** (settled: {len(settled)}, "
             f"pending: {len(executed) - len(settled)})",
-            f"- win rate: **{len(wins)}/{len(settled)}"
-            + (f" = {len(wins)/len(settled):.1%}\"" if settled else "\""),
+            win_line,
             f"- cumulative PnL: **${pnl:+.2f}** on {n_contracts} contracts"
             + (f" ({pnl/n_contracts:+.4f}/contract)" if n_contracts else ""),
             "",
@@ -82,6 +85,7 @@ def build_report(collector_db: str, paper_db: str, now_ms: int) -> str:
 
     # --- cap-blocked counterfactuals ---
     lines += ["## Entry-cap blocked (ask > cap) — counterfactual", ""]
+    decided = len(blocked) + len(executed) + len(theta_skipped)
     if blocked:
         known = [t for t in blocked if t["market_id"] in res and t["p_model"] is not None]
         would_win = sum(
@@ -89,17 +93,14 @@ def build_report(collector_db: str, paper_db: str, now_ms: int) -> str:
             for t in known
             if res[t["market_id"]] == _intended_side(t["p_model"])
         )
+        asks = [t["entry_price"] for t in blocked if t["entry_price"]]
         lines += [
             f"- blocked epochs: **{len(blocked)}** "
-            f"({len(blocked)/(len(blocked)+len(executed)+len(theta_skipped)+1e-9):.0%} "
-            "of decided epochs)"
-            if blocked
-            else "",
+            f"({len(blocked)/max(1, decided):.0%} of decided epochs)",
             f"- counterfactual win rate if we HAD entered at the ask: "
             f"**{would_win}/{len(known)}"
-            + (f" = {would_win/len(known):.1%}\"" if known else " (no resolutions yet)\""),
-            f"- avg blocked ask: "
-            f"{sum(t['entry_price'] for t in blocked if t['entry_price'])/max(1,len([t for t in blocked if t['entry_price']])):.3f}",
+            + (f" = {would_win/len(known):.1%}**" if known else " (no resolutions yet)**"),
+            f"- avg blocked ask: {sum(asks)/max(1, len(asks)):.3f}",
             "",
             "| epoch | p | intended | ask | actual outcome | would-have |",
             "|---|---|---|---|---|---|",
