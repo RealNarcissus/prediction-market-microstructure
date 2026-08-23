@@ -20,3 +20,8 @@ binance:
 storage:
   sqlite_path: data/collector.db
   parquet_dir: data/raw
+
+research:
+  # Herdr frozen canonical dataset — referenced by path, never copied/mutated
+  data_5m: /home/charleton/Desktop/agentProjects/Herdr/quant-btc/data/processed/btcusdt-usdtm-5m.parquet
+  data_15m: /home/charleton/Desktop/agentProjects/Herdr/quant-btc/data/processed/btcusdt-usdtm-15m.parquet

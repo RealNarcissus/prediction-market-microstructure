@@ -40,11 +40,24 @@ class StorageConfig:
 
 
 @dataclass(frozen=True)
+class ResearchConfig:
+    data_5m: str = (
+        "/home/charleton/Desktop/agentProjects/Herdr/quant-btc/"
+        "data/processed/btcusdt-usdtm-5m.parquet"
+    )
+    data_15m: str = (
+        "/home/charleton/Desktop/agentProjects/Herdr/quant-btc/"
+        "data/processed/btcusdt-usdtm-15m.parquet"
+    )
+
+
+@dataclass(frozen=True)
 class Config:
     fees: FeesConfig = FeesConfig()
     jupiter: JupiterConfig = JupiterConfig()
     binance: BinanceConfig = BinanceConfig()
     storage: StorageConfig = StorageConfig()
+    research: ResearchConfig = ResearchConfig()
 
 
 def _as_tuple(value: object, key: str) -> tuple[str, ...]:
@@ -65,4 +78,7 @@ def load_config(path: str | Path = "config/config.yaml") -> Config:
         bnc_raw["symbols"] = _as_tuple(bnc_raw["symbols"], "binance.symbols")
     bnc = BinanceConfig(**bnc_raw)
     storage = StorageConfig(**(raw.get("storage") or {}))
-    return Config(fees=fees, jupiter=jup, binance=bnc, storage=storage)
+    research = ResearchConfig(**(raw.get("research") or {}))
+    return Config(
+        fees=fees, jupiter=jup, binance=bnc, storage=storage, research=research
+    )

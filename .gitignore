@@ -5,3 +5,5 @@ __pycache__/
 .env
 *.egg-info/
 reports/
+research/results.db
+research/__pycache__/
