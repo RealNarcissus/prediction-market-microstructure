@@ -15,6 +15,13 @@ from quantbtc.store import Store
 
 # Verified live (docs/RECON.md): up/down epochs are discovered per horizon tag.
 HORIZON_TAGS = ("5m", "15m")
+# Recency-ranked search phrases per asset (search beats deep pagination
+# for surfacing the CURRENTLY-live epoch).
+ASSET_QUERY = {
+    "BTC": "bitcoin up or down",
+    "ETH": "ethereum up or down",
+    "SOL": "solana up or down",
+}
 
 
 class JupiterPoller:
@@ -57,10 +64,26 @@ class JupiterPoller:
             < self.discovery_interval_s * 1000
         ):
             return
-        epochs = []
+        by_event: dict[str, object] = {}
+
+        def collect(events: list) -> None:
+            for event in events:
+                ep = parse_epoch_event(event)
+                if ep is not None and ep.asset in self.assets:
+                    by_event.setdefault(ep.event_id, ep)
+
+        # 1) recency-ranked search per asset: catches the LIVE epoch even
+        #    when the tags listing buries it under past ones
+        for asset in self.assets:
+            if asset in ASSET_QUERY:
+                try:
+                    collect(
+                        await self.client.get_event_search(ASSET_QUERY[asset])
+                    )
+                except Exception as exc:
+                    print(f"[jupiter] search {asset} failed: {exc!r}")
+        # 2) paginated tags listing: breadth (pre-listed future epochs)
         for tag in HORIZON_TAGS:
-            # The listing mixes past and pre-listed future epochs across
-            # pages; paginate so the currently-active epoch is never missed.
             for offset in range(0, self.discovery_pages * 10, 10):
                 events = await self.client.get_events(
                     category="crypto",
@@ -68,15 +91,17 @@ class JupiterPoller:
                     include_markets=True,
                     start=offset,
                 )
-                for event in events:
-                    ep = parse_epoch_event(event)
-                    if ep is not None and ep.asset in self.assets:
-                        epochs.append(ep)
-                if not events or not (
-                    isinstance(events, list) and len(events) >= 10
-                ):
+                collect(events)
+                if not (isinstance(events, list) and len(events) >= 10):
                     break
-        self._epochs = epochs
+        # keep only epochs relevant around now (bounded memory)
+        horizon_max = 900_000
+        cutoff = now_ms - 3_600_000
+        self._epochs = [
+            ep
+            for ep in by_event.values()
+            if ep.close_ms >= cutoff and ep.epoch_start_ms <= now_ms + horizon_max * 8
+        ]
         self._last_discovery_ms = now_ms
 
     async def poll_once(self, now_ms: int | None = None, force: bool = False) -> None:

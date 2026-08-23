@@ -69,6 +69,8 @@ def _champion_model():
 def load_spot_1m(
     parquet_dir: str | Path, symbol: str = "BTCUSDT"
 ) -> pl.DataFrame:
+    """Load collected kline_1m parquet, normalizing WS-schema files
+    (ts_ms/taker_buy_volume) to the canonical REST/twapbars schema."""
     root = Path(parquet_dir) / symbol / "kline_1m"
     schema = {
         "open_time": pl.Datetime("ms", "UTC"), "open": pl.Float64,
@@ -78,7 +80,16 @@ def load_spot_1m(
     }
     if not root.exists():
         return pl.DataFrame(schema=schema)
-    frames = [pl.read_parquet(f) for f in sorted(root.glob("*.parquet"))]
+    frames = []
+    for f in sorted(root.glob("*.parquet")):
+        df = pl.read_parquet(f)
+        if "ts_ms" in df.columns:  # WS collector schema
+            df = df.with_columns(
+                pl.col("ts_ms").cast(pl.Datetime("ms", "UTC")).alias("open_time"),
+                pl.col("taker_buy_volume").alias("taker_buy_base_volume"),
+                pl.lit(0, dtype=pl.Int64).alias("count"),
+            )
+        frames.append(df.select(list(schema.keys())))
     df = pl.concat(frames).unique(subset=["open_time"]).sort("open_time")
     return df.select(list(schema.keys()))
 

@@ -192,6 +192,12 @@ class JupiterClient:
         data = await self._get("/events", params)
         return self._unwrap(data, "data")
 
+    async def get_event_search(self, query: str, limit: int = 20) -> list[dict]:
+        """Keyword search — recency-ranked, reliably surfaces LIVE epochs
+        (the tags listing can bury the active epoch under past ones)."""
+        data = await self._get("/events/search", {"query": query, "limit": limit})
+        return self._unwrap(data, "data")
+
     async def get_market(self, market_id: str) -> dict:
         return await self._get(f"/markets/{market_id}")
 
