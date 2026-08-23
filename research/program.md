@@ -35,23 +35,32 @@ One file in `research/strategies/sNNN_name.py` exposing:
 
 ## Current champion
 
-See `research/RESULTS.md`. Baseline: s000 (R4 port, primary 0.032710,
-matching the Herdr reference).
+See `research/RESULTS.md`. **s005_lgbm_plus_imbalance** (primary 0.042270;
+5m MCC +0.0327, 15m MCC +0.0518) — LightGBM + taker-buy imbalance, +29% over
+the R4 baseline after 7 trials.
+
+### Batch-1 findings (2026-08-23, 7 trials)
+
+- LightGBM >> logistic on the same 5 features (0.0395 vs 0.0327) — nonlinear
+  structure is real out-of-sample, not capacity noise (heavier-regularized
+  variant s006 also beat the logit but lost to s002: keep mid-capacity).
+- Taker-buy imbalance helps both models (logit: +0.0013; LGBM: +0.0028).
+- Realized-vol features and longer lookbacks + time-of-day: no help (RESET).
 
 ## Idea backlog (agent: work top-down, one change per experiment)
 
-1. Taker-buy volume imbalance feature `2*TBV/V - 1` (Herdr Exp005 found it
-   lifted traded-subset win rates and per-trade edge; on pure MCC it was
-   roughly neutral — test whether MCC also moves).
-2. Realized volatility features: rolling std of 1-bar returns over
-   {6, 24, 96} bars, and vol-of-vol.
-3. LightGBM (small: ≤300 leaves, deep limits, strong min_child_samples,
-   fixed seed) on the base 5 features — capture nonlinearity the logit misses.
-4. Longer lookbacks f_{20}, f_{50} and hourly-aligned seasonality
-   (time-of-day one-hots via sin/cos of minute-of-day).
-5. Trade-count and volume z-score features (activity bursts).
-6. Calibration-aware variant: isotonic on fold-internal holdout — expect no
-   MCC change; useful only if tail calibration error improves (note it).
+1. LGBM hyperparameter neighborhood around s002 (num_leaves 31 worked;
+   try 63 / min_child_samples 1000 / lr 0.05 with n_est 200 — capacity
+   frontier).
+2. Interactions: give LGBM the imbalance split by up/down volume separately
+   (TBV and V-TBV as two columns) instead of the single ratio.
+3. Volume/count activity z-scores (rolling 24-bar z).
+4. Intra-bar position features: close position within bar range
+   (close-low)/(high-low), and bar range / ATR.
+5. Ensemble: average s005 with the R4 logit probabilities (variance
+   reduction; cheap).
+6. Calibration-aware variant: isotonic on fold-internal holdout; expect no
+   MCC change — check tail calibration error improves without hurting MCC.
 
 After each batch of ~10 experiments, STOP and summarize findings for the
 human (diminishing returns are expected; report honestly).
