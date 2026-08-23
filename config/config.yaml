@@ -1,0 +1,20 @@
+fees:
+  rate: 0.07          # per-contract coefficient, Kalshi-style; verified in Task 6
+  round_cents: true   # Jupiter rounds the order fee up to the nearest cent
+
+jupiter:
+  base_url: https://api.jup.ag/prediction/v1
+  api_key_env: JUP_API_KEY
+  poll_interval_s: 2.0
+  result_delay_s: 5.0        # wait after closeTime before fetching final result
+  event_filter: live
+  asset_patterns: ["BTC", "ETH", "SOL"]
+
+binance:
+  symbols: [btcusdt, ethusdt, solusdt]
+  ws_url: wss://fstream.binance.com/stream
+  rest_url: https://fapi.binance.com
+
+storage:
+  sqlite_path: data/collector.db
+  parquet_dir: data/raw

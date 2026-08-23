@@ -1,0 +1,25 @@
+[project]
+name = "quantbtc"
+version = "0.1.0"
+description = "Short-horizon direction model vs Jupiter Up/Down (paper trading research)"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27",
+    "websockets>=12.0",
+    "polars>=1.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: hits live network APIs (deselect with '-m \"not integration\"')"]
