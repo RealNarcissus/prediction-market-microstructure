@@ -19,4 +19,13 @@ Every trial here counts toward deflated final statistics.
 | 12 | s011_lgbm_bar_position | +0.0309 | +0.0576 | +0.044257 | KEEP |  | 8384ec9 |
 | 13 | s012_ensemble_lgbm_logit | +0.0286 | +0.0472 | +0.037895 | reset |  |  |
 | 14 | s013_lgbm_isotonic | +0.0298 | +0.0492 | +0.039505 | reset |  |  |
-| 15 | s014_lgbm_position_history | +0.5621 | +0.5804 | +0.571279 | KEEP | **champion** | f1b21fe |
+| 15 | **INVALID** s014_lgbm_position_history | +0.5621 | +0.5804 | +0.571279 | reset |  | f1b21fe |
+| 16 | s015_lgbm_range_dynamics | +0.0306 | +0.0484 | +0.039490 | reset |  |  |
+| 17 | s016_lgbm_wick_asymmetry | +0.0329 | +0.0514 | +0.042138 | reset |  |  |
+| 18 | s017_lgbm_open_gap | +0.0330 | +0.0547 | +0.043861 | reset |  |  |
+| 19 | s018_lgbm_weighted_imbalance | +0.0326 | +0.0583 | +0.045434 | reset |  |  |
+| 20 | s019_lgbm_imb_split_with_pos | +0.0311 | +0.0568 | +0.043932 | reset |  |  |
+| 21 | s015_lgbm_range_dynamics | +0.0306 | +0.0484 | +0.039490 | reset |  |  |
+| 22 | s016_lgbm_wick_asymmetry | +0.0329 | +0.0514 | +0.042138 | reset |  |  |
+| 23 | s017_lgbm_open_gap | +0.0330 | +0.0547 | +0.043861 | reset |  |  |
+| 24 | s018_lgbm_weighted_imbalance | +0.0326 | +0.0583 | +0.045434 | KEEP | **champion** | 3f1f0ec |
