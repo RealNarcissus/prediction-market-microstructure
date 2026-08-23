@@ -262,16 +262,14 @@ class PaperTrader:
                 ).fetchall()
                 quotes = {q["side"]: q for q in quote}
                 if "up" not in quotes or now_ms - quotes["up"]["ts_ms"] > 30_000:
-                    record_skip("no fresh quote")
-                    continue
+                    continue  # transient: retry next step within the window
 
                 bars = load_spot_1m(self.cfg.storage.parquet_dir, f"{rec['asset']}USDT")
                 p = self.p_model(
                     "5m" if rec["horizon_s"] == 300 else "15m", bars, now_ms
                 )
                 if p is None:
-                    record_skip("insufficient bars")
-                    continue
+                    continue  # transient: retry next step within the window
                 d = decide(p, self.cfg.paper.theta)
                 if d.action == "skip":
                     record_skip(d.reason, p=p)

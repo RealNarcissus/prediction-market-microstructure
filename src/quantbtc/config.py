@@ -54,7 +54,7 @@ class ResearchConfig:
 @dataclass(frozen=True)
 class PaperConfig:
     assets: tuple[str, ...] = ("BTC",)
-    entry_window_s: float = 60.0
+    entry_window_s: float = 90.0
     theta: float = 0.05
     contracts: int = 10
     max_ask: float = 0.55
