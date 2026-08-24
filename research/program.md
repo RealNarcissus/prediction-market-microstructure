@@ -105,3 +105,15 @@ averaged +0.003) and the backlog below the noise floor is exhausted.
 
 After each batch of ~10 experiments, STOP and summarize findings for the
 human (diminishing returns are expected; report honestly).
+
+### Literature batch (2026-08-24, human-directed: arXiv autoresearch)
+
+Four published edge formulas reproduced on our data through the locked
+harness (trials 28-31): Quarter-Hour imb lags and flow-switch dummies
+(arXiv:2607.09426), VPIN volume-clock toxicity (arXiv:1912.10343), and
+Amihud-impact-weighted imbalance (Amihud 2002 + arXiv:2602.00776).
+**All four RESET** — the s023 champion already absorbs the
+OHLCV-computable literature. Full catalog with formulas, verdicts, and
+replication-cost estimates: `research/litreview/CATALOG.md`. Tier-2
+formulas (OFI, micro-price, Hawkes) await ~2 weeks of collected
+depth/tick data — they are Phase-B candidates, not Phase-A.
