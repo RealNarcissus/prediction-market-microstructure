@@ -61,6 +61,8 @@ class JupiterPoller:
         self._epochs: list = []  # cached EpochEvent list
         self._last_discovery_ms = 0
         self._rr_index = 0
+        self._probe_backoff: dict[str, int] = {}  # slug -> next-attempt ms
+        self._cycle = 0
 
     async def _discover(self, now_ms: int, force: bool = False) -> None:
         if (
@@ -198,22 +200,21 @@ class JupiterPoller:
                 print(f"[jupiter] resolve {ep.slug} failed: {exc!r}")
 
     async def _slug_probe(self, now_ms: int) -> None:
-        """Deterministically fetch the CURRENT and NEXT epoch per asset x
-        horizon. Pre-caching the next window means quoting (and paper
-        decisions) can start on the FIRST poll after open — the entry race
-        is won before it begins. Steady state costs zero requests (slug
-        already cached); a couple of targeted calls only at window opens.
+        """Deterministically fetch the CURRENT epoch per asset x horizon
+        (BTC additionally pre-caches the next window for paper entries).
+
+        Failed probes back off exponentially per slug — an unfindable slug
+        must never be re-requested every cycle (that was throttling the API).
         """
         now_s = now_ms // 1000
         cached = {ep.slug for ep in self._epochs}
+        attempts = 0
         for asset, prefix in SLUG_PREFIX.items():
             if asset not in self.assets:
                 continue
             for hz, seconds in HORIZON_S.items():
                 win_start = (now_s // seconds) * seconds
                 # next-window pre-caching only for the paper-traded asset
-                # (probing every combo at every boundary was throttling the
-                # API and starving quote capture)
                 windows = (
                     (win_start, win_start + seconds)
                     if asset == "BTC"
@@ -223,8 +224,14 @@ class JupiterPoller:
                     slug = f"{prefix}-updown-{hz}-{start}"
                     if slug in cached:
                         continue
+                    if self._probe_backoff.get(slug, 0) > now_ms:
+                        continue  # recently failed: exponential backoff
+                    if attempts >= 2:  # hard per-cycle attempt budget
+                        return
+                    attempts += 1
                     try:
                         events = await self.client.get_event_search(slug, limit=3)
+                        found = False
                         for event in events:
                             ep = parse_epoch_event(event)
                             if ep is None or ep.slug != slug:
@@ -237,9 +244,20 @@ class JupiterPoller:
                             if ep.up_market_id is not None:
                                 self._epochs.append(ep)
                                 cached.add(slug)
+                                self._probe_backoff.pop(slug, None)
                                 print(f"[jupiter] slug-probe found {slug}")
+                            found = True
                             break
+                        if not found:
+                            prev = self._probe_backoff.get(slug, 30_000)
+                            self._probe_backoff[slug] = (
+                                now_ms + min(max(60_000, prev * 2), 600_000)
+                            )
                     except Exception as exc:
+                        prev = self._probe_backoff.get(slug, 30_000)
+                        self._probe_backoff[slug] = (
+                            now_ms + min(max(60_000, prev * 2), 600_000)
+                        )
                         print(f"[jupiter] slug-probe {slug} failed: {exc!r}")
 
     async def _record_quotes(self, ep, now_ms: int) -> None:
