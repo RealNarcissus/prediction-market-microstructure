@@ -96,26 +96,38 @@ class PolicyAgent:
         n = max(1, len(trajectory))
         return {"pi_loss": stats["loss"] / n, "entropy": stats["entropy"] / n}
 
-    def update_fullinfo(self, steps: list[dict]) -> dict:
+    def update_fullinfo(self, steps: list[dict], skip_baseline: bool = False,
+                        entry_ema: "list" = None) -> dict:
         """All-actions policy gradient (full-information contextual bandit).
 
         Each step exposes the EX-POST reward of every action:
           r_skip = 0, r_up, r_down (computable once the window settles).
-        Gradient: dlogits[a] += probs[a] * (r_a - mean_r - v(s)) for all a,
-        which pushes probability mass toward actions that beat the
-        state-value expectation — the optimal-stopping contrast that
-        single-sample REINFORCE lacks.
+        Gradient: dlogits[a] += probs[a] * (r_a - baseline) for all a.
+
+        skip_baseline=True changes the baseline to the best-entry EMA:
+        adv(skip) = -b, adv(entry) = r_entry - b, where b tracks the EMA of
+        max(r_up, r_down) — encoding "enter only when you beat skipping"
+        directly (the backlog's explicit skip-baseline advantage).
+        entry_ema is a one-element list holding the EMA state.
         """
         stats = {"loss": 0.0}
         for t in steps:
             s = np.asarray(t["s"], dtype=float)
             r = np.array([t["r_skip"], t["r_up"], t["r_down"]])
-            r = np.clip(r, -1.5, 1.5)  # dollar rewards are bounded; clip kills
-            # any residual explosion from extreme fair-value entries
+            r = np.clip(r, -1.5, 1.5)
             h, h_pre, logits = self._forward(s)
             probs = softmax(logits)
-            v_hat = float(self.v_w[: len(s)] @ s + self.v_w[-1])
-            adv = np.clip(r - (r.mean() + v_hat), -1.5, 1.5)
+
+            if skip_baseline and entry_ema is not None:
+                best_entry = max(t["r_up"], t["r_down"], 0.0)
+                prev = entry_ema[0] if entry_ema[0] is not None else 0.0
+                b = prev
+                adv = np.array([t["r_skip"] - b, t["r_up"] - b, t["r_down"] - b])
+                entry_ema[0] = 0.95 * prev + 0.05 * best_entry
+            else:
+                v_hat = float(self.v_w[: len(s)] @ s + self.v_w[-1])
+                adv = np.clip(r - (r.mean() + v_hat), -1.5, 1.5)
+
             dlogits = probs * adv
             nrm = float(np.abs(dlogits).max())
             if nrm > 1.0:
@@ -130,11 +142,36 @@ class PolicyAgent:
             self.b2 -= self.lr * db2
             # value regresses toward expected reward under current policy
             ev = float(probs @ r)
-            dv = np.clip(ev - v_hat, -1.5, 1.5)
-            self.v_w[: len(s)] -= self.value_lr * dv * s / max(1e-6, np.abs(s).max())
-            self.v_w[-1] -= self.value_lr * dv
+            if not skip_baseline:
+                dv = np.clip(ev - float(self.v_w[: len(s)] @ s + self.v_w[-1]),
+                             -1.5, 1.5)
+                self.v_w[: len(s)] -= self.value_lr * dv * s / max(1e-6, np.abs(s).max())
+                self.v_w[-1] -= self.value_lr * dv
             stats["loss"] += float(-(probs @ np.log(probs + 1e-12) * r).sum())
         return {"pi_loss": stats["loss"]}
+
+    def behavioral_clone(self, X: np.ndarray, actions: np.ndarray,
+                         iters: int = 5) -> dict:
+        """Supervised cross-entropy pretraining on an expert's decisions."""
+        stats = {"loss": 0.0}
+        n = max(1, len(X))
+        for _ in range(iters):
+            for s, a in zip(X, actions):
+                s = np.asarray(s, dtype=float)
+                h, h_pre, logits = self._forward(s)
+                probs = softmax(logits)
+                dlogits = probs.copy()
+                dlogits[a] -= 1.0
+                dW2 = np.outer(dlogits, h)
+                db2 = dlogits
+                dh = self.W2.T @ dlogits
+                dh_pre = dh * (1 - np.tanh(h_pre) ** 2)
+                self.W1 -= self.lr * 2.0 * np.outer(dh_pre, s)
+                self.b1 -= self.lr * 2.0 * dh_pre
+                self.W2 -= self.lr * 2.0 * dW2
+                self.b2 -= self.lr * 2.0 * db2
+                stats["loss"] += float(-np.log(probs[a] + 1e-12)) / n
+        return {"bc_loss": stats["loss"]}
 
     def snapshot(self) -> dict:
         return {k: v.copy() for k, v in self.__dict__.items()

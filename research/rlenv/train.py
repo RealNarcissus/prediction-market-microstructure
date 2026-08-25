@@ -27,6 +27,7 @@ from env import build_windows, load_1m_bars
 
 REPO_SRC = Path(__file__).resolve().parents[2] / "src"
 sys.path.insert(0, str(REPO_SRC))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from quantbtc.fees import order_fee  # noqa: E402
 
 RESEARCH = Path(__file__).resolve().parents[1]
@@ -134,6 +135,10 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=3e-3)
     ap.add_argument("--hidden", type=int, default=24)
     ap.add_argument("--episodes-per-iter", type=int, default=4000)
+    ap.add_argument("--bc-warmstart", action="store_true",
+                    help="behavioral-clone the s023 champion's decisions first")
+    ap.add_argument("--skip-baseline", action="store_true",
+                    help="advantage baseline = best-entry EMA (beat skipping)")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -149,6 +154,39 @@ def main() -> None:
 
     agent = PolicyAgent(state_dim=len(train[0]["steps"][0]["feat"]),
                         hidden=args.hidden, lr=args.lr, seed=args.seed)
+
+    if args.bc_warmstart:
+        import polars as pl
+
+        from quantbtc.twapbars import aggregate_windows
+        from strategies.s002_lgbm_base import new_model as champ_model
+        from strategies.s023_lgbm_pos_lag23 import build_features as champ_feats
+
+        t_bc = time.time()
+        agg = aggregate_windows(bars, horizon_s=args.horizon)
+        agg = agg.filter(pl.col("open_time") < TRAIN_END.astype("datetime64[ms]"))
+        agg = agg.with_columns(pl.col("y_twap").shift(-1).alias("y_next")).drop_nulls(["y_next"])
+        Xc = champ_feats(agg)
+        yc = agg["y_next"].to_numpy().astype(int)
+        finite_c = np.isfinite(Xc).all(axis=1)
+        cm = champ_model()
+        cm.fit(Xc[finite_c], yc[finite_c])
+        opens_ms = agg["open_time"].dt.epoch("ms").to_numpy()
+        row_by_open = {int(t): i for i, t in enumerate(opens_ms)}
+        theta = 0.05
+        bc_X, bc_A = [], []
+        for ep in train:
+            prev_open = ep["open_time_ms"] - args.horizon * 1000
+            i = row_by_open.get(prev_open)
+            if i is None or not finite_c[i]:
+                continue
+            p1 = cm.predict_proba(Xc[i:i + 1])[0, list(cm.classes_).index(1)]
+            a = 2 if p1 <= 0.5 - theta else (1 if p1 >= 0.5 + theta else 0)
+            bc_X.append(ep["steps"][0]["feat"])
+            bc_A.append(a)
+        res_bc = agent.behavioral_clone(np.array(bc_X), np.array(bc_A), iters=5)
+        print(f"BC warm-start: {len(bc_X)} episodes cloned "
+              f"(loss {res_bc['bc_loss']:.3f}, {time.time()-t_bc:.0f}s)")
 
     # honest checkpointing: model SELECTION uses only val-H1 (2025 H1);
     # the reported number comes from val-H2 (2025 H2), never seen during
@@ -168,12 +206,15 @@ def main() -> None:
     history = []
     best_sel_ev = float("-inf")
     best_snapshot = None
+    entry_ema = [None]  # mutable EMA state for skip-baseline advantages
     for it in range(1, args.iters + 1):
         t_it = time.time()
         batch = rng.choice(len(train), size=min(args.episodes_per_iter, len(train)),
                            replace=False)
         for bi in batch:
-            agent.update_fullinfo(fullinfo_steps(train[int(bi)]))
+            agent.update_fullinfo(fullinfo_steps(train[int(bi)]),
+                                  skip_baseline=args.skip_baseline,
+                                  entry_ema=entry_ema)
         rewards = []  # greedy train sample for monitoring
         for bi in batch[:500]:
             o = play_episode(agent, train[int(bi)], greedy=True)
