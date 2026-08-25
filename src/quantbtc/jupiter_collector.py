@@ -70,12 +70,13 @@ class JupiterPoller:
             < self.discovery_interval_s * 1000
         ):
             return
-        # retention window: keep epochs until 15 min after close (resolution
-        # pickup) and no further than 2h pre-listed; seed the new cache from
-        # the old one so once-seen epochs are never evicted by listing roulette
+        # retention window: keep epochs until 6h after close (Jupiter's
+        # result can land late — resolution retries need the window) and no
+        # further than 2h pre-listed; seed the new cache from the old one so
+        # once-seen epochs are never evicted by listing roulette
         def _keep(ep) -> bool:
             return (
-                ep.close_ms >= now_ms - 15 * 60_000
+                ep.close_ms >= now_ms - 6 * 3600_000
                 and ep.epoch_start_ms <= now_ms + 2 * 3600_000
             )
 
@@ -172,11 +173,24 @@ class JupiterPoller:
         while fetched < self.orderbook_budget and fetched < n:
             ep = active[self._rr_index % n]
             self._rr_index += 1
-            await self._record_quotes(ep, now_ms)
+            try:
+                await self._record_quotes(ep, now_ms)
+            except Exception as exc:
+                # one rate-limited/failed fetch must not abort the whole
+                # cycle — other epochs still get their quotes
+                print(f"[jupiter] quote {ep.slug} failed: {exc!r}")
+                await asyncio.sleep(1.0)  # breathe before the next attempt
             fetched += 1
 
+        resolved = 0
         for ep in self._epochs:
-            await self._maybe_resolve(ep, now_ms)
+            if resolved >= 2:  # paced: resolutions must not starve quotes
+                break
+            try:
+                if await self._maybe_resolve(ep, now_ms):
+                    resolved += 1
+            except Exception as exc:
+                print(f"[jupiter] resolve {ep.slug} failed: {exc!r}")
 
     async def _slug_probe(self, now_ms: int) -> None:
         """Deterministically fetch the CURRENT and NEXT epoch per asset x
@@ -192,7 +206,15 @@ class JupiterPoller:
                 continue
             for hz, seconds in HORIZON_S.items():
                 win_start = (now_s // seconds) * seconds
-                for start in (win_start, win_start + seconds):  # current, next
+                # next-window pre-caching only for the paper-traded asset
+                # (probing every combo at every boundary was throttling the
+                # API and starving quote capture)
+                windows = (
+                    (win_start, win_start + seconds)
+                    if asset == "BTC"
+                    else (win_start,)
+                )
+                for start in windows:
                     slug = f"{prefix}-updown-{hz}-{start}"
                     if slug in cached:
                         continue
@@ -246,14 +268,19 @@ class JupiterPoller:
             ]
         )
 
-    async def _maybe_resolve(self, ep, now_ms: int) -> None:
+    async def _maybe_resolve(self, ep, now_ms: int) -> bool:
+        """Fetch the official outcome for a closed epoch. Jupiter's result
+        field can land well after close (Chainlink TWAP + on-chain
+        resolution), so the retry window spans 6h; returns True if this
+        call resolved an epoch."""
         if (
             now_ms < ep.close_ms + self.result_delay_ms
+            or now_ms > ep.close_ms + 6 * 3600_000
             or not ep.up_market_id
             or not ep.down_market_id
             or self.store.resolution(ep.up_market_id) is not None
         ):
-            return
+            return False
         fresh = await self.client.get_market(ep.up_market_id)
         if fresh.get("result") in ("yes", "no"):
             up_won = fresh["result"] == "yes"
@@ -269,6 +296,8 @@ class JupiterPoller:
                 resolved_ms=ep.close_ms,
                 checked_ms=now_ms,
             )
+            return True
+        return False
 
     async def run_forever(self) -> None:
         backoff_s = self.poll_interval_s
