@@ -97,7 +97,7 @@ class PolicyAgent:
         return {"pi_loss": stats["loss"] / n, "entropy": stats["entropy"] / n}
 
     def update_fullinfo(self, steps: list[dict], skip_baseline: bool = False,
-                        entry_ema: "list" = None) -> dict:
+                        entry_ema: "list" = None, group_norm: bool = True) -> dict:
         """All-actions policy gradient (full-information contextual bandit).
 
         Each step exposes the EX-POST reward of every action:
@@ -111,6 +111,7 @@ class PolicyAgent:
         entry_ema is a one-element list holding the EMA state.
         """
         stats = {"loss": 0.0}
+        cache = []
         for t in steps:
             s = np.asarray(t["s"], dtype=float)
             r = np.array([t["r_skip"], t["r_up"], t["r_down"]])
@@ -128,6 +129,29 @@ class PolicyAgent:
                 v_hat = float(self.v_w[: len(s)] @ s + self.v_w[-1])
                 adv = np.clip(r - (r.mean() + v_hat), -1.5, 1.5)
 
+            # GRPO-style group normalization is applied after the pass below
+            cache.append((s, h, h_pre, probs, adv))
+
+            ev = float(probs @ r)
+            if not skip_baseline:
+                dv = np.clip(ev - float(self.v_w[: len(s)] @ s + self.v_w[-1]),
+                             -1.5, 1.5)
+                self.v_w[: len(s)] -= self.value_lr * dv * s / max(1e-6, np.abs(s).max())
+                self.v_w[-1] -= self.value_lr * dv
+            stats["loss"] += float(-(probs @ np.log(probs + 1e-12) * r).sum())
+
+        if group_norm and len(cache) > 1:
+            # mini-GRPO: standardize advantages across the episode's actions
+            # (the group). Stabilizes Campaign-C-style EV oscillation.
+            flat = np.concatenate([c[4].ravel() for c in cache])
+            mu, sd = float(flat.mean()), float(flat.std())
+            if sd > 1e-12:
+                cache = [
+                    (s, h, hp, p, np.clip((adv - mu) / (sd + 1e-8), -3.0, 3.0))
+                    for (s, h, hp, p, adv) in cache
+                ]
+
+        for s, h, h_pre, probs, adv in cache:
             dlogits = probs * adv
             nrm = float(np.abs(dlogits).max())
             if nrm > 1.0:
@@ -140,14 +164,6 @@ class PolicyAgent:
             self.b1 -= self.lr * dh_pre
             self.W2 -= self.lr * dW2
             self.b2 -= self.lr * db2
-            # value regresses toward expected reward under current policy
-            ev = float(probs @ r)
-            if not skip_baseline:
-                dv = np.clip(ev - float(self.v_w[: len(s)] @ s + self.v_w[-1]),
-                             -1.5, 1.5)
-                self.v_w[: len(s)] -= self.value_lr * dv * s / max(1e-6, np.abs(s).max())
-                self.v_w[-1] -= self.value_lr * dv
-            stats["loss"] += float(-(probs @ np.log(probs + 1e-12) * r).sum())
         return {"pi_loss": stats["loss"]}
 
     def behavioral_clone(self, X: np.ndarray, actions: np.ndarray,
