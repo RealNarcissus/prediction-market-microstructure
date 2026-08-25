@@ -165,9 +165,9 @@ class JupiterPoller:
             and ep.status == "open"
             and ep.up_market_id
         ]
-        # freshest epochs first: just-opened windows get the first cut of
-        # the quote budget (the paper trader races the open)
-        active.sort(key=lambda ep: -ep.epoch_start_ms)
+        # freshest epochs first WITHIN asset priority: BTC (the paper-traded
+        # asset) gets the first cut of the quote budget; ETH/SOL follow
+        active.sort(key=lambda ep: (ep.asset != "BTC", -ep.epoch_start_ms))
         fetched = 0
         n = len(active)
         while fetched < self.orderbook_budget and fetched < n:
@@ -183,8 +183,13 @@ class JupiterPoller:
             fetched += 1
 
         resolved = 0
-        for ep in self._epochs:
-            if resolved >= 2:  # paced: resolutions must not starve quotes
+        # oldest-pending first: those expire out of the 6h retry window soonest
+        pending = sorted(
+            [ep for ep in self._epochs],
+            key=lambda ep: ep.close_ms,
+        )
+        for ep in pending:
+            if resolved >= 1:  # paced hard: one resolution per cycle max
                 break
             try:
                 if await self._maybe_resolve(ep, now_ms):

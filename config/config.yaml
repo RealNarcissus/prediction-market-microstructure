@@ -7,7 +7,7 @@ jupiter:
   api_key_env: JUP_API_KEY
   poll_interval_s: 10.0
   result_delay_s: 5.0        # wait after closeTime before fetching final result
-  discovery_interval_s: 120.0 # refresh event discovery at most once a minute
+  discovery_interval_s: 300.0 # refresh event discovery at most once a minute
   orderbook_budget: 5        # max orderbook fetches per poll cycle (429 safety)
   discovery_pages: 2         # paginate event listing so active epochs are seen
   asset_patterns: ["BTC", "ETH", "SOL"]
