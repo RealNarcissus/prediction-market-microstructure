@@ -86,3 +86,30 @@ Backlog (next iterations):
   2. Explicit skip-baseline advantage: adv(a) = r_a - r_skip-expectation.
   3. Curriculum: begin episodes mid-window (informative fairs) then extend.
   4. lr/entropy schedules; BTC-only state subset ablation.
+
+### Campaign D — BC warm-start + skip-baseline fine-tune
+
+Config: h=900s, seed 0, lr 3e-4, BC(5 iters over 105,192 episode-level
+champion decisions, loss 4.858) -> all-actions fine-tune with explicit
+skip-baseline advantages (b = EMA of best-entry reward).
+
+Result: **policy collapsed to pure abstinence** — 0 entries across both
+validation halves; EV exactly 0.0 (vs -0.016 fee bleed for enter-everything).
+
+Interpretation:
+1. EV 0.0 > -0.016 is a RATIONAL learned conclusion under entry-at-fair
+   pricing: when directional skill doesn't clear fees, not playing wins.
+   The skip-baseline formulation works — it discovered abstention on its own.
+2. Overdetermined by BC target imbalance: the champion trades <1% of
+   windows, so ~99% of clone targets were "skip" — the warm-start began
+   near-abstinent and fine-tuning confirmed it.
+3. The open question remains whether ANY timing policy can clear Jupiter
+   fees at fair-value pricing, or whether edge requires mispriced quotes
+   (Phase B staleness capture), not better stopping.
+
+Backlog update:
+  - Entry-forced evaluation variant (skip disallowed) to isolate side/timing
+    skill from the abstention option.
+  - Revisit when official-resolution labels mature (Phase B).
+  - If real-money Phase C ever runs, the abstinent policy IS the safe
+    default the system should fall back to.

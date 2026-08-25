@@ -163,8 +163,8 @@ def main() -> None:
         from strategies.s023_lgbm_pos_lag23 import build_features as champ_feats
 
         t_bc = time.time()
-        agg = aggregate_windows(bars, horizon_s=args.horizon)
-        agg = agg.filter(pl.col("open_time") < TRAIN_END.astype("datetime64[ms]"))
+        agg = aggregate_windows(bars, "15m" if args.horizon == 900 else "5m")
+        agg = agg.filter(pl.col("open_time").dt.epoch("ms") < int(TRAIN_END.astype("datetime64[ms]").astype(int)))
         agg = agg.with_columns(pl.col("y_twap").shift(-1).alias("y_next")).drop_nulls(["y_next"])
         Xc = champ_feats(agg)
         yc = agg["y_next"].to_numpy().astype(int)
