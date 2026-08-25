@@ -1,0 +1,65 @@
+episodes: train 105216, val 35040 (36s to build)
+iter   1 | train R -0.0228 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter   2 | train R -0.0191 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter   3 | train R -0.0316 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter   4 | train R -0.0128 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter   5 | train R -0.0215 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter   6 | train R -0.0227 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter   7 | train R -0.0129 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter   8 | train R -0.0101 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter   9 | train R -0.0245 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  10 | train R -0.0214 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  11 | train R -0.0133 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  12 | train R -0.0180 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  13 | train R -0.0088 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  14 | train R -0.0133 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  15 | train R -0.0173 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  16 | train R -0.0260 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  17 | train R -0.0218 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  18 | train R -0.0242 (enter 79%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  19 | train R -0.0164 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  20 | train R -0.0223 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  21 | train R -0.0267 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  22 | train R -0.0193 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  23 | train R -0.0265 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  24 | train R -0.0244 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  25 | train R -0.0254 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  26 | train R -0.0338 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  27 | train R -0.0254 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  28 | train R -0.0195 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  29 | train R -0.0246 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  30 | train R -0.0201 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  31 | train R -0.0146 (enter 79%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  32 | train R -0.0225 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  33 | train R -0.0230 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  34 | train R -0.0227 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  35 | train R -0.0113 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  36 | train R -0.0164 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  37 | train R -0.0185 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  38 | train R -0.0259 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  39 | train R -0.0273 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  40 | train R -0.0132 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  41 | train R -0.0208 (enter 79%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  42 | train R -0.0259 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  43 | train R -0.0255 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  44 | train R -0.0285 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  45 | train R -0.0211 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  46 | train R -0.0149 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  47 | train R -0.0159 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  48 | train R -0.0174 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  49 | train R -0.0180 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  50 | train R -0.0235 (enter 79%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.3s
+iter  51 | train R -0.0216 (enter 79%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.3s
+iter  52 | train R -0.0143 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  53 | train R -0.0247 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  54 | train R -0.0191 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  55 | train R -0.0086 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  56 | train R -0.0197 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  57 | train R -0.0270 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  58 | train R -0.0219 (enter 81%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.2s
+iter  59 | train R -0.0226 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+iter  60 | train R -0.0175 (enter 80%) | VAL entries 35040/35040 win 0.4975 EV -0.0197 CI [-0.0253, -0.0144] | 3.1s
+
+BASELINE (untrained): {"episodes": 35040, "entries": 35040, "entry_rate": 1.0, "win_rate": 0.4975, "ev_per_trade": -0.0197, "ev_ci95": [-0.0253, -0.0144], "total_pnl": -691.88}
+BEST VAL EV: -0.0197
+observations -> /home/charleton/Desktop/agentProjects/ZCode/quant-btc/research/rlenv/OBSERVATIONS.jsonl

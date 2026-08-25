@@ -1,0 +1,4 @@
+/home/charleton/Desktop/agentProjects/ZCode/quant-btc/research/rlenv/agent.py:120: RuntimeWarning: overflow encountered in matmul
+  dh = self.W2.T @ dlogits
+/home/charleton/Desktop/agentProjects/ZCode/quant-btc/research/rlenv/agent.py:121: RuntimeWarning: invalid value encountered in multiply
+  dh_pre = dh * (1 - np.tanh(h_pre) ** 2)

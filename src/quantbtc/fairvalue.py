@@ -45,14 +45,11 @@ class AsianDigital:
         s2t = self.sigma * self.sigma * tau
         if s2t <= 1e-18:
             return 1.0 if spot >= k_star else 0.0
-        try:
-            growth = (math.exp(s2t) - 1.0 - s2t) / (s2t * s2t)
-        except OverflowError:
-            growth = float("inf")
-        M1 = spot
-        M2 = 2.0 * spot * spot * growth
-        if M2 <= M1 * M1 or not math.isfinite(M2):
+
+        # CLT form for the arithmetic average (exact small-x limit of Levy;
+        # numerically stable at our tenors where sigma^2*tau ~ 1e-6):
+        #   A_future ~ N(S, S^2 sigma^2 tau / 3) under driftless GBM
+        sd_A = spot * self.sigma * math.sqrt(tau / 3.0)
+        if sd_A <= 1e-15:
             return 1.0 if spot >= k_star else 0.0
-        v2 = math.log(M2 / (M1 * M1))
-        m = math.log(M1) - v2 / 2.0
-        return _cdf((m - math.log(k_star)) / math.sqrt(v2))
+        return _cdf((spot - k_star) / sd_A)
