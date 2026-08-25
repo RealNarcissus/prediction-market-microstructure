@@ -23,3 +23,20 @@ reading. Two possibilities:
 Resolution path: pull one trades day-file and compare EXECUTED prices to
 concurrent best_bid/best_ask snapshots. Do not backtest against these
 quotes until this is settled.
+
+## ✅ VERDICT (2026-08-25): snapshots are true two-sided books
+
+Cross-validation of 32,780 executed trades (top-5 markets, Mar 6) against
+their latest prior snapshot: **97.9% executed inside [bid, ask]**;
+|price−mid| median 0.14. No inversion bug.
+
+Refined microstructure picture of the first 3 minutes:
+- Books open WIDE (~10¢/90¢ walls, median spread 0.80) and tighten slowly.
+- But heavy flow clears AT/near mid (repeated 0.500 prints — consistent
+  with Polymarket's midpoint-matching facility), so fills near fair value
+  DO happen without crossing the full spread.
+- Implication split:
+    * Taker entries at the ask are expensive early (ask ≈ 0.90 walls).
+    * Mid/maker-style fills near 0.50 are empirically common — making a
+      maker-based entry strategy (or midpoint-match reliance) the most
+      promising Phase-B execution design, with inventory risk as the cost.
