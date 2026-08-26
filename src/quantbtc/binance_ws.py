@@ -30,7 +30,7 @@ def parse_kline(d: dict) -> dict:
         "low": float(k["l"]),
         "close": float(k["c"]),
         "volume": float(k["v"]),
-        "taker_buy_volume": float(k["V"]),
+        "taker_buy_base_volume": float(k["V"]),
         "quote_volume": float(k["q"]),
     }
 

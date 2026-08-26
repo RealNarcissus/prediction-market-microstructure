@@ -60,7 +60,7 @@ def fetch_klines(
                     "low": float(k[3]),
                     "close": float(k[4]),
                     "volume": float(k[5]),
-                    "taker_buy_volume": float(k[9]),
+                    "taker_buy_base_volume": float(k[9]),
                     "quote_volume": float(k[7]),
                 }
             )

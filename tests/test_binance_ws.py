@@ -53,7 +53,7 @@ def test_parse_kline_keeps_taker_volume():
     assert row["ts_ms"] == 1784773200000
     assert row["close"] == 50050.0
     assert row["volume"] == 12.5
-    assert row["taker_buy_volume"] == 7.5  # imbalance feature source
+    assert row["taker_buy_base_volume"] == 7.5  # imbalance feature source
 
 
 def test_parse_depth_uses_futures_ws_format():

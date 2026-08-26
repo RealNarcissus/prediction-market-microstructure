@@ -41,14 +41,8 @@ class StorageConfig:
 
 @dataclass(frozen=True)
 class ResearchConfig:
-    data_5m: str = (
-        "/home/charleton/Desktop/agentProjects/Herdr/quant-btc/"
-        "data/processed/btcusdt-usdtm-5m.parquet"
-    )
-    data_15m: str = (
-        "/home/charleton/Desktop/agentProjects/Herdr/quant-btc/"
-        "data/processed/btcusdt-usdtm-15m.parquet"
-    )
+    data_5m: str = ""   # set via config.yaml; Herdr path is machine-specific
+    data_15m: str = ""
 
 
 @dataclass(frozen=True)

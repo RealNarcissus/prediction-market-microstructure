@@ -154,3 +154,20 @@ Phase B proper requires more accumulated data (~5-7 days of collection).
 
 The paper trader continues running and collecting (+$6.96 cumulative).
 All infrastructure is built and ready for retraining when data matures.
+
+## PHASE B FINAL VERDICT (2026-08-26)
+
+Official-label training on updown historical resolutions + full-year
+Binance klines: **no directional edge detected**. Accuracy 43-51%
+across all asset×horizon cells (n=247 eval).
+
+This is the DEFINITIVE Phase-B conclusion: the directional signal that
+exists in Herdr perp data (~52-56%) does NOT transfer to Polymarket
+spot-market outcomes when trained on official labels with proper
+temporal discipline.
+
+The project's original hypothesis (Jupiter-specific quote staleness
+provides an execution edge) remains UNTESTED — it requires live
+infrastructure beyond this research scope.
+
+Stage progression complete through all testable stages.
