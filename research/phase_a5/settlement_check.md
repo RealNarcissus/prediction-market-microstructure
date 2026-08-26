@@ -4,14 +4,14 @@ Official Jupiter resolutions vs Binance-spot-derived labels.
 
 | asset | horizon | n | TWAP-proxy agree | endpoint agree | twap!=endpoint |
 |---|---|---|---|---|---|
-| BTC | 300s | 40 | 33/40 (82%) | 32/40 (80%) | 7 |
-| BTC | 900s | 15 | 13/15 (87%) | 13/15 (87%) | 2 |
-| ETH | 300s | 16 | 13/16 (81%) | 15/16 (94%) | 2 |
-| ETH | 900s | 15 | 15/15 (100%) | 15/15 (100%) | 0 |
-| SOL | 300s | 16 | 13/16 (81%) | 13/16 (81%) | 0 |
-| SOL | 900s | 11 | 10/11 (91%) | 10/11 (91%) | 0 |
+| BTC | 300s | 144 | 117/144 (81%) | 126/144 (88%) | 21 |
+| BTC | 900s | 70 | 62/70 (89%) | 68/70 (97%) | 8 |
+| ETH | 300s | 151 | 128/151 (85%) | 135/151 (89%) | 17 |
+| ETH | 900s | 68 | 59/68 (87%) | 65/68 (96%) | 6 |
+| SOL | 300s | 150 | 124/150 (83%) | 138/150 (92%) | 16 |
+| SOL | 900s | 63 | 54/63 (86%) | 60/63 (95%) | 8 |
 
-**Overall: TWAP-proxy agrees with the oracle 97/113 (85.8%); endpoint 98/113 (86.7%).**
+**Overall: TWAP-proxy agrees with the oracle 544/646 (84.2%); endpoint 592/646 (91.6%).**
 
 Basis risk = 1 - agreement. Every disagreement point is edge lost
 or mislabeled training data for TWAP-proxy models; if the endpoint
