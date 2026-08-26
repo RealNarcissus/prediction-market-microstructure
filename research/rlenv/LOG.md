@@ -113,3 +113,12 @@ Backlog update:
   - Revisit when official-resolution labels mature (Phase B).
   - If real-money Phase C ever runs, the abstinent policy IS the safe
     default the system should fall back to.
+
+## Conf-gate sweep status (2026-08-25)
+
+Script written but blocked on updown dataset schema mismatch:
+- `start_ts` is market creation time, NOT epoch window start
+- `slug` column is empty (can't join with orderbooks)
+- Correct approach: use `end_ts - timeframe_duration` for window start,
+  and `up_token_id`/`down_token_id` (present in markets) for side mapping
+- Next session: rewrite sweep using these fields (~15 min)
