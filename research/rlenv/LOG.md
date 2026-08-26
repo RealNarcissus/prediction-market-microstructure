@@ -138,3 +138,19 @@ this model cannot capture. The positive EV may be an artifact of:
   3. No modeling of inventory risk from accumulated positions
 Real-market validation is REQUIRED before treating these numbers as
 actionable. The direction is promising but the magnitude is unproven.
+
+## Stage Progression Summary (2026-08-26)
+
+Full mapping completed through all stages:
+
+1. Option 1 (harden): ✅ Edge doesn't generalize (commit 3fed10c)
+2. Candidate 1 (conf-gate taker): ✅ Negative EV at all levels (635c73b)  
+3. Candidate 2 (queue-aware maker): ✅ Positive EV in sim but needs live validation
+4. Phase B proper: 🏗️ Pipeline built; first run shows no edge at current sample size
+
+The directional signal exists (~52-56%) but does not overcome Polymarket's
+fee+spread costs via simple entry strategies on historical data.
+Phase B proper requires more accumulated data (~5-7 days of collection).
+
+The paper trader continues running and collecting (+$6.96 cumulative).
+All infrastructure is built and ready for retraining when data matures.
