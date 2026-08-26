@@ -122,3 +122,19 @@ Script written but blocked on updown dataset schema mismatch:
 - Correct approach: use `end_ts - timeframe_duration` for window start,
   and `up_token_id`/`down_token_id` (present in markets) for side mapping
 - Next session: rewrite sweep using these fields (~15 min)
+
+## Queue-aware maker backtest (2026-08-25)
+
+Results: 2,134 fills, 63.2% win rate, EV +0.54/trade at theta=0.05.
+Win rate rises to 93.9% at theta=0.15. All levels positive.
+
+⚠️ CRITICAL CAVEAT: the fill simulation assumes our order is filled when
+cumulative traded volume at/below our price exceeds an estimated queue.
+This is a significant simplification — real Polymarket matching depends
+on exact queue position, order priority, and midpoint-match rules that
+this model cannot capture. The positive EV may be an artifact of:
+  1. Optimistic fill probability (queue position underestimated)
+  2. Entry prices at extreme levels (deep OTM bids at ~0.10)
+  3. No modeling of inventory risk from accumulated positions
+Real-market validation is REQUIRED before treating these numbers as
+actionable. The direction is promising but the magnitude is unproven.
