@@ -1,0 +1,191 @@
+# Paper queue — single source of truth for the long-horizon arXiv loop.
+# Human-editable. Each entry MUST have id, arxiv or url, data_needed.
+# data_needed: minute_bar | depth_gated | tick_gated | theory
+# The loop sweeps CHUNK_SIZE=2 papers per step; papers_target = len(queue).
+# helpful_target (Budget) counts KEEP promotions on net-EV after fees.
+papers:
+  - id: W_0
+    title: "OFI-family linear price impact (Cont-Kukanov-Stoikov)"
+    arxiv: 1011.6402
+    url: https://arxiv.org/abs/1011.6402
+    tier: 2
+    data_needed: minute_bar
+    status: seeded
+    note: "Holistic baseline; proxy ofi_proxy = imb*range/mean_range; weight-aware w sweep"
+
+  - id: privacy-lambda
+    title: "Kyle lambda under privacy noise — noisy informed flow"
+    arxiv: 2605.15746
+    url: https://arxiv.org/abs/2605.15746
+    tier: 2
+    data_needed: theory
+    status: seeded
+    note: "Proxy lam = ofi_proxy / r24; theory + flow"
+
+  - id: 1306.6188
+    title: "Easley-Lopez-de-Prado VPIN — volume-clock toxicity"
+    arxiv: 1306.6188
+    url: https://arxiv.org/abs/1306.6188
+    tier: 1
+    data_needed: minute_bar
+    status: reset
+    note: "s028 RESET — predicts vol/toxicity not direction; venue reframe as entry filter not side"
+
+  - id: 2602.00776
+    title: "Explainable crypto microstructure vol-conditional"
+    arxiv: 2602.00776
+    url: https://arxiv.org/abs/2602.00776
+    tier: 1
+    data_needed: minute_bar
+    status: reset
+    note: "s029 Amihud+imb RESET — impact regime may matter for Phase B timing"
+
+  - id: 2607.09426-imb-lag
+    title: "Quarter-Hour effect — same-phase imbalance lags"
+    arxiv: 2607.09426
+    url: https://arxiv.org/abs/2607.09426
+    tier: 1
+    data_needed: minute_bar
+    status: reset
+    note: "s026 RESET — horizon 10s/4-12h mismatches 5m/15m epoch"
+
+  - id: 2607.09426-flow-switch
+    title: "Quarter-Hour effect — flow-switch reversal dummies"
+    arxiv: 2607.09426
+    url: https://arxiv.org/abs/2607.09426
+    tier: 1
+    data_needed: minute_bar
+    status: reset
+    note: "s027 RESET"
+
+  - id: micro-price
+    title: "Stoikov micro-price (imbalance-weighted mid)"
+    arxiv: "stoikov-microprice"
+    url: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3158995
+    tier: 2
+    data_needed: depth_gated
+    status: deferred
+    note: "m = (Vbid*ask+Vask*bid)/(Vbid+Vask); needs top-of-book sizes; DEFERRED until depth20 >=14d"
+
+  - id: hawkes-lob
+    title: "Hawkes self-excitation on LOB — crypto"
+    arxiv: 2312.16190
+    url: https://arxiv.org/abs/2312.16190
+    tier: 2
+    data_needed: tick_gated
+    status: deferred
+    note: "Lambda(t)=mu+sum alpha*beta*exp(-beta(t-ti)); needs tick history; DEFERRED"
+
+  - id: spoofability-hawkes
+    title: "Spoofability / multi-scale Hawkes order features"
+    arxiv: 2504.15908
+    url: https://arxiv.org/abs/2504.15908
+    tier: 2
+    data_needed: depth_gated
+    status: deferred
+    note: "DEFERRED until depth"
+
+  - id: quarter-hour-vwap
+    title: "Quarter-Hour 10s VWAP at session boundary"
+    arxiv: 2607.09426
+    url: https://arxiv.org/abs/2607.09426
+    tier: 2
+    data_needed: tick_gated
+    status: candidate
+    note: "10s VWAP at 00/15/30/45 boundaries; 4-12h horizon — FUTURE swing project not epoch; track as candidate"
+
+  - id: 2605.04004-falsification
+    title: "Intraday momentum falsification (14 families)"
+    arxiv: 2605.04004
+    url: https://arxiv.org/abs/2605.04004
+    tier: 3
+    data_needed: minute_bar
+    status: guard
+    note: "Negative-context guard: all 14 families untradable after costs — validates fee-first methodology"
+
+  - id: red-queen-trap
+    title: "Red Queen's Trap — DRL crypto decay live"
+    arxiv: 2512.15732
+    url: https://arxiv.org/abs/2512.15732
+    tier: 3
+    data_needed: guard
+    status: guard
+    note: "300% val APY decayed 70% live ignoring friction — validates classical ML + paper gates"
+
+  - id: ofi-ml-ofi
+    title: "MLOFI — multi-level OFI extension"
+    arxiv: 1011.6402-ext
+    url: https://arxiv.org/abs/1011.6402
+    tier: 2
+    data_needed: depth_gated
+    status: deferred
+    note: "Multi-level OFI; DEFERRED until depth"
+
+  - id: queue-imbalance-spot
+    title: "LOB queue imbalance — spot immediate direction"
+    arxiv: 2403.09267
+    url: https://arxiv.org/abs/2403.09267
+    tier: 2
+    data_needed: depth_gated
+    status: deferred
+    note: "DEFERRED"
+
+  - id: crypto-predictability-lob
+    title: "Crypto LOB predictability (Hawkes-based)"
+    arxiv: 2312.16190-b
+    url: https://arxiv.org/abs/2312.16190
+    tier: 2
+    data_needed: tick_gated
+    status: deferred
+    note: "DEFERRED"
+
+  - id: amihud-regime
+    title: "Amihud illiquidity regime — binary reframe"
+    arxiv: amihud-2002
+    url: https://doi.org/10.1016/S0065-2156(02)80006-1
+    tier: 1
+    data_needed: minute_bar
+    status: candidate
+    note: "Revisit as volatility-conditioned entry filter (not imbalance weight alone); minute_bar runnable"
+
+  - id: vpin-regime-filter
+    title: "VPIN as volatility-conditioned entry filter (not direction)"
+    arxiv: 1912.10343
+    url: https://arxiv.org/abs/1912.10343
+    tier: 2
+    data_needed: minute_bar
+    status: candidate
+    note: "VPIN high => skip or size down; bounded-payout reframe"
+
+  - id: twap-staleness
+    title: "TWAP vs spot staleness — Branch C precursor"
+    arxiv: twap-staleness
+    url: https://docs.jup.ag
+    tier: 2
+    data_needed: tick_gated
+    status: candidate
+    note: "Chainlink TWAP over window vs window-start; compare Jupiter quote staleness; tick_gated"
+
+  - id: inventory-spread
+    title: "Maker spread posting with inventory risk"
+    arxiv: inventory-risk
+    url: https://doi.org/10.3905/jot.2011.6.4.035
+    tier: 2
+    data_needed: depth_gated
+    status: candidate
+    note: "Branch C: posting inside spread; DEFERRED until depth"
+
+  - id: cross-venue-leadlag
+    title: "Cross-venue lead-lag (Binance vs Polymarket mid)"
+    arxiv: cross-venue
+    url: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7170178
+    tier: 2
+    data_needed: tick_gated
+    status: candidate
+    note: "'Mistiming is not Arbitrage' caution — ms-synced timestamps required"
+
+config:
+  chunk_size: 2
+  papers_target: 20
+  helpful_target: 3
+  knowledge_stall_steps: 8

@@ -7,3 +7,4 @@ __pycache__/
 reports/
 research/results.db
 research/__pycache__/
+.zcode/
