@@ -28,7 +28,10 @@ Verdict legend: **ACT** = actionable now; **REF** = keep as reference/tooling;
 | Period | Settlement | Source |
 |---|---|---|
 | launch → 2026-08-07 00:00 UTC | **single-snapshot** price at window close (Chainlink Data Streams) | [crypto.news](https://crypto.news/polymarket-five-second-exploit-manipulation-twap-fix/), [CoinDesk 2026-08-07](https://www.coindesk.com/business/2026/08/07/how-a-five-second-trick-let-traders-drain-millions-from-polymarket) |
-| 2026-08-07 → now | **TWAP: 30s average for 5m markets, 60s for 15m/4h**, Chainlink Data Streams; $1M liquidity rewards attached (Aug, ~$550k on 5m markets) | same + [Genfinity 2026-08-12](https://genfinity.io/2026/08/12/chainlink-twap-data-streams-polymarket-crypto-markets/) |
+| 2026-08-07 → 2026-08-14 | **TWAP: 30s average for 5m markets, 60s for 15m/4h**; **strike (price-to-beat) also moves to the TWAP feed on this date** — both the open and the settle come from the applicable TWAP feed | [changelog /changelog/predictions.md](https://docs.polymarket.com/changelog/predictions.md) (fetched round 10), Genfinity |
+| 2026-08-14 → now | **5m markets moved to 60s TWAP** (replacing the 30s window), 00:00 UTC → **current regime: 60s TWAP for BOTH strike and settlement on 5m and 15m** | changelog (fetched round 10) |
+
+- **Taker matching delay on crypto markets: 250ms → 50ms on 2026-08-17** (changelog) → resolves the `secondsDelay` VERIFY action: the delay exists but is negligible at our timescales.
 
 - Why it changed: Stanford + SMU study ([arXiv:2606.31675](https://arxiv.org/abs/2606.31675)): **821 accounts earned $8.2M** pushing Binance BTC across the strike in the final 2–3s of snapshot-settled 5m windows (cost $5–20k to move spot → $50k+ payout; fragmented orders, off-hours timing). "A bet the market treated as near certain was overturned one time in three" (90%+ priced contracts flipped in manipulated windows). Ex-MMs, **93% of losses fell on retail**. Fix raises attack cost but sustained full-window pushes remain possible.
 - Kalshi comparison: CF Benchmarks index with 60-second moving average + KYC/CFTC.
@@ -44,7 +47,7 @@ Verdict legend: **ACT** = actionable now; **REF** = keep as reference/tooling;
 | `market.trading.secondsDelay` + `delayed` status | Some markets have a matching delay on marketable orders | **VERIFY**: if 5m/15m crypto markets carry a near-settlement matching delay, late-window sniping dynamics change. Check CLOB API for our exact markets. |
 | Chainlink TWAP Prices page exists (Market Data section) | Polymarket publishes the TWAP feed its crypto markets settle on | **ACT**: replaces our Binance-proxy strike/TWAP fair value with the venue's own oracle series → cleaner fair_yes, removes Binance-vs-Chainlink basis from the staleness signal. |
 | **Maker Rebates CONFIRMED** (docs /programs/maker-rebates.md, fetched 2026-09-02) | Taker fees fund maker rebates paid **daily in pUSD** ($1 min payout), performance-based (share of your liquidity that got taken), **fee-curve weighted** using the same formula as taker fees. Category table: **Crypto 20%**, Sports 15%, Finance/Politics/Economics/Culture/Weather/Other/Mentions/Tech 25%, Geopolitics fee-free. | **REF→ACT(maker mode)**: 20% of collected crypto fees flow to makers — the "101¢ per pair" claims likely monetize this. Informs the maker-mode EV question. |
-| Taker Rebate Program — **fully captured** (docs /programs/taker-rebates.md, fetched 2026-09-02) | Live **2026-05-28**. wV = TradeSize × (1−EntryPrice) × CategoryWeight × Bonuses; tier from trailing-30d wV; 7 tiers Bronze→Obsidian; daily pUSD payouts; one-time tier bonuses. **Crypto CategoryWeight = 2.3** (highest mentioned). Design note: the (1−EntryPrice) term pays MORE wV per dollar to takers buying the CHEAP side — the venue subsidizes exactly the longshot-taking that MMs won't quote. | **REF** + sample footnote: our April 2026 updown data predates the fee/rebate era → EV on those rows was overstated by assuming 0.07 fee throughout (conservative for us: historical trades were actually cheaper). At our $5/day scale rebates are rounding errors; relevant only at volume. |
+| Taker Rebate Program — **fully captured** (docs /programs/taker-rebates.md, fetched 2026-09-02) | Live **2026-05-28**. wV = TradeSize × (1−EntryPrice) × CategoryWeight × Bonuses; tier from trailing-30d wV; 7 tiers Bronze→Obsidian; daily pUSD payouts; one-time tier bonuses. **Crypto CategoryWeight = 2.3** (highest mentioned). Design note: the (1−EntryPrice) term pays MORE wV per dollar to takers buying the CHEAP side — the venue subsidizes exactly the longshot-taking that MMs won't quote. | **REF** — at our $5/day scale rebates are rounding errors; relevant only at volume. (Earlier April-sample footnote withdrawn — see §1d: fees existed from Feb/Mar 2026, before our sample start.) |
 | Chainlink Data Streams docs ([overview](https://docs.chain.link/data-streams), index round 6) | Pull-based low-latency feed family powering the venue's crypto settlement. Relevant schemas/concepts from the docs index: **Crypto Report Schema v2 (Crypto Standard) and v3 (Crypto Advanced), DEX State Price Streams, Crypto Top-of-Book Streams, Calculated Streams, Liquidity-Weighted Bid/Ask, Candlestick API**; llms.txt index for agent consumption | **REF→ACT(#10 refinement)**: the settlement feed's own schema defines what "the venue's number" is — if we ever subscribe (licensing required), the v3 advanced fields and liquidity-weighted quotes would replace ALL proxies in our fair model. Until then, document schema drift risk: our fair assumes 1m-bar sampling, the stream updates faster |
 | QuickNode top-10 bots ([guide](https://www.quicknode.com/builders-guide/best/top-10-polymarket-trading-bots)) | Listicle census of bot products (body JS-walled to curl; scope captured via round-1 search summary) | REF (listicle; no methodology) |
 | [Moonsat: 6 main types of up/down bots](https://moonsat.medium.com/6-main-types-of-trading-bots-on-up-down-markets-on-polymarket-12893a484f28) | Taxonomy article (403 via WebFetch, absent from author RSS window, no wayback snapshot) | PERMANENTLY DEFERRED — taxonomy partially covered by compendium §2 (11 strategies) and our own §2 map |
@@ -67,11 +70,28 @@ From [clob-openapi.yaml](https://docs.polymarket.com/api-spec/clob-openapi.yaml)
 - WS (via borntoup, §5): `wss://ws-subscriptions-clob.polymarket.com/ws/market` — events `book`, `price_change`, `last_trade_price`, `best_bid_ask`, `new_market`, `market_resolved`
 - **Verdict: ACT** — this is the definitive API map for collector v2 (WS events + REST backfill via /books + /prices-history) and for runtime fee/min-size reads.
 | Taker Rebate Program + Maker Rebates | Programs pages exist (details pending fetch) | **VERIFY**: rebates change net-EV math; taker rebates are unusual and would fatten our taker edge if we qualify. |
-| **Fee formula CONFIRMED** (docs.polymarket.com/trading/fees, fetched in full 2026-09-02) | `fee = C × feeRate × p × (1−p)`, C = shares, p = price. **Crypto category feeRate = 0.07** → fee table peaks $1.75/100 shares at 0.50. Makers never charged; fees fund Maker Rebates (crypto: 20% of fees, redistributed daily); tiered Taker Rebate Program on top. Fee precision: 5 decimals, min 0.00001 USDC. News claims of "1.56%" (TradingView/Cointelegraph summary) and "up to 3%" (KuCoin) are wrong. | **RESOLVED**: our `0.07·p·(1−p)` model is exactly right for Polymarket crypto — no code change needed. Open minor item: fee introduction date (if fees postdate part of our sample, historical EV was overstated → conservative direction). Rebate programs = potential cost reduction if we ever scale. |
+| **Fee formula CONFIRMED for our sample** (docs fetched round 3; timeline pinned from changelog round 10) | Current docs: `fee = C × feeRate × p × (1−p)`, **crypto feeRate = 0.07** (peak $1.75/100 shares at 0.50). Makers never charged; 20% of crypto fees → maker rebates; tiered taker rebate on top. **Fee history (changelog §1d): squared curve (peak 1.56% = 0.25·(p(1−p))²) ran until Fee Structure V2 on 2026-03-30; 5m markets launched 2026-02-12 with fees; coefficients drift (sports 0.03→0.05 on Jul 10) and fees are set at match time since CLOB V2 — docs snapshots go stale.** | **RESOLVED**: our `0.07·p·(1−p)` model matches Fee Structure V2 (2026-03-30 onward), which covers our ENTIRE sample (starts Apr 6) — validated, no code change. The earlier "news claims are wrong" statement is corrected: the 1.56% figure described the real pre-Mar-30 curve. Runtime `/fee-rate/{token_id}` queries remain mandatory (coefficients drift). |
 
 Sources: [Place Orders](https://docs.polymarket.com/trading/place-orders),
 [Fees](https://docs.polymarket.com/trading/fees),
 [py-clob-client#326](https://github.com/Polymarket/py-clob-client/issues/326).
+
+### 1d. Fee & platform timeline — fully pinned from the changelog (round 10)
+
+Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predictions.md) (fetched in full, round 10).
+
+| Date | Change | Impact on us |
+|---|---|---|
+| ≤ Feb 2026 | 15m crypto markets carry taker fees on the **squared curve** (peak 1.56% at 0.50 = `0.25·(p·(1−p))²`) | Explains the "1.56%" claims we initially dismissed — both formulas were real, in sequence |
+| 2026-02-12 | **5-minute crypto markets launch with taker fees** (same curve as 15m) + maker rebates | 5m fee era begins |
+| 2026-03-06 | Fees extend to ALL crypto markets (1H/4H/daily/weekly), new markets only | — |
+| **2026-03-30** | **Fee Structure V2**: per-category rates → **crypto feeRate 0.07** (peak 1.75% at 0.50) | Our evaluator/wallet formula matches the V2 regime |
+| 2026-03-31 | Fees must be computed from the per-market `feeSchedule` object | Runtime reads mandatory (docs snapshots go stale) |
+| **2026-04-28** | **CLOB V2 live**: fees set at match time (`feeRateBps` removed from orders); pUSD replaces USDC.e collateral; open orders wiped | **Sample regime boundary**: our updown data starts Apr 6 → first ~3 weeks are V1-era; analyses should carry a CLOB V1/V2 flag |
+| 2026-07-10 | Sports fee coefficient 0.03→0.05; sports maker rebate 25%→15% | Proof coefficients drift → never hardcode; query `/fee-rate/{token_id}` |
+| 2026-08-07 / 14 / 17 | TWAP strike+settlement live; 5m window 30s→60s; taker delay 250ms→50ms | See §1a |
+
+- **Net sample-consistency verdict (supersedes the earlier April footnote)**: our sample starts **2026-04-06** → the ENTIRE sample is in the Fee-Structure-V2 era (0.07·p·(1−p)) — our fee model is validated across the whole sample. Remaining sample regime flags: CLOB V1→V2 (Apr 28), snapshot→TWAP (Aug 7), 5m 30s→60s (Aug 14).
 
 ## 2. GitHub repos (English + Chinese-dev)
 
@@ -385,3 +405,16 @@ Sources: [Place Orders](https://docs.polymarket.com/trading/place-orders),
   30-40s official-API-vs-stream law; mempool frontrunning discarded).
   Changelog doc JS-walled this round (retry via web_reader next scan).
   CSDN/Zhihu fresh scan deferred to monthly cadence (lane already dense).
+- 2026-09-02: round 10 — changelog fetched in full (§1d: complete fee &
+  platform timeline). Contradiction resolved: squared fee curve (1.56% peak)
+  ran until Fee Structure V2 (2026-03-30) when crypto feeRate became 0.07;
+  our ENTIRE sample (Apr 6 start) is in the 0.07 era → fee model validated;
+  earlier April-predates-fees footnote withdrawn. New regime flags: CLOB V2
+  cutover inside sample (Apr 28, match-time fees + pUSD), strike moved to
+  TWAP feed on Aug 7 (price-to-beat is now an average, not a snapshot),
+  5m TWAP window 30s→60s on Aug 14, crypto taker delay 250ms→50ms on Aug 17
+  (secondsDelay action resolved). Failure-Modes paper identified as subtitle
+  of arXiv:2605.10400v2 (merged into existing entry). CSDN/Zhihu fresh scan:
+  only reposts/guides + the BlockBeats fee-timeline story (recorded);
+  deployment/API-overview/AI-agent articles = REF-grade, copy-trading guide
+  DISCARD. Perps fees page remains JS-walled (deferred, low relevance).
