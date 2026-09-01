@@ -213,6 +213,11 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
 - **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
 
+**PR&R Guides index (round 18, 12 guides) + spread-capture guide deep-read:**
+- [How to Build a Spread-Capture Bot for 5-Minute BTC Markets](https://www.polyresearchrobotics.com/guide/how-to-build-a-spread-capture-bot): the maker-mode primer for our exact markets. **Key mechanism — time-separated pairing**: accumulate both sides on their *separate* dips so the blended pair cost lands below $1.00 even though simultaneous pairing never does (this REFINES the round-17 pair-cost conclusion: SLIP-ME's $1.0183 was simultaneous; sequential dip-buying with a paired-cost ceiling is the viable form). Mechanics covered: paired-cost gate computation, inverse-weighted allocation to minimize blended cost, per-leg dip entry with ceiling enforcement, explicit "no exit management" design (with a section on what happens if you add one), session scheduling, edge-longevity monitoring, capacity limits. Honest framing: "not a ready-made profitable bot."
+- Other guides: "Watch a Better Trader, Then Copy Their Edge" (live comparison loop turning winning wallets into bot improvements — the forensics workflow as a process), "How Quants Read Market State" (market-state vs trend-lines), Weather Bot build.
+- **Impact on the action queue**: the sequential-dip pairing with a blended-cost ceiling is THE concrete maker-mode entry design for any future maker experiment; pairs with strategy K's sequential grid and ohanism's paired-dominance signal.
+
 **PR&R Strategy Database + site facts (fetched round 16):**
 - [Strategy Database](https://www.polyresearchrobotics.com/strategies): **297 cataloged strategies**, sortable by technique and market category (crypto, sports, esports, weather, macro, stocks, politics, mentions…), each with a full write-up (mechanics, requirements, applicable Polymarket markets, needed datasets). Arbitrage section alone: 34 entries — notable for us: **Pre-Resolution Oracle-Lag Lock-In** (our staleness trade under another name), Resolution-Source Scrape-to-Order First-Mover (strategy H's law applied to resolution feeds), Settlement-Timing Funding Arbitrage, Kalshi-Polymarket Identical-Contract Relative Value, Split/Merge Redemption Arbitrage (CTF), Multi-Outcome Overround Shorting (Dutch-book lay).
 - **94 bot-building data resources** (APIs, websockets, RSS, data providers, live-odds services) — the richest tooling map found.
@@ -514,3 +519,9 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   and shown competed-away on liquid books. Cross-cutting: our edge class is
   structurally distinct in the 297-strategy taxonomy. Drift checks clean
   (arXiv 2608.30999; changelog Aug 17).
+- 2026-09-02: round 18 — drift clean (arXiv 2608.30999; changelog Aug 17).
+  PR&R guides index read (12 guides); spread-capture guide deep-read:
+  time-separated pairing (blended pair cost < $1.00 via separate dips)
+  REFINES the round-17 simultaneous-pair-cost conclusion — the viable
+  maker-mode entry design for our markets, queued alongside strategy K's
+  sequential grid and ohanism's paired-dominance signal.
