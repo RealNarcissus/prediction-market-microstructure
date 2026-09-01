@@ -213,6 +213,11 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
 - **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
 
+**ohanism report (Trader Report, 2026-05-08) — the third archetype, hybrid at scale:**
+- 694,439 trades / 37,982 markets / 27 days (~21,800/day, 24/7, BTC/ETH/SOL/XRP Up/Down = 99.2% crypto); **+$258,687 on $8.57M deployed = +3.02% ROI**; 64.4% win rate; avg position $14.
+- **Hybrid MM + directional**: pairs both sides 33.3% of the time (locks spread when the pair is cheap), expresses directional views the other 67%, **using the dominance ratio on paired fills as the conviction signal**.
+- Third design point on the maker↔directional spectrum (SLIP-ME: directional-in-disguise; SIRMARTINGALE: pure latency taker; ohanism: explicit hybrid). The paired-dominance signal — how lopsided your own two-side fills are — is a novel conviction metric worth remembering for maker mode.
+
 **SIRMARTINGALE report (Report 008, 2026-04-29) — the working latency-arb archetype:**
 - +$119.6K / 28d, **ROI +82.95%** on ~$361K turnover, 23,440 trades / 3,996 markets, 38.4% win rate, 26/27 green days.
 - Directional micro-arb on 5m+15m BTC (78%) / ETH (22%) Up/Down only: watches the spot tape, fires a directional buy when one side of the book prices under his fair value, then **unloads aggressively into orderbook strength before resolution** — an arbitrageur of the few-second spot-tape↔CLOB lag, NOT a hold-to-settlement trader.
@@ -475,3 +480,9 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   Aug 17). PR&R SIRMARTINGALE report fetched (§6c-2): working latency-arb
   archetype, +82.95% ROI/28d, sell-into-catch-up exit (hold-vs-exit variant
   flagged for wallet simulation). ohanism report remains unread (watch).
+- 2026-09-02: round 15 — drift checks clean (arXiv 2608.30999; changelog
+  Aug 17). PR&R ohanism report fetched (§6c-2): hybrid MM+directional
+  archetype at extreme scale (694k fills/27d, +3.02% ROI, paired-dominance
+  as conviction signal). All three PR&R trader reports now read; PR&R
+  Strategy Database remains on watch. Practitioner content scan: no new
+  items beyond rounds 13-14 findings (same-day re-scan).
