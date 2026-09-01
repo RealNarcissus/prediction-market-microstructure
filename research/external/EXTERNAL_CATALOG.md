@@ -233,6 +233,8 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - **Data-resources directory** ([/strategies/resources](https://www.polyresearchrobotics.com/strategies/resources)): the 94 bot-building feeds, categorized — crypto exchange WS/REST (Binance spot+futures WS, Coinbase, Kraken v2, Bybit V5, CoinGecko, CoinMarketCap, CoinDesk/CCData), oracle feeds (**Chainlink Data Streams WS, Pyth Hermes WS+REST, Polymarket RTDS**), sports odds (TheRundown, Sportradar, OddsPapi, SportsGameOdds, The Odds API, ESPN hidden scoreboard, MLB GUMBO, API-Sports), esports (PandaScore, GRID.gg, Riot, Steam Dota2, HLTV, Abios, OpticOdds), weather (NWS, Open-Meteo, Tomorrow.io, Meteomatics, AccuWeather, Weatherbit, Visual Crossing, Xweather, WeatherFlow), macro (FRED, BLS v2, Treasury Fiscal Data).
 - **Verdict: KEEP-CORNERSTONE (input-feed map)** — for our lanes the additions are Chainlink Data Streams WS + Polymarket RTDS (both already action-queued) and Pyth Hermes as an alternative oracle cross-check; the weather/macro/sports feeds map the other verticals' edge sources (gghff-style). Free samples noted as the zero-cost validation path for the data bundle.
 
+**RN1 operator manual (round 29 — the corpus's most complete strategy spec):** 1.40M rows over Oct 2025–Mar 2026, $131.85M notional, 38,975 conditions, 99.985% buys, median ticket $9.84, edge category "spread + lean". Structure: both-sides accumulation, bursty automated inventory-aware execution, **2.0× dominance ratio as the side-weight threshold** (the concrete parameter behind BONEREAPER's 1.5× and ohanism's paired-dominance), with sections for market selection, entry/execution, pricing/spread, dominance ratio, position sizing, exit behavior, risk, operational rhythm, a rebuildable blueprint, and a confidence map separating observed from inferred. The 18-section template is itself the best available spec format for documenting a live trading engine. Remaining ~19 sports/politics reports: method sections sampled via this + the descriptor sweep — they run the same archetypes (spread+lean, directional, MM) on other verticals; recorded as classified, watch for new entries only.
+
 **PR&R classification COMPLETE — all 36 reports (round 24):**
 - **bonereaper-update**: 44 days (vs the original's 22), 2.69M trades / 37,228 markets, +$458,493 but at **+0.2% ROI — marginal ROI diluted ~7.5× as the fair-value MM scaled up**. The single most important new data point: even the best forensicated bot's edge decays with size (capacity constraint on the fair-value MM lane).
 - **sinenooneei**: 2,057 trades / 265 markets, **+$349,407 at +16.3% ROI** — the new ROI leader, at LOW frequency (a concentrated specialist, not a bot grid); reinforces that high ROI lives in selectivity, not throughput.
@@ -645,3 +647,7 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   collateral (reduces lock-up compensation → tighter long-dated fair; 25%
   maker rebate; Binance Wallet integration). Polymarket live on BSC with
   minute-level BNB 5m markets. Drift clean.
+- 2026-09-02: round 29 — RN1 operator manual read (2.0x dominance threshold;
+  18-section spec template; spread+lean archetype at \$131.85M scale).
+  Remaining PR&R sports/politics method sections sampled-sufficient — same
+  archetypes on other verticals. Drift clean (arXiv 2608.30999).
