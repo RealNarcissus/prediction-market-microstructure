@@ -710,3 +710,17 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   15m -0.012) — scale-factor signature (strike basis or fat tails), 5m
   nearly perfectly calibrated. Next: strike-basis test needs Chainlink tape
   (queued); daily-block CI waits for >=5 gated days (collector thickening).
+- 2026-09-02: round 35 — cross-validation round: (i) the local updown price
+  files cover Apr-May 2026 markets with ZERO id overlap against collector
+  resolutions (Aug era) — that external route needs the OpenMarket/kacho
+  downloads (46GB / HF; queued as a dedicated session with exact commands
+  already in the catalog); (ii) internal quote-based label validation run:
+  final-quote mid vs official resolution agrees 95.3% when post-close
+  snapshots are included (trivially), and **76.15% on honest final quotes
+  within 30s of close — with 88% of disagreements being genuinely-undecided
+  books (mid in [0.35,0.65])**. That near-close uncertainty is structurally
+  CORRECT under 60s-TWAP settlement (half the averaging window unrealized
+  at 30s-out) — internal evidence the venue books price the TWAP process,
+  and no label-inversion signature (76% >> 24%). Collector join/labels
+  validated as sound; external archive cross-check remains queued.
+  Drift clean (arXiv 2608.30999).
