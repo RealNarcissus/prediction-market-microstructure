@@ -213,6 +213,11 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
 - **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
 
+**PR&R reports index (round 19): 36 trader reports, grouped by strategy.**
+- Read so far: SLIP-ME (009), SIRMARTINGALE (008), ohanism — 3 of 36.
+- **Top-priority unread: BONEREAPER — "Fair-value market maker on 5- and 15-minute crypto up-or-down binaries"** — the direct competitor running OUR strategy class (exogenous fair → MM quotes); its read is the highest-value next item in the PR&R lane.
+- Also flagged by name: BTC5MScour (5-minute BTC specialist), plus ~30 other high-volume wallet reconstructions (Vito3Corleone, Michi1, LBTrading, NeverSmiling, Bonereaper Update, etc.) on watch.
+
 **PR&R Guides index (round 18, 12 guides) + spread-capture guide deep-read:**
 - [How to Build a Spread-Capture Bot for 5-Minute BTC Markets](https://www.polyresearchrobotics.com/guide/how-to-build-a-spread-capture-bot): the maker-mode primer for our exact markets. **Key mechanism — time-separated pairing**: accumulate both sides on their *separate* dips so the blended pair cost lands below $1.00 even though simultaneous pairing never does (this REFINES the round-17 pair-cost conclusion: SLIP-ME's $1.0183 was simultaneous; sequential dip-buying with a paired-cost ceiling is the viable form). Mechanics covered: paired-cost gate computation, inverse-weighted allocation to minimize blended cost, per-leg dip entry with ceiling enforcement, explicit "no exit management" design (with a section on what happens if you add one), session scheduling, edge-longevity monitoring, capacity limits. Honest framing: "not a ready-made profitable bot."
 - Other guides: "Watch a Better Trader, Then Copy Their Edge" (live comparison loop turning winning wallets into bot improvements — the forensics workflow as a process), "How Quants Read Market State" (market-state vs trend-lines), Weather Bot build.
@@ -525,3 +530,8 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   REFINES the round-17 simultaneous-pair-cost conclusion — the viable
   maker-mode entry design for our markets, queued alongside strategy K's
   sequential grid and ohanism's paired-dominance signal.
+- 2026-09-02: round 19 — drift clean (arXiv 2608.30999; changelog Aug 17).
+  PR&R reports index enumerated: 36 reports total (3 read). BONEREAPER
+  (fair-value MM on 5/15m crypto binaries = our direct competitor) flagged
+  as the top-priority next deep-read; BTC5MScour second; remaining ~30 on
+  watch queue.
