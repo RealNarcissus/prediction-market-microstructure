@@ -659,3 +659,20 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   does NOT explain measured overconfidence; σ understatement / strike basis
   / adverse selection elevated as candidate causes. Empirical re-test vs
   resolutions + σ-lookback sweep = next research session. Drift clean.
+- 2026-09-02: round 31 — research queue: empirical calibration comparison
+  EXECUTED (research/staleness/calibration_compare.py + CALIBRATION_COMPARE.md;
+  97,356 quotes x 4 configs, all in the 60s-TWAP regime). **MAJOR FIND: units
+  bug in audit.py** — (e_twap − K) is a PRICE difference divided by a RETURN
+  sd → every v1 fair pinned at the 0/1 clip → the staleness audit's "median
+  |gap| 26-29pp" magnitudes were artifacts, and the calibrated re-test's
+  +2.87¢ EV actually measured direction-following (buy the ITM side cheap),
+  not genuine fair-vs-quote staleness. Fixed in log space for both v1 and v2
+  (fair_v2.py z = ln(E[S]/K)/sd). Results (log-space): v2 beats v1 (Brier
+  0.1951-0.1954 vs 0.1969; ECE 0.146 vs 0.150); σ lookback matters modestly
+  (r60/EWMA ≥ r24); ALL configs show an S-curve — realized COMPRESSED toward
+  0.5 (fair 0.98 → realized 0.82; fair 0.15 → realized 0.34), mid bands
+  [0.4,0.6] well calibrated (±0.01). Signature = σ understatement ~2-3x;
+  queued: Brier-minimizing σ multiplier λ fit + strike-basis decomposition.
+  Wallet implication: the live wallet's gate (same pinned formula) is
+  effectively direction-following — interpretation note recorded; no
+  mid-experiment change (fair_v2 integration queued after the window).

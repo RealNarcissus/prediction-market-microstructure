@@ -21,7 +21,10 @@ Math (per-minute variance sigma^2, e.g. from the r24 estimate):
   twap, d <  w:  S = ((w-d)*A + d*P_t) / w   with A = realized mean of the
                      last (w-d) minutes; future part adds
                      Var(S) = sigma^2 * d^3 / (3 w^2)
-  fair_up = Phi( (E[S] - K) / sqrt(Var(S)) ),  E[S] = current spot (driftless).
+  fair_up = Phi( z ),  z computed in LOG-RETURN space:
+    z = ln(E[S]/K) / sqrt(Var(S)_log),  Var(S)_log = sigma^2 * (...) as above
+  (sigma is a per-minute RETURN sd; mixing price differences with return sd
+   was the units bug that pinned v1 fairs at 0/1 — fixed here).
 
 EMPIRICAL CORRECTION (round 30, supersedes the earlier catalog note):
   The v1 running-TWAP model (audit.py) has MORE mid-window variance than the
@@ -87,16 +90,20 @@ def fair_up_v2(
 
     if w_minutes <= 0:  # snapshot regime: European digital on the close
         sd = sigma_1m * math.sqrt(max(d_minutes, 1e-9))
-        return min(max(norm_cdf((spot - strike) / sd), 0.0), 1.0)
+        z = math.log(spot / strike) / sd
+        return min(max(norm_cdf(z), 0.0), 1.0)
 
     if d_minutes >= w_minutes:
         sd = math.sqrt(variance_final_window(sigma_1m, w_minutes))
-        return min(max(norm_cdf((spot - strike) / sd), 0.0), 1.0)
+        z = math.log(spot / strike) / sd
+        return min(max(norm_cdf(z), 0.0), 1.0)
 
     # inside the final averaging window
     if realized_avg is None:
         sd = math.sqrt(variance_final_window(sigma_1m, w_minutes))
-        return min(max(norm_cdf((spot - strike) / sd), 0.0), 1.0)
+        z = math.log(spot / strike) / sd
+        return min(max(norm_cdf(z), 0.0), 1.0)
     mean_s = ((w_minutes - d_minutes) * realized_avg + d_minutes * spot) / w_minutes
     sd = math.sqrt(variance_within_window(sigma_1m, d_minutes, w_minutes))
-    return min(max(norm_cdf((mean_s - strike) / sd), 0.0), 1.0)
+    z = math.log(mean_s / strike) / sd
+    return min(max(norm_cdf(z), 0.0), 1.0)

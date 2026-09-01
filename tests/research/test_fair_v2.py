@@ -20,9 +20,10 @@ from research.staleness.fair_v2 import (
 
 
 def test_snapshot_regime_is_european_digital() -> None:
-    # w=0: settle on the close price => sd = sigma * sqrt(d)
+    # w=0: settle on the close price => z = ln(spot/strike) / (sigma*sqrt(d))
     spot, strike, sigma, d = 101.0, 100.0, 0.002, 4.0
-    expected = 0.5 * (1 + math.erf((spot - strike) / (sigma * math.sqrt(d)) / math.sqrt(2)))
+    z = math.log(spot / strike) / (sigma * math.sqrt(d))
+    expected = 0.5 * (1 + math.erf(z / math.sqrt(2)))
     assert fair_up_v2(spot, strike, sigma, d, w_minutes=0.0) == pytest.approx(expected)
 
 
@@ -68,14 +69,15 @@ def test_v2_more_extreme_than_v1_mid_window() -> None:
     # sd ~0.577 sigma => v2 fair is farther from 0.5. Documents the round-30
     # correction (the earlier catalog note had this backwards).
     sigma = 0.002
-    spot, strike = 100.0005, 100.0  # 0.5bp distance: within a sigma, no saturation
+    spot, strike = 100.02, 100.0  # 2bp move, ~0.1-0.24 sigma: no saturation
     sd_v1 = math.sqrt(variance_running_twap_v1(sigma, n_fut=4.0, n_total=5.0))
     sd_v2 = math.sqrt(variance_final_window(sigma, w_minutes=1.0))
     assert sd_v1 > sd_v2
     from research.staleness.fair_v2 import norm_cdf
 
-    f_v1 = norm_cdf((spot - strike) / sd_v1)
-    f_v2 = norm_cdf((spot - strike) / sd_v2)
+    z = math.log(spot / strike)
+    f_v1 = norm_cdf(z / sd_v1)
+    f_v2 = norm_cdf(z / sd_v2)
     assert abs(f_v2 - 0.5) > abs(f_v1 - 0.5)
 
 
