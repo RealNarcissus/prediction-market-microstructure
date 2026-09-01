@@ -1,6 +1,6 @@
 # Staleness Audit — Live Collector Data (Branch C precursor)
 
-Generated: 2026-09-01T18:47:18.126988+00:00
+Generated: 2026-09-01T19:25:53.799219+00:00
 
 Data: collector.db quotes joined with official resolutions; fair = CLT Asian digital on Binance 1m klines (strike = epoch-open 1m open, sigma from r24).
 Caveats: quote timestamps are collector-arrival times (measured staleness = UPPER bound on venue staleness); BTC orderbooks polled first each cycle (cross-asset lag comparisons carry sampler bias); Binance-vs-Chainlink basis noise inflates |gap| symmetrically — a NEGATIVE EV result is robust, a POSITIVE one needs the resolution-based win rate to confirm.
@@ -9,52 +9,51 @@ Caveats: quote timestamps are collector-arrival times (measured staleness = UPPE
 
 | asset | hz | N quotes | median \|gap\| | p90 \|gap\| | stale>fee | stale>2fee |
 |---|---|---|---|---|---|---|
-| SOL | 300s | 16892 | 0.2750 | 0.6250 | 99.7% | 99.5% |
-| ETH | 300s | 15787 | 0.2850 | 0.6150 | 99.9% | 99.8% |
-| ETH | 900s | 20297 | 0.2950 | 0.5350 | 100.0% | 100.0% |
-| BTC | 300s | 5671 | 0.2650 | 0.6250 | 99.9% | 99.8% |
-| SOL | 900s | 19819 | 0.2850 | 0.5350 | 99.9% | 99.9% |
-| BTC | 900s | 15365 | 0.2550 | 0.5350 | 100.0% | 99.9% |
+| ETH | 900s | 20397 | 0.2950 | 0.5350 | 100.0% | 100.0% |
+| SOL | 300s | 17001 | 0.2750 | 0.6150 | 99.7% | 99.5% |
+| ETH | 300s | 15838 | 0.2850 | 0.6150 | 99.9% | 99.8% |
+| SOL | 900s | 19912 | 0.2850 | 0.5350 | 99.9% | 99.9% |
+| BTC | 300s | 5729 | 0.2650 | 0.6170 | 99.9% | 99.8% |
+| BTC | 900s | 15480 | 0.2550 | 0.5350 | 100.0% | 99.9% |
 
 ## 2. Taker rule 'buy yes when fair - ask > fee' vs official resolutions
 
-**fee=0.07**: N=45837, win rate 73.3% (breakeven needs >50.0% avg depending on avg ask), EV/trade +0.0176, day-block 95% CI [-0.0137, +0.0437], total PnL +808.26
+**fee=0.07**: N=46181, win rate 73.5% (breakeven needs >50.0% avg depending on avg ask), EV/trade +0.0190, day-block 95% CI [-0.0094, +0.0441], total PnL +876.23
 
-  Per-day EV: 2026-08-23: +0.1190 (n=109), 2026-08-24: +0.0134 (n=34), 2026-08-25: -0.0234 (n=4436), 2026-08-26: -0.0226 (n=1710), 2026-08-27: +0.0093 (n=3889), 2026-08-28: -0.0017 (n=4878), 2026-08-29: +0.0097 (n=9425), 2026-08-30: +0.0392 (n=8647), 2026-08-31: +0.0765 (n=8731), 2026-09-01: -0.0473 (n=3978)
+  Per-day EV: 2026-08-23: +0.1190 (n=109), 2026-08-24: +0.0134 (n=34), 2026-08-25: -0.0234 (n=4436), 2026-08-26: -0.0226 (n=1710), 2026-08-27: +0.0093 (n=3889), 2026-08-28: -0.0017 (n=4878), 2026-08-29: +0.0097 (n=9425), 2026-08-30: +0.0392 (n=8647), 2026-08-31: +0.0765 (n=8731), 2026-09-01: -0.0278 (n=4322)
 
-**fee=0.14 (2x)**: N=45803, win rate 73.3% (breakeven needs >50.0% avg depending on avg ask), EV/trade +0.0178, day-block 95% CI [-0.0136, +0.0438], total PnL +814.00
+**fee=0.14 (2x)**: N=46147, win rate 73.5% (breakeven needs >50.0% avg depending on avg ask), EV/trade +0.0191, day-block 95% CI [-0.0093, +0.0442], total PnL +881.96
 
-  Per-day EV: 2026-08-23: +0.1190 (n=109), 2026-08-24: +0.0134 (n=34), 2026-08-25: -0.0233 (n=4435), 2026-08-26: -0.0226 (n=1710), 2026-08-27: +0.0093 (n=3889), 2026-08-28: -0.0019 (n=4872), 2026-08-29: +0.0101 (n=9409), 2026-08-30: +0.0396 (n=8638), 2026-08-31: +0.0764 (n=8730), 2026-09-01: -0.0472 (n=3977)
+  Per-day EV: 2026-08-23: +0.1190 (n=109), 2026-08-24: +0.0134 (n=34), 2026-08-25: -0.0233 (n=4435), 2026-08-26: -0.0226 (n=1710), 2026-08-27: +0.0093 (n=3889), 2026-08-28: -0.0019 (n=4872), 2026-08-29: +0.0101 (n=9409), 2026-08-30: +0.0396 (n=8638), 2026-08-31: +0.0764 (n=8730), 2026-09-01: -0.0277 (n=4321)
 
 ## 3. Taker EV by asset x horizon (fee=0.07 gate)
 
 | asset | hz | N | win | EV |
 |---|---|---|---|---|
-| ETH | 900s | 10122 | 74.5% | +0.0326 |
-| SOL | 300s | 8231 | 73.4% | +0.0232 |
-| SOL | 900s | 9604 | 72.5% | -0.0077 |
-| BTC | 300s | 2730 | 72.5% | +0.0274 |
-| ETH | 300s | 7721 | 73.2% | +0.0288 |
-| BTC | 900s | 7429 | 73.0% | +0.0087 |
+| SOL | 300s | 8314 | 73.7% | +0.0250 |
+| SOL | 900s | 9659 | 72.6% | -0.0065 |
+| ETH | 900s | 10183 | 74.7% | +0.0339 |
+| ETH | 300s | 7752 | 73.2% | +0.0287 |
+| BTC | 900s | 7498 | 73.3% | +0.0105 |
+| BTC | 300s | 2775 | 72.9% | +0.0305 |
 
 ## 4. Collector polling cadence per asset (confound documentation)
 
 | asset | hz | markets | quotes | median inter-quote s |
 |---|---|---|---|---|
-| BTC | 300s | 1259 | 21810 | 0.0 |
-| BTC | 900s | 701 | 46992 | 0.0 |
-| ETH | 300s | 1793 | 51314 | 0.0 |
-| ETH | 900s | 706 | 60046 | 0.0 |
-| SOL | 300s | 1850 | 54910 | 0.0 |
-| SOL | 900s | 700 | 59930 | 0.0 |
+| BTC | 300s | 1265 | 22002 | 0.0 |
+| BTC | 900s | 703 | 47280 | 0.0 |
+| ETH | 300s | 1797 | 51440 | 0.0 |
+| ETH | 900s | 708 | 60338 | 0.0 |
+| SOL | 300s | 1858 | 55188 | 0.0 |
+| SOL | 900s | 702 | 60222 | 0.0 |
 
 ## 5. Cross-asset transmission at BTC move events
 
-- ETH: corr(1m ret, BTC) = 0.848; |ret| baseline 4.8bp vs 16.9bp when BTC moves >=10bp; same-direction 99.4% (n=640 events)
-- SOL: corr(1m ret, BTC) = 0.731; |ret| baseline 7.1bp vs 21.5bp when BTC moves >=10bp; same-direction 98.0% (n=640 events)
+- ETH: corr(1m ret, BTC) = 0.848; |ret| baseline 4.8bp vs 16.9bp when BTC moves >=10bp; same-direction 99.4% (n=645 events)
+- SOL: corr(1m ret, BTC) = 0.731; |ret| baseline 7.1bp vs 21.5bp when BTC moves >=10bp; same-direction 98.0% (n=645 events)
 
 Transmission premise confirmed if SOL/ETH move materially same-minute with BTC. Venue-side test (do SOL/ETH *quotes* lag BTC quotes on the same shock) is confounded by BTC-first polling order — see caveats; requires interleaved sampling or venue-native timestamps to measure cleanly.
-
 ---
 
 ## 6. Decomposition (v2) — where does the EV come from?

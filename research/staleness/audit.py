@@ -182,7 +182,7 @@ def main() -> None:
         gap = fair_yes - ask  # edge if we buy yes at ask
         tau_rem = (close_ms - tsq) / 1000.0
         rows.append({
-            "asset": asset, "hz": f"{hz_s}s", "ts_ms": tsq,
+            "market_id": r["market_id"], "asset": asset, "hz": f"{hz_s}s", "ts_ms": tsq,
             "open_ms": open_ms, "won": int(r["token_won"]),
             "ask": ask, "mid": mid, "fair": fair_yes,
             "gap": gap, "fee": fee,
