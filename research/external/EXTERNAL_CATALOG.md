@@ -142,6 +142,30 @@ Sources: [Place Orders](https://docs.polymarket.com/trading/place-orders),
 | OctagonAI / yllvar Kalshi bots | AI-CLI and enterprise-style bots | DISCARD (no edge methodology) |
 | [Medium: 4 strategies bots profit from (2026)](https://medium.com/illumination/beyond-simple-arbitrage-4-polymarket-strategies-bots-actually-profit-from-in-2026-ddacc92c5b4f) | MM example $1,247 on $10k/3wk (12.5%) | PENDING fetch (403) — MM-on-$10k economics matter if we scale past paper stage |
 
+### 6b. Venue landscape beyond Polymarket/Kalshi (round 3)
+
+| Venue | Mechanics | Verdict |
+|---|---|---|
+| [Limitless](https://iq.wiki/wiki/limitless-exchange) (Base) | CLOB; short-term high-frequency crypto + stock price predictions — hourly and 30–60min markets ([CryptoRadar](https://cryptoradar.com/sponsored/best-crypto-native-prediction-markets-beyond-polymarket-and-kalshi), [KuCoin playbook](https://www.kucoin.com/blog/en-the-prediction-market-playbook-uncovering-alpha-top-players-core-risks-and-the-infrastructure-landscape)) | **DEFER** — closest structural twin to our markets (CLOB, minutes-horizon, crypto); a second venue for the same staleness fair-value engine if/when we scale; already covered by pmxt's unified API |
+| Myriad (BNB Chain) | Casual/embedded AMM markets; case study in [arXiv:2601.01706](https://arxiv.org/html/2601.01706v1) "Semantic Non-Fungibility and Violations of the Law of One Price" (deterministic AMM pricing rules → LoOP violations) | REF — the academic entry point for AMM-based rival venues; connects to §4b LMSR lane |
+| PRDT Finance + [Alchemy's 56 Web3 PM list](https://www.alchemy.com/dapps/best/web3-prediction-markets) | More up/down-style platforms | REF (venue map) |
+
+### 6c. Whale tracking / analytics tools (round 3)
+
+| Tool | What it does | Verdict |
+|---|---|---|
+| [sporeking's corrected whale tracker](https://dune.com/sporeking/polymarket-whale-tracker-corrected-deep-dive-fixed-charts) + [order-owner maker/taker version](https://dune.com/sporeking/polymarket-whale-tracker-corrected-order-owner-maker-taker) | Dune dashboards on OrderFilled events; the corrected one **detects whales buying both outcomes in the same binary market** (paired-arb / rebate-farming detection) | **REF→ACT(maker check)**: the both-sides detector is exactly the empirical test for the 101¢/rebate-farming question; SQL approach reusable if we join Dune |
+| [polymarketanalytics.com](https://polymarketanalytics.com/) | Free real-time whale/top-trader/wallet-PnL tracking across 1M+ wallets, live odds, OI, volume | REF (future smart-money feature; FKPolyTools equivalent, EN-side) |
+| [Dune leaderboard/whale dashboards](https://dune.com/genejp999/polymarket-leaderboard), [lujanodera analysis + Whalewatchpoly](https://dune.com/lujanodera/polymarket-analysis), [polymark.et dunedata](https://polymark.et/product/dunedata), [Kairos](https://kairos.trade/compare/polymarket-analytics) (>$10k fills, 30d PnL), [SightWhale guide](https://www.sightwhale.com/blog/en/polymarket-whale-tracking-tools-2026-complete-guide), [tools guide](https://polymarkets.co.il/en/guide/tools-resources/) | Whale/sentiment analytics cluster | REF (map; low priority at our scale) |
+| [aarora4/Awesome-Prediction-Market-Tools](https://github.com/aarora4/Awesome-Prediction-Market-Tools) (incl. Polytrackerbot — Twitter bot tracking high-conviction whale wallets) | Curated awesome-list | REF (source map for future sweeps) |
+
+### 6d. Twitter/X lane findings (round 3)
+
+- [r/algotrading: "Polymarket bot posts?"](https://www.reddit.com/r/algotrading/comments/1uo4cin/polymarket_bot_posts/) — practitioners report **hundreds of likely fake Twitter posts** about Polymarket algos and copy-trade accounts. **KEEP-WARNING**: the social "inspiration" lane is heavily polluted; only open-source (verifiable code) and academic (verifiable method) sources earn weight — this catalog's weighting rule going forward.
+- [0xLeon on X](https://x.com/Leoninweb3/status/2017081662195323144): 3.7% of users (~54k addresses) generate 37.44% of Polymarket volume — independent corroboration of the Binance Square bot-war stat already in §3.
+- [HN: Uncovering insiders and alpha with AI](https://news.ycombinator.com/item?id=47091557): argues real alpha is in **microstructure/cross-venue discrepancies (Polymarket vs Kalshi)** rather than event prediction — consistent with our positioning.
+- X trending "AI bots dominate Polymarket" posts ($500→$600 claims): DISCARD (marketing).
+
 ## 7. Practitioner tactics (single lines worth keeping)
 
 - @w00dsbot (Threads): "Wait for 5-minute BTC contract mispricings (<$0.35)" —
@@ -244,3 +268,11 @@ Sources: [Place Orders](https://docs.polymarket.com/trading/place-orders),
   existence proof (§5). gregyoung14 connective insight: HN arb-bot post,
   OpenMarket dataset, and 5m-dataset post are one author's arc (arb bot →
   null result → data releases). Reddit body + Medium remain proxy-blocked.
+- 2026-09-02: round 3 — whale-tracking lane (§6c: sporeking both-sides
+  detector, polymarketanalytics, Kairos/SightWhale map, Awesome list),
+  Twitter/X lane (§6d: fake-bot-post warning = catalog weighting rule,
+  0xLeon bot-dominance corroboration, PM-vs-Kalshi microstructure alpha
+  argument), venue landscape (§6b: Limitless CLOB 30-60min markets = closest
+  twin venue; Myriad AMM + arXiv:2601.01706 LoOP study; Alchemy 56-venue map).
+  STILL OPEN: JP/KR deeper communities, taker-rebate tiers, Medium bodies,
+  7-months full body, HN comment bodies.
