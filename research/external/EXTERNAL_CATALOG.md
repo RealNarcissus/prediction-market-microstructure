@@ -623,3 +623,5 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   small-ticket frequency analysis (consistent with BONEREAPER's $5.56
   median ticket); retail endgame-sniping rule (price>90 & <99 in last
   1-2min) = the favorite trade at retail level. No CSDN results this week.
+- 2026-09-02: round 26b — changelog verified on retry: newest entry still
+  Aug 17 (50ms taker delay). No venue drift across rounds 22–26.
