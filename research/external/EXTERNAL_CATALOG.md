@@ -213,6 +213,15 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
 - **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
 
+**BONEREAPER report (fetched in full, round 19) — the direct fair-value-MM competitor, fully forensicated:**
+- Scale: 1.34M trades / 22 days / 14,168 resolved markets (~61k trades/day, 99.8% buys, median ticket $5.56, power-law sizing — top 5% of fills carry 57.3% of capital). **+$443,754 realized (+1.527% on $29.09M deployed), 22/23 green days, 100% of rolling 7/15-day windows green.**
+- Mechanics: both-sides MM on 5m+15m crypto binaries — pairs both outcomes on **96.7%** of markets within **10s median hedge lag**, almost never sells (0.08%), holds everything to resolution; lets the dominant side run when its **USDC-imbalance dominance ratio** warrants.
+- **The calibration signature (the key validation standard for us)**: dominant-side win rate climbs **smoothly 59% (1.0–1.5×) → 97.7% (5×+)** as conviction grows, and entry-price-band win rates track implied probability **within ~2 points across the full $0–$1 range** — "a calibration signature you only get from a working model." This is exactly the standard our fair-rebuild must meet (ECE-style, per price band, per dominance bucket).
+- Observed vs inferred: fair-value source not in the trade data (inferred external BTC/ETH reference feed); fill-and-burst execution; the 2026-03-29 red day is the regime to characterize (only −$2.5K).
+- **Window caveat**: Mar 25–Apr 16, 2026 straddles Fee-Structure V2 (Mar 30) and is entirely pre-TWAP — economics reflect the older fee curve and snapshot settlement; our current regime differs on both.
+- PR&R's own follow-ups worth adopting: ratio ≥1.5× filter shadowing at 1% scale; replicate the fair-value layer against the wallet's entry timestamps; stack ratio+paired-cost filters; characterize the red-day regime.
+- **Tail finds**: (i) **Mean-Reversion Guide G·001 — "The HFT mean-reversion playbook applied to the BTC Up/Down 15-min market, with worked code and validation"** — top-priority next read alongside BONEREAPER; (ii) PR&R data store sells **full-depth BTC/ETH/SOL/XRP/BNB/DOGE Up/Down books at 1-second cadence** — a richer-than-top-of-book source for our markets (dataset cross-validation queue); (iii) KCH123 = high-volume momentum scalper on crypto up/down books (watch); LIL222 = patient low-frequency directional.
+
 **PR&R reports index (round 19): 36 trader reports, grouped by strategy.**
 - Read so far: SLIP-ME (009), SIRMARTINGALE (008), ohanism — 3 of 36.
 - **Top-priority unread: BONEREAPER — "Fair-value market maker on 5- and 15-minute crypto up-or-down binaries"** — the direct competitor running OUR strategy class (exogenous fair → MM quotes); its read is the highest-value next item in the PR&R lane.
@@ -535,3 +544,10 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   (fair-value MM on 5/15m crypto binaries = our direct competitor) flagged
   as the top-priority next deep-read; BTC5MScour second; remaining ~30 on
   watch queue.
+- 2026-09-02: round 19b — BONEREAPER report fetched in full (§6c-2): the
+  fair-value-MM competitor at +\$443.8K/22d, calibration signature within ~2
+  points across all price bands, dominance→win-rate 59→97.7%, both-sides
+  96.7% with 10s hedge lag; window straddles Fee-V2 and is pre-TWAP (caveat
+  recorded). Tail finds: Mean-Reversion Guide G·001 with worked code on BTC
+  15-min (top-priority next read), PR&R full-depth 1s-cadence book data for
+  our 6 symbols (cross-validation source), KCH123/LIL222 on watch.
