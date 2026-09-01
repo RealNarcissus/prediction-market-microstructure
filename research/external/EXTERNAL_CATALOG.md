@@ -222,6 +222,8 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - PR&R's own follow-ups worth adopting: ratio ≥1.5× filter shadowing at 1% scale; replicate the fair-value layer against the wallet's entry timestamps; stack ratio+paired-cost filters; characterize the red-day regime.
 - **Tail finds**: (i) **Mean-Reversion Guide G·001 — "The HFT mean-reversion playbook applied to the BTC Up/Down 15-min market, with worked code and validation"** — top-priority next read alongside BONEREAPER; (ii) PR&R data store sells **full-depth BTC/ETH/SOL/XRP/BNB/DOGE Up/Down books at 1-second cadence** — a richer-than-top-of-book source for our markets (dataset cross-validation queue); (iii) KCH123 = high-volume momentum scalper on crypto up/down books (watch); LIL222 = patient low-frequency directional.
 
+**PR&R Mean-Reversion Guide G·001 (round 20, method fully captured):** [Stealing HFT's mean reversion playbook](https://www.polyresearchrobotics.com/guide/mean-reversion-polymarket-bot) — free, with worked code and a worked example on the BTC 15-min Up/Down market. Method (11 steps): prices → log returns → lag-1 autoregression → **sign encoding (magnitude deliberately discarded)** → group by prior-move direction → compute conditional next-return stats per bucket → **out-of-sample validation pipeline** → signal → trade → evaluate. Framing: pro mean reversion is not Bollinger Bands — it is "recent moves get unwound" measured as conditional probability. Two claims worth keeping: (i) **bounded probability prices make reversion mechanically more likely** (a market at 0.85 cannot trend to infinity); (ii) most published strategies overfit patterns that evaporate by deployment — hence the OOS pipeline as the core discipline. Worked-example result numbers sit deeper in the page (re-read next round); method is the transferable part. **Relevance to us**: this is the conditional-reversal measurement our chop-regime findings and Binance-Square contrarian experiment point to, formalized for our markets; the sign-lag conditional stats are a cheap addition to our next evaluator run.
+
 **PR&R reports index (round 19): 36 trader reports, grouped by strategy.**
 - Read so far: SLIP-ME (009), SIRMARTINGALE (008), ohanism — 3 of 36.
 - **Top-priority unread: BONEREAPER — "Fair-value market maker on 5- and 15-minute crypto up-or-down binaries"** — the direct competitor running OUR strategy class (exogenous fair → MM quotes); its read is the highest-value next item in the PR&R lane.
@@ -551,3 +553,7 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   recorded). Tail finds: Mean-Reversion Guide G·001 with worked code on BTC
   15-min (top-priority next read), PR&R full-depth 1s-cadence book data for
   our 6 symbols (cross-validation source), KCH123/LIL222 on watch.
+- 2026-09-02: round 20 — drift clean (arXiv 2608.30999; changelog Aug 17).
+  G·001 mean-reversion guide method captured (§6c-2): sign-lag conditional
+  stats + OOS pipeline for BTC 15-min; worked-example numbers on deeper page
+  (re-read next round). BTC5MScour/KCH123 reports remain queued.
