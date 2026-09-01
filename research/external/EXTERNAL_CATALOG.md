@@ -612,3 +612,14 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   (crypto/oracle/sports/esports/weather/macro feeds). PR&R site now fully
   perused end-to-end. Drift checks clean (arXiv 2608.30999; changelog
   Aug 17).
+- 2026-09-02: round 26 — drift: arXiv unchanged (2608.30999); changelog
+  re-fetch intermittent (prior round-22 snapshot showed Aug 17 top; watch
+  continues). PR&R report count still 36 (no new). Fresh practitioner scan
+  (7-day window): NEW r/PredictionsMarkets postmortem "My Polymarket bot
+  wins 68% of the time and still loses money" (3 months on BTC Up/Down —
+  4th independent instance of the win-rate lesson on our exact market);
+  "How to Build a Polymarket Trading Bot (After CLOB V2)" free tutorial
+  (REF, matches our Apr-28 boundary); "$3 bets over 80k times → $273k+"
+  small-ticket frequency analysis (consistent with BONEREAPER's $5.56
+  median ticket); retail endgame-sniping rule (price>90 & <99 in last
+  1-2min) = the favorite trade at retail level. No CSDN results this week.
