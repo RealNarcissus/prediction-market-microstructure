@@ -688,3 +688,15 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   absorbed by lambda); (ii) v2+lambda is the calibration champion and the
   reference for wallet integration (queued after the $5 window);
   (iii) remaining extreme-band residual = strike-basis decomposition item.
+- 2026-09-02: round 33 — calibrated re-test re-run with log-space fair
+  (research/staleness/retest_logspace.py + RETEST_LOGSPACE.md): temporal
+  split 2026-08-29 12:00 UTC, lambda + isotonic fit on TRAIN only, gate =
+  calibrated_prob - ask > fee, test-only evaluation. **v2_ewma: EV +6.81c
+  CI [+6.29,+7.32] on 23,945 gated trades (win rate 0.504, avg ask 0.424)**
+  vs v1_r24 +4.98c [+4.46,+5.50] on 23,080 (WR 0.406, ask 0.344). Favorites
+  control NEGATIVE for both (-3.4c) — the gate selects real signal, not
+  cheap quotes. v2 beats v1 by +1.8c/trade — the venue-accurate settlement
+  math has direct economic value. lambda refit on train (1.95) matches the
+  full-sample 1.86-1.94 (stable). CAVEATS: test window only ~2.5 days ->
+  trade-level bootstrap (CI optimistic vs daily-block); gate takes 40% of
+  quotes (isotonic remap wide); mid-experiment wallet untouched.
