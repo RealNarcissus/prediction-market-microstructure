@@ -228,6 +228,13 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 
 **PR&R Mean-Reversion Guide G·001 (round 20, method fully captured):** [Stealing HFT's mean reversion playbook](https://www.polyresearchrobotics.com/guide/mean-reversion-polymarket-bot) — free, with worked code and a worked example on the BTC 15-min Up/Down market. Method (11 steps): prices → log returns → lag-1 autoregression → **sign encoding (magnitude deliberately discarded)** → group by prior-move direction → compute conditional next-return stats per bucket → **out-of-sample validation pipeline** → signal → trade → evaluate. Framing: pro mean reversion is not Bollinger Bands — it is "recent moves get unwound" measured as conditional probability. Two claims worth keeping: (i) **bounded probability prices make reversion mechanically more likely** (a market at 0.85 cannot trend to infinity); (ii) most published strategies overfit patterns that evaporate by deployment — hence the OOS pipeline as the core discipline. Worked-example result numbers sit deeper in the page (re-read next round); method is the transferable part. **Relevance to us**: this is the conditional-reversal measurement our chop-regime findings and Binance-Square contrarian experiment point to, formalized for our markets; the sign-lag conditional stats are a cheap addition to our next evaluator run.
 
+**PR&R classification sweep (round 22, descriptors read for 8 more reports — 14 of 36 total):**
+- **vidarx**: always-on crypto bot, 1,025,598 BUY tickets / 8 SELLs, $11.99M deployed, +$103,949 — "**a conviction curve that suggests a real edge underneath the spread book**" → same class as BONEREAPER; top-priority unread alongside gghff.
+- **gghff**: 13,004 trades / 23d, **+9.9% ROI** — the highest ROI among high-frequency wallets.
+- **exitliquidty**: 1,234 trades / 73 markets, **+$330,940 at +86.4% ROI** — concentrated whale, different species from the bots.
+- billbenter2026: 892,903 trades, +0.7% · gabigol: 324,515 trades (likely the "Gabagool" $100k/mo Reddit bot), +2.1% · sixx7: 586,261 trades, +0.9% · pbot-6b: 65,567 trades / 9,843 markets, +4.7% · flippingsharks: 89,684 trades, +0.3%.
+- **THE CONVERGENCE INSIGHT (now empirically solid across 14 forensicated wallets)**: every high-volume bot on our markets runs **0.3–9.9% monthly ROI** on deployed capital, with win rates 38–96% — the entire "AI bot makes millions" narrative dissolves into single-digit monthly returns at scale, won through frequency × tiny edges × discipline. BONEREAPER (+1.5%) and ohanism (+3.0%) are typical, not exceptional. Bankroll expectations for any real deployment should be set accordingly.
+
 **PR&R reports index (round 19): 36 trader reports, grouped by strategy.**
 - Read so far: SLIP-ME (009), SIRMARTINGALE (008), ohanism — 3 of 36.
 - **Top-priority unread: BONEREAPER — "Fair-value market maker on 5- and 15-minute crypto up-or-down binaries"** — the direct competitor running OUR strategy class (exogenous fair → MM quotes); its read is the highest-value next item in the PR&R lane.
@@ -567,3 +574,7 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   95.8% WR at +1.8% ROI/26d — the favorite trade's razor margin quantified.
   KCH123: sports whale, pay-vs-bleed filter method (0.03% of notional is
   the profit). Drift checks clean (arXiv 2608.30999; changelog Aug 17).
+- 2026-09-02: round 22 — descriptors read for 8 more PR&R reports (14/36
+  total): ROI-convergence insight established (all high-volume bots 0.3-9.9%
+  monthly ROI; vidarx conviction-curve bot and gghff highest-ROI flagged for
+  deep-read). Drift checks clean (arXiv 2608.30999; changelog Aug 17).
