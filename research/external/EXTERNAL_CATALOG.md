@@ -218,7 +218,15 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - **94 bot-building data resources** (APIs, websockets, RSS, data providers, live-odds services) — the richest tooling map found.
 - **TWAP Price Feed product** (Data Store) — venue-native settlement-series access; a candidate source for action #10 (fair-model TWAP input) if licensing is reasonable.
 - Business model (via /llms.txt): guides, trader reports, and strategy database are **free**; funded by the historical-data store; no affiliate deals; 1,000+ member Discord; site updated 2026-08-27. Every page serves `Accept: text/markdown` / `.md` suffix (agent-friendly).
-- Verdict: **KEEP-CORNERSTONE (reference hub)** — the 297-strategy catalog is the comprehensive map of the technique space; deep-reads of the ~10 strategies intersecting our lanes (staleness, TWAP, MM, crypto up/down) are queued.
+- **Deep-reads of 5 strategy pages intersecting our lanes (round 17, all fetched via .md):**
+1. **Pre-Resolution Oracle-Lag Lock-In (#061)**: buys the winner during UMA's proposal/dispute lag on real-world events. **NOT applicable to our lane** — our crypto markets auto-resolve via Chainlink TWAP with no proposal window; the oracle-lag edge class exists only on UMA-resolved markets. Precision gained: our staleness is *feed-vs-book* lag, not *oracle* lag.
+2. **Resolution-Source Scrape-to-Order First-Mover (#138)**: poll the canonical source named in the resolution rule, pre-stage signed orders, fire on change. For our markets the canonical source (Chainlink stream/Binance) is already our fair input — this page is the general form of our architecture; its novel bits are pre-staged orders and ToS-legality review.
+3. **Kalshi-Polymarket Identical-Contract RV (#054)**: hold-to-settlement cross-venue lock; requires resolution-criteria reconciliation. **Crypto up/down caveat**: the two venues settle on DIFFERENT indices (Chainlink stream vs CF Benchmarks BRTI) → basis risk makes them not strictly identical contracts; pure RV applies to same-print markets (CPI/Fed).
+4. **Settlement-Timing Funding Arbitrage (#056)**: near-certain long-dated markets under $1 = underpriced cost-of-carry; annualized-yield rotation. This operationalizes the round-9 capital lock-up paper. Minutes-horizon lock-up → N/A for us.
+5. **Split/Merge Redemption Arbitrage / CTF (#053)**: correct mechanics — mint $1 pair and sell both halves when BIDS sum > $1; buy both when ASKS sum < $1 and redeem (PR&R's summary garbles the directions). On liquid crypto books, competed to SLIP-ME's $1.0183 pair cost → viable only on illiquid markets after gas.
+- **Cross-cutting conclusion**: none of the five apply to the 5m/15m TWAP lane — Chainlink auto-resolution (no oracle lag), minute lock-up (no carry), and a fee curve plus competition (no pair arb) make our lane structurally distinct. Our edge class (calibrated feed-vs-book gap within TWAP-settled short windows) is confirmed rare in the taxonomy — consistent with it being unclaimed.
+
+Verdict: **KEEP-CORNERSTONE (reference hub)** — the 297-strategy catalog is the comprehensive map of the technique space; deep-reads of the ~10 strategies intersecting our lanes (staleness, TWAP, MM, crypto up/down) are queued.
 
 **ohanism report (Trader Report, 2026-05-08) — the third archetype, hybrid at scale:**
 - 694,439 trades / 37,982 markets / 27 days (~21,800/day, 24/7, BTC/ETH/SOL/XRP Up/Down = 99.2% crypto); **+$258,687 on $8.57M deployed = +3.02% ROI**; 64.4% win rate; avg position $14.
@@ -498,3 +506,11 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   resources + TWAP Price Feed product; site is free/data-funded (llms.txt);
   deep-reads of the ~10 strategies intersecting our lanes queued. All named
   PR&R items now captured.
+- 2026-09-02: round 17 — 5 PR&R strategy deep-reads (§6c-2): oracle-lag lock-in
+  NOT applicable (UMA-only; our lane auto-resolves), scrape-first-mover = our
+  architecture's general form, Kalshi RV carries index-basis risk for crypto
+  up/down (Chainlink vs CF Benchmarks), settlement-timing carry = lock-up
+  paper operationalized (N/A at minutes), CTF split/merge mechanics corrected
+  and shown competed-away on liquid books. Cross-cutting: our edge class is
+  structurally distinct in the 297-strategy taxonomy. Drift checks clean
+  (arXiv 2608.30999; changelog Aug 17).
