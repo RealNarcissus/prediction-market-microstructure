@@ -199,6 +199,19 @@ Sources: [Place Orders](https://docs.polymarket.com/trading/place-orders),
 - Korea: strict gambling regime; no meaningful PM trading community surfaced across searches.
 - **Verdict: LANE CLOSED (negative)** — the absence of JP/KR practitioner content is regulatory, not a search failure. Revisit only if/when Polymarket's Japanese approval lands (~2030) or Gumi ships.
 
+### 6f. Kalshi crypto short-duration contracts — cross-venue comparison (round 8)
+
+- [Kalshi 15-min crypto category](https://kalshi.com/category/crypto/frequency/fifteen_min) + [hourly](https://kalshi.com/category/crypto/frequency/hourly) + [BTC main](https://kalshi.com/category/crypto/btc): **KXBTC15M** up/down contracts on BTC/ETH/SOL/XRP/BNB, 24/7, per-market volume >$1.1M, "up to 6x leverage" display.
+- Settlement: **CF Benchmarks BRTI** (CFTC-regulated index administrator) with a **60-second averaging window** at settlement ([KXBTC15M explainer](https://predictionmarketspicks.com/articles/kalshi-bitcoin-15-minute-markets)) — structurally identical to Polymarket's post-Aug-7 60s TWAP for 15m markets.
+- Community: [r/algotrading Kalshi 15m indicators thread](https://www.reddit.com/r/algotrading/comments/1ru03le/is_anyone_interested_in_discussing_a_kalshi_15/).
+- **Verdict: DEFER→STRATEGIC**: a second venue running the SAME product shape. Our staleness fair-value engine is venue-agnostic (needs: window, strike, settlement series, quotes) → Kalshi 15m is the natural expansion or cross-venue hedge (compendium strategy B); CFTC regulation/KYC = different counterparty and fee regime (Kalshi's fee formula is the same 0.07·p·(1−p) shape). Record as the roadmap's "second venue" candidate.
+
+### 6g. Compendium strategy deep-reads D/G/K (round 8, fetched in full)
+
+- **D — Market Making**: revenue = spread capture + Maker Rewards + position rewards (4% APY on eligible markets); rule of thumb **~0.2% of traded volume becomes profit** ($1M monthly volume ≈ $2k/market); core risk = inventory risk (lower in low-vol markets). poly-market-maker's two modes (Bands around mid / AMM-curve by inventory) + poly-maker's market-discovery scoring (volatility at 3h/24h/7d/30d, reward score by distance-from-mid) are the reference implementations. **REF→maker-mode checklist**.
+- **G — "Bond" strategy (buy >$0.95, hold to settlement)**: claimed 520%+ annualized is naive (assumes instant turnover, ignores black swans — the UMA oracle attack collapsed $0.99 contracts to $0). **Key microstructure fact: 90%+ of $10k+ orders occur in >$0.95 markets** — whale flow concentrates in near-certainties, where adverse selection is worst. Tools: [guzus/dr-manhattan](https://github.com/guzus/dr-manhattan), pmxt. Our 5m/15m lane settles too fast for bond economics; DISCARD for us, KEEP the whale-flow fact.
+- **K — Volatility grid (sequential two-leg)**: in 15m markets, buy UP at panic price, then DOWN after stabilization, total < $0.95 → guaranteed >$0.05 at settlement; range-bound chop only, stop on trends, mind dynamic taker fees. Time-separated rebalancing arb where leg 1 is a directional catch. **REF** — a variant of our staleness trade with a guaranteed-outcome exit; relevant if panic dislocations appear early in windows (our EV-by-gap monotonicity hints at this).
+
 ## 7. Practitioner tactics (single lines worth keeping)
 
 - @w00dsbot (Threads): "Wait for 5-minute BTC contract mispricings (<$0.35)" —
@@ -351,3 +364,11 @@ Sources: [Place Orders](https://docs.polymarket.com/trading/place-orders),
   {token_id} closes runtime-fee action; rewards endpoints for maker mode).
   Catalog structurally complete for the practitioners+infra cluster;
   next rounds: new topics (perps docs, additional venues, new papers).
+- 2026-09-02: round 8 — Kalshi cross-venue lane opened (§6f: KXBTC15M 24/7
+  up/down on 5 coins, CF Benchmarks BRTI 60s-average settlement = same shape
+  as our 15m markets, >$1.1M/market volume; second-venue candidate),
+  compendium D/G/K deep-reads (§6g: maker rule-of-thumb 0.2% of volume,
+  90%+ of $10k+ orders in >$0.95 markets, sequential two-leg grid variant),
+  Perps market-sessions concept noted (feed-set switching by session —
+  parallels our own session buckets; Perps fees doc JS-walled, Perps itself
+  low-relevance to our PM work).
