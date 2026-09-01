@@ -724,3 +724,13 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   and no label-inversion signature (76% >> 24%). Collector join/labels
   validated as sound; external archive cross-check remains queued.
   Drift clean (arXiv 2608.30999).
+- 2026-09-02: round 36 — external cross-validation EXECUTED on the kacho
+  archive (data/external/btc_markets.parquet downloaded, 15,682 BTC 5m
+  markets, Mar 24-May 18 2026): joined on condition_id against our updown
+  markets (2,066 matched). **Outcome agreement 91.56%** (564/616 both-known)
+  — no systematic inversion; the 8.4% divergence is kacho's tick-inferred
+  outcome vs the venue's official resolution field. **Bonus find: the venue's
+  own fee_rate_bps metadata corroborates the changelog timeline** —
+  fee_rate_bps=1000 populated on 15,055 markets from 2026-03-27 (Fee
+  Structure V2 era), then unset (-1) on 63,953 later markets (feeRateBps
+  deprecated at CLOB V2 Apr 28, fees set at match time). Drift clean.
