@@ -676,3 +676,15 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   Wallet implication: the live wallet's gate (same pinned formula) is
   effectively direction-following — interpretation note recorded; no
   mid-experiment change (fair_v2 integration queued after the window).
+- 2026-09-02: round 32 — Brier-minimizing sigma multiplier lambda fit EXECUTED
+  (comparison script now stores raw z and fits lambda per config): **v2_r24
+  lambda*=1.94, v2_r60 1.88, v2_ewma 1.86, v1_r24 1.60**. With lambda
+  applied: Brier v1 0.1843 vs v2 0.1720-0.1725; ECE v1 0.0455 vs v2
+  0.0285-0.0306 (nearly halved); band errors flat at +-0.03 across all ten
+  bands, residual overconfidence only in the extreme band (fair>0.9:
+  realized ~0.885 vs 0.958 — strike-basis/fat-tails candidate, still queued).
+  Interpretation: (i) the sigma understatement is ~1.9x, stable across
+  lookbacks (a systematic scale factor, not a lookback artifact — r60/EWMA
+  absorbed by lambda); (ii) v2+lambda is the calibration champion and the
+  reference for wallet integration (queued after the $5 window);
+  (iii) remaining extreme-band residual = strike-basis decomposition item.

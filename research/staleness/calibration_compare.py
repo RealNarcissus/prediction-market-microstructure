@@ -76,7 +76,7 @@ def build_sigma_variants(df: pl.DataFrame):
     }
 
 
-def fair_v1(sigma_now, sum_obs, last_close, n_fut, N, K, count_obs):
+def fair_v1(sigma_now, sum_obs, last_close, n_fut, N, K, count_obs, return_z=False):
     """audit.py running-TWAP fair, corrected to return-space z.
 
     audit.py itself divides a PRICE difference by a RETURN sd — the units bug
@@ -90,19 +90,19 @@ def fair_v1(sigma_now, sum_obs, last_close, n_fut, N, K, count_obs):
         var = 1e-12
     e = (sum_obs + last_close * n_fut) / N
     z = math.log(max(e, 1e-9) / K) / math.sqrt(max(var, 1e-12))
-    return norm_cdf(z)
+    return z if return_z else norm_cdf(z)
 
 
-def fair_v2(sigma_now, spot, K, d_min, w_min=1.0, realized_avg=None):
+def fair_v2(sigma_now, spot, K, d_min, w_min=1.0, realized_avg=None, return_z=False):
     """fair_v2 (log-space z): venue final-window settlement (60s => w = 1 min)."""
     if d_min >= w_min or realized_avg is None:
         sd = sigma_now * math.sqrt(w_min / 3.0)
         z = math.log(spot / K) / max(sd, 1e-12)
-        return norm_cdf(z)
+        return z if return_z else norm_cdf(z)
     mean_s = (w_min - d_min) * realized_avg + d_min * spot
     sd = sigma_now * math.sqrt(max(d_min ** 3 / (3.0 * w_min ** 2), 1e-12)) / w_min
     z = math.log(max(mean_s, 1e-9) / K) / max(sd, 1e-12)
-    return norm_cdf(z)
+    return z if return_z else norm_cdf(z)
 
 
 def main() -> None:
@@ -179,43 +179,64 @@ def main() -> None:
         sig = {k: (v[i_now] if np.isfinite(v[i_now]) else np.nan) for k, v in sig_variants[asset].items()}
         if any(not np.isfinite(v) for v in sig.values()):
             continue
-        fair_up = {
-            "v1_r24": fair_v1(sig["r24"], sum_obs, spot, n_fut, N, K, count_obs),
-            "v2_r24": fair_v2(sig["r24"], spot, K, d_min, 1.0, realized_avg),
-            "v2_r60": fair_v2(sig["r60"], spot, K, d_min, 1.0, realized_avg),
-            "v2_ewma": fair_v2(sig["ewma"], spot, K, d_min, 1.0, realized_avg),
+        z_up = {
+            "v1_r24": fair_v1(sig["r24"], sum_obs, spot, n_fut, N, K, count_obs, return_z=True),
+            "v2_r24": fair_v2(sig["r24"], spot, K, d_min, 1.0, realized_avg, return_z=True),
+            "v2_r60": fair_v2(sig["r60"], spot, K, d_min, 1.0, realized_avg, return_z=True),
+            "v2_ewma": fair_v2(sig["ewma"], spot, K, d_min, 1.0, realized_avg, return_z=True),
         }
-        for cfg, fu in fair_up.items():
-            fu = min(max(fu, 0.005), 0.995)
-            fair_yes = fu if r["is_up_market"] else 1.0 - fu
+        for cfg, zu in z_up.items():
+            z_yes = zu if r["is_up_market"] else -zu
             rows.append({
                 "market_id": r["market_id"], "asset": asset, "hz": f"{hz_s}s",
                 "won": int(r["token_won"]), "ask": float(r["ask"]),
-                "fair": fair_yes, "cfg": cfg,
+                "z": z_yes, "cfg": cfg,
                 "in_final": in_final, "ts_ms": tsq,
             })
 
     df = pl.DataFrame(rows)
     df.write_parquet(str(REPO / "research" / "staleness" / "calibration_compare.parquet"))
-    lines = ["# Fair calibration comparison: v1 vs v2 (round 31)", "",
+    lines = ["# Fair calibration comparison: v1 vs v2 (rounds 31-32)", "",
              f"Quotes scored: {df.height // len(CONFIGS):,} x {len(CONFIGS)} configs "
-             "(all post-2026-08-14 => 60s-TWAP settlement regime)", ""]
+             "(all post-2026-08-14 => 60s-TWAP settlement regime). "
+             "z = log-space fair z-score; lambda = sigma multiplier fit by Brier.", ""]
     for cfg in CONFIGS:
         d = df.filter(pl.col("cfg") == cfg)
-        brier = float(((d["fair"] - d["won"]) ** 2).mean())
-        # ECE over bands
+        z = d["z"].to_numpy()
+        won = d["won"].to_numpy().astype(float)
+        # Brier-minimizing sigma multiplier: fair = Phi(z / lambda)
+        grid = np.arange(0.5, 8.001, 0.02)
+
+        def sigmoid(x):
+            out = np.empty_like(x)
+            pos = x >= 0
+            out[pos] = 1 / (1 + np.exp(-x[pos]))
+            ex = np.exp(x[~pos])
+            out[~pos] = ex / (1 + ex)
+            return out
+
+        briers = [float((((sigmoid(z / l)) - won) ** 2).mean()) for l in grid]
+        i = int(np.argmin(briers))
+        lam = float(grid[i])
+        fair = 1 / (1 + np.exp(-(z / lam)))
+        brier = float(((fair - won) ** 2).mean())
         ece = 0.0
         band_rows = []
+        df = df.with_columns(pl.when(pl.col("cfg") == cfg)
+                             .then(pl.col("z") / lam)
+                             .otherwise(pl.col("z")).alias("_z_cal")) if False else df
+        zc = d["z"].to_numpy() / lam
+        dcal = d.with_columns(pl.Series("fair_cal", sigmoid(zc)))
         for lo, hi in zip(BANDS[:-1], BANDS[1:]):
-            b = d.filter((pl.col("fair") >= lo) & (pl.col("fair") < hi))
+            b = dcal.filter((pl.col("fair_cal") >= lo) & (pl.col("fair_cal") < hi))
             if b.height < 30:
                 continue
-            mf, wr, n = float(b["fair"].mean()), float(b["won"].mean()), b.height
+            mf, wr, n = float(b["fair_cal"].mean()), float(b["won"].mean()), b.height
             ece += (n / d.height) * abs(wr - mf)
             band_rows.append((lo, hi, n, mf, wr, wr - mf))
-        lines.append(f"## {cfg}  —  Brier {brier:.4f}  ECE {ece:.4f}  (n={d.height:,})")
+        lines.append(f"## {cfg}  —  lambda* {lam:.2f}  Brier {brier:.4f}  ECE {ece:.4f}  (n={d.height:,})")
         lines.append("")
-        lines.append("| fair band | n | mean fair | realized | error |")
+        lines.append("| calibrated fair band | n | mean fair | realized | error |")
         lines.append("|---|---|---|---|---|")
         for lo, hi, n, mf, wr, err in band_rows:
             lines.append(f"| [{lo:.1f},{hi:.1f}) | {n:,} | {mf:.3f} | {wr:.3f} | {err:+.3f} |")
