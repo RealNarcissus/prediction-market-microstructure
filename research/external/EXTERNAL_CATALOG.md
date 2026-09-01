@@ -700,3 +700,13 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   full-sample 1.86-1.94 (stable). CAVEATS: test window only ~2.5 days ->
   trade-level bootstrap (CI optimistic vs daily-block); gate takes 40% of
   quotes (isotonic remap wide); mid-experiment wallet untouched.
+- 2026-09-02: round 34 — split sensitivity + residual attribution EXECUTED
+  (research/staleness/sensitivity_round34.py + SENSITIVITY_ROUND34.md):
+  (i) the +6.8c gate EV is robust across three temporal cuts (+6.81/+6.94/
+  +8.10 — rising with more train data; not a split artifact); (ii) extreme-
+  band residual attribution (n=23,492, lambda=1.85): flat across remaining
+  time (final-60s -0.006 vs d>=60s -0.010), mild asset variation (BTC
+  -0.014 / ETH -0.003 / SOL -0.012), horizon concentration (5m -0.002 vs
+  15m -0.012) — scale-factor signature (strike basis or fat tails), 5m
+  nearly perfectly calibrated. Next: strike-basis test needs Chainlink tape
+  (queued); daily-block CI waits for >=5 gated days (collector thickening).
