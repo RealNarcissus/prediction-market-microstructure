@@ -35,7 +35,7 @@ Verdict legend: **ACT** = actionable now; **REF** = keep as reference/tooling;
 
 - Why it changed: Stanford + SMU study ([arXiv:2606.31675](https://arxiv.org/abs/2606.31675)): **821 accounts earned $8.2M** pushing Binance BTC across the strike in the final 2–3s of snapshot-settled 5m windows (cost $5–20k to move spot → $50k+ payout; fragmented orders, off-hours timing). "A bet the market treated as near certain was overturned one time in three" (90%+ priced contracts flipped in manipulated windows). Ex-MMs, **93% of losses fell on retail**. Fix raises attack cost but sustained full-window pushes remain possible.
 - Kalshi comparison: CF Benchmarks index with 60-second moving average + KYC/CFTC.
-- **Impact on us**: (i) our updown historical data spans BOTH regimes → any label-based analysis should carry a settlement-regime flag (Aug 7 boundary); (ii) our CLT fair models a *running* TWAP to window close, but venue settles the **final 30s/60s average** — that averaging-window mismatch plausibly explains the overconfidence we measured (fair 95¢ → 73.5% realized): running-TWAP variance is lower than final-window variance, so our fair values are too extreme. Fix: recompute fair with final-window averaging (Var = σ²·w/3 for window w at distance d ≥ w; blends toward European digital for d < w); (iii) live wallet should avoid entries in the final ~90s (manipulation-noise zone; also the sniper-bots' contest zone).
+- **Impact on us**: (i) our updown historical data spans BOTH regimes → any label-based analysis should carry a settlement-regime flag (Aug 7 boundary); (ii) our CLT fair models a *running* TWAP to window close, but venue settles the **final 30s/60s average** — `research/staleness/fair_v2.py` implements the venue-accurate math (Var = σ²·w/3 for final window w at distance d ≥ w; σ²·d³/(3w²) blend inside the window; European digital for the snapshot regime). **CORRECTED (round 30)**: v1's running-TWAP sd is LARGER mid-window than v2's final-window sd (5m at open+60s: 1.21σ vs 0.577σ), so v2 fairs are MORE extreme — the averaging mismatch runs the OPPOSITE way from the earlier note and cannot explain the v1 overconfidence (fair 95¢ → 73.5% realized); surviving causes: σ understatement (r24 24-min lookback), strike basis (Binance 1m open vs Chainlink TWAP), adverse selection in observed quotes; (iii) live wallet should avoid entries in the final ~90s (manipulation-noise zone; also the sniper-bots' contest zone).
 
 | Fact | Detail | Impact on us |
 |---|---|---|
@@ -651,3 +651,11 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   18-section spec template; spread+lean archetype at \$131.85M scale).
   Remaining PR&R sports/politics method sections sampled-sufficient — same
   archetypes on other verticals. Drift clean (arXiv 2608.30999).
+- 2026-09-02: round 30 — research queue BEGUN: fair_v2 implemented
+  (research/staleness/fair_v2.py + tests/research/test_fair_v2.py, 7 tests
+  green; suite-external polars collection errors pre-existing in default
+  env). **Mechanism correction**: v1 running-TWAP variance is LARGER
+  mid-window than venue final-window → v2 more extreme → averaging mismatch
+  does NOT explain measured overconfidence; σ understatement / strike basis
+  / adverse selection elevated as candidate causes. Empirical re-test vs
+  resolutions + σ-lookback sweep = next research session. Drift clean.
