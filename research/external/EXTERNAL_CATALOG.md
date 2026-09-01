@@ -315,6 +315,13 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
 - Korea: strict gambling regime; no meaningful PM trading community surfaced across searches.
 - **Verdict: LANE CLOSED (negative)** — the absence of JP/KR practitioner content is regulatory, not a search failure. Revisit only if/when Polymarket's Japanese approval lands (~2030) or Gumi ships.
 
+**6f-2. Venue-lane completion: PRDT / Opinion / Predict.fun (round 28):**
+- **PRDT Finance** ([learn hub](https://prdt.finance/learn)): 1–30 minute Up/Down rounds, **fixed-time fixed-payout pool-odds model** — the platform sets payouts from pool-side odds; NOT a CLOB (no book, no maker mode, house edge built into the payout). Binary-options structure; DEFERRED (our taker logic would port but the pool's built-in edge makes it a different risk class; 80% revenue sharing for PRDT stakers).
+- **Opinion** ([docs](https://docs.opinion.trade), opinion.trade): **a genuine CLOB** on BNB Chain — order-book depth, trade prices, candles via a published [`opinion-clob-sdk`](https://pypi.org/) (Python); macro focus (Fed/CPI/jobs) plus crypto Up/Down (ETH/BNB/BTC price levels); YZi Labs-backed, ~$190.6M volume at launch, #3 among prediction markets. **Third CLOB venue** for the staleness engine; dr-manhattan already supports it.
+- **Predict.fun**: BNB-native, "**Polymarket-style order book exchange**", launch partner for Binance Wallet's in-app prediction market; acquired Probable. **Differentiator: yield-bearing collateral** — funds routed through Venus Protocol earn yield while parked (≈25% maker rebate on filled orders also mentioned). **Model implication**: yield-bearing collateral mechanically reduces the cost-of-carry that the capital-lock-up paper (round 9) says explains most long-dated "mispricing" — on Predict, near-certain long-dated contracts should price TIGHTER to $1 than on Polymarket. Our minutes-horizon lane is unaffected, but this is a real input for any cross-venue fair model.
+- Also noted: Polymarket itself is now live on BSC via partnership, with minute-level "BNB Up/Down 5m" markets — the venue is expanding the exact product we trade.
+- Drift checks clean (arXiv 2608.30999; PR&R still 36 reports).
+
 ### 6f. Kalshi crypto short-duration contracts — cross-venue comparison (round 8)
 
 - [Kalshi 15-min crypto category](https://kalshi.com/category/crypto/frequency/fifteen_min) + [hourly](https://kalshi.com/category/crypto/frequency/hourly) + [BTC main](https://kalshi.com/category/crypto/btc): **KXBTC15M** up/down contracts on BTC/ETH/SOL/XRP/BNB, 24/7, per-market volume >$1.1M, "up to 6x leverage" display.
@@ -632,3 +639,9 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   view. Traditional derivatives model, unrelated to the p·(1−p) curve —
   closes the LAST named open item in the catalog. Drift clean (arXiv
   2608.30999; PR&R still 36 reports; changelog last verified Aug 17).
+- 2026-09-02: round 28 — venue-lane completion (§6f-2): PRDT = fixed-odds
+  pool model (no book; deferred), Opinion = third CLOB venue with Python SDK
+  (macro + crypto Up/Down), Predict.fun = order book + Venus yield-bearing
+  collateral (reduces lock-up compensation → tighter long-dated fair; 25%
+  maker rebate; Binance Wallet integration). Polymarket live on BSC with
+  minute-level BNB 5m markets. Drift clean.
