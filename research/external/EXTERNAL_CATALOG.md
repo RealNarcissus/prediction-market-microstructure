@@ -201,6 +201,20 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 | Myriad (BNB Chain) | Casual/embedded AMM markets; case study in [arXiv:2601.01706](https://arxiv.org/html/2601.01706v1) "Semantic Non-Fungibility and Violations of the Law of One Price" (deterministic AMM pricing rules → LoOP violations) | REF — the academic entry point for AMM-based rival venues; connects to §4b LMSR lane |
 | PRDT Finance + [Alchemy's 56 Web3 PM list](https://www.alchemy.com/dapps/best/web3-prediction-markets) | More up/down-style platforms | REF (venue map) |
 
+### 6c-2. PR&R — on-chain bot forensics site (round 13, SLIP-ME report fetched in full)
+
+[Poly Research & Robotics](https://www.polyresearchrobotics.com/reports/slip-me) publishes systematic wallet-forensics reports on Polymarket traders (reports 001+, incl. SIRMARTINGALE, ohanism; + a Strategy Database and Data Resources section). **The highest-quality external analysis found in this sweep** — every fill mapped, two-leg P&L decomposition, reproducibility grading.
+
+**SLIP-ME report (Report 009, 2026-05-01) — the definitive 5m-BTC bot anatomy:**
+- 188,932 trades / 4,725 markets / 23 days; 4,723 of 4,725 markets = btc-updown-5m (pure specialization; the 2 outliers are a routing bug). Flat 6,500–9,700 trades per UTC hour — **no session/weekend edge**.
+- **Net +$111.8K; ROI +2.59% on $4.32M deployed; win rate 53.4%; 22/22 green days.**
+- **Two-leg decomposition**: quotes both YES+NO on 98.6% of markets (~40 fills each) → the "spread leg" **bleeds −$97,523** (median paired cost $1.0183 — above par!). The directional leg — **loading the winner in the final 90 seconds** as the BTC tick carries one side toward certainty — earns **+$204,450**. Presence costs money; information + timing pays.
+- 5×+ skewed markets: dominant side wins **99.8%** of the time.
+- Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
+- **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
+
+Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone is now triple-documented (manipulation study, sniper bots, SLIP-ME's profit engine) — it is where real money operates with slip-tolerant tooling; our no-entry rule stays correct for a $5 paper wallet but the zone deserves explicit modeling if we ever scale. (ii) Surface metrics mislead: a "53.4% WR maker" is actually a directional late-loader bleeding spread — the two-leg decomposition lens should be adopted for our own wallet reporting. (iii) Presence-based quoting as an information cost is a maker-mode design input.
+
 ### 6c. Whale tracking / analytics tools (round 3)
 
 | Tool | What it does | Verdict |
@@ -440,3 +454,13 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
   hyper-competitive"), 10,000-season simulation ("only 3 strategies survived —
   model-driven positive-EV ones") — corroborates Foresight 25→4 and our
   29-trial/5-keep ledger. No TWAP-for-Polymarket articles on Zhihu.
+- 2026-09-02: round 13 — drift checks clean (arXiv newest still 2608.30999;
+  changelog newest still Aug 17). Reddit scan surfaced PR&R
+  (polyresearchrobotics.com) — on-chain bot-forensics reports; SLIP-ME report
+  fetched in full (§6c-2): 188,932 fills mapped, two-leg decomposition
+  (spread leg −$97.5K as cost of presence, final-90s directional leg
+  +$204.5K, net +$111.8K/23d at 2.59% ROI), 5×-skew → 99.8% win rate,
+  pair-cost $1.0183 > par resolves the 101¢/rebate question (mechanical
+  pair-arb net-negative at taker prices). New: Gabagool bot profile
+  ($100k/mo, waits for cheap mispriced moments = our trade shape),
+  r/Polymarket TA-on-live-BTC thread (retail fair-value instinct).
