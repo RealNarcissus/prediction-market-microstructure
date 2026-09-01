@@ -625,3 +625,10 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   1-2min) = the favorite trade at retail level. No CSDN results this week.
 - 2026-09-02: round 26b — changelog verified on retry: newest entry still
   Aug 17 (50ms taker delay). No venue drift across rounds 22–26.
+- 2026-09-02: round 27 — Perps fees page fetched (transient failures
+  resolved by retry loop): flat notional-rate tiered schedule — taker
+  0.0400%→0.0200% (\$1B+ tier), maker 0.0125%→−0.0050% rebate at top tier;
+  fee = abs(Price × Quantity) × Rate, daily tier re-eval, 7-day metrics
+  view. Traditional derivatives model, unrelated to the p·(1−p) curve —
+  closes the LAST named open item in the catalog. Drift clean (arXiv
+  2608.30999; PR&R still 36 reports; changelog last verified Aug 17).
