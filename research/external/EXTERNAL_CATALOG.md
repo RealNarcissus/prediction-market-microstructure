@@ -228,6 +228,11 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 
 **PR&R Mean-Reversion Guide G·001 (round 20, method fully captured):** [Stealing HFT's mean reversion playbook](https://www.polyresearchrobotics.com/guide/mean-reversion-polymarket-bot) — free, with worked code and a worked example on the BTC 15-min Up/Down market. Method (11 steps): prices → log returns → lag-1 autoregression → **sign encoding (magnitude deliberately discarded)** → group by prior-move direction → compute conditional next-return stats per bucket → **out-of-sample validation pipeline** → signal → trade → evaluate. Framing: pro mean reversion is not Bollinger Bands — it is "recent moves get unwound" measured as conditional probability. Two claims worth keeping: (i) **bounded probability prices make reversion mechanically more likely** (a market at 0.85 cannot trend to infinity); (ii) most published strategies overfit patterns that evaporate by deployment — hence the OOS pipeline as the core discipline. Worked-example result numbers sit deeper in the page (re-read next round); method is the transferable part. **Relevance to us**: this is the conditional-reversal measurement our chop-regime findings and Binance-Square contrarian experiment point to, formalized for our markets; the sign-lag conditional stats are a cheap addition to our next evaluator run.
 
+**Deep-reads (round 23): vidarx + gghff.**
+- **vidarx** (Trader Analysis, Apr 19): $11.99M volume, 1,025,590 BUY / 8 SELL, **win rate 48.4%** (below coin-flip) yet +$103,949 realized — a pure spread/inventory MM whose profit is invisible in surface metrics and only appears in the conviction-curve decomposition. Third documented case (after SLIP-ME's 53.4% and the 1.4%-WR maker) that win rate carries zero signal about edge quality on these books.
+- **gghff** (Trader Report, May 13): **not crypto — a weather bot**. The entire 13,004-trade book is daily temperature-distribution markets (Singapore, Miami, Warsaw, Houston, London, Seoul, …): buy every bucket in a city's temperature distribution, weight toward the most probable outcomes, collect at settlement. +$10,926 at **+9.9% ROI** — the highest high-frequency ROI in the PR&R set, earned from a meteorological-model edge (better forecast distributions than the market's), not from microstructure. Confirms the weather category of the 297-strategy database is genuinely profit-bearing for model-advantaged traders — an entirely different edge class (information/model quality) from our staleness lane.
+- Classification now 16 of 36 reports.
+
 **PR&R classification sweep (round 22, descriptors read for 8 more reports — 14 of 36 total):**
 - **vidarx**: always-on crypto bot, 1,025,598 BUY tickets / 8 SELLs, $11.99M deployed, +$103,949 — "**a conviction curve that suggests a real edge underneath the spread book**" → same class as BONEREAPER; top-priority unread alongside gghff.
 - **gghff**: 13,004 trades / 23d, **+9.9% ROI** — the highest ROI among high-frequency wallets.
@@ -578,3 +583,8 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   total): ROI-convergence insight established (all high-volume bots 0.3-9.9%
   monthly ROI; vidarx conviction-curve bot and gghff highest-ROI flagged for
   deep-read). Drift checks clean (arXiv 2608.30999; changelog Aug 17).
+- 2026-09-02: round 23 — vidarx + gghff deep-read (§6c-2, 16/36 classified):
+  vidarx = 48.4%-WR profitable MM (win-rate-meaningless, case 3); gghff =
+  weather-distribution bot at +9.9% ROI (model-quality edge, different class
+  from microstructure lanes). Drift checks clean (arXiv 2608.30999;
+  changelog Aug 17).
