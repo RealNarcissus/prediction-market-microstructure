@@ -213,6 +213,13 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
 - **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
 
+**PR&R Strategy Database + site facts (fetched round 16):**
+- [Strategy Database](https://www.polyresearchrobotics.com/strategies): **297 cataloged strategies**, sortable by technique and market category (crypto, sports, esports, weather, macro, stocks, politics, mentions…), each with a full write-up (mechanics, requirements, applicable Polymarket markets, needed datasets). Arbitrage section alone: 34 entries — notable for us: **Pre-Resolution Oracle-Lag Lock-In** (our staleness trade under another name), Resolution-Source Scrape-to-Order First-Mover (strategy H's law applied to resolution feeds), Settlement-Timing Funding Arbitrage, Kalshi-Polymarket Identical-Contract Relative Value, Split/Merge Redemption Arbitrage (CTF), Multi-Outcome Overround Shorting (Dutch-book lay).
+- **94 bot-building data resources** (APIs, websockets, RSS, data providers, live-odds services) — the richest tooling map found.
+- **TWAP Price Feed product** (Data Store) — venue-native settlement-series access; a candidate source for action #10 (fair-model TWAP input) if licensing is reasonable.
+- Business model (via /llms.txt): guides, trader reports, and strategy database are **free**; funded by the historical-data store; no affiliate deals; 1,000+ member Discord; site updated 2026-08-27. Every page serves `Accept: text/markdown` / `.md` suffix (agent-friendly).
+- Verdict: **KEEP-CORNERSTONE (reference hub)** — the 297-strategy catalog is the comprehensive map of the technique space; deep-reads of the ~10 strategies intersecting our lanes (staleness, TWAP, MM, crypto up/down) are queued.
+
 **ohanism report (Trader Report, 2026-05-08) — the third archetype, hybrid at scale:**
 - 694,439 trades / 37,982 markets / 27 days (~21,800/day, 24/7, BTC/ETH/SOL/XRP Up/Down = 99.2% crypto); **+$258,687 on $8.57M deployed = +3.02% ROI**; 64.4% win rate; avg position $14.
 - **Hybrid MM + directional**: pairs both sides 33.3% of the time (locks spread when the pair is cheap), expresses directional views the other 67%, **using the dominance ratio on paired fills as the conviction signal**.
@@ -486,3 +493,8 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   as conviction signal). All three PR&R trader reports now read; PR&R
   Strategy Database remains on watch. Practitioner content scan: no new
   items beyond rounds 13-14 findings (same-day re-scan).
+- 2026-09-02: round 16 — drift checks clean (arXiv 2608.30999; changelog
+  Aug 17). PR&R Strategy Database fetched (§6c-2): 297 strategies + 94 data
+  resources + TWAP Price Feed product; site is free/data-funded (llms.txt);
+  deep-reads of the ~10 strategies intersecting our lanes queued. All named
+  PR&R items now captured.
