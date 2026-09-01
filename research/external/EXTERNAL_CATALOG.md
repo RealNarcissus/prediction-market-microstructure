@@ -228,6 +228,11 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 
 **PR&R Mean-Reversion Guide G·001 (round 20, method fully captured):** [Stealing HFT's mean reversion playbook](https://www.polyresearchrobotics.com/guide/mean-reversion-polymarket-bot) — free, with worked code and a worked example on the BTC 15-min Up/Down market. Method (11 steps): prices → log returns → lag-1 autoregression → **sign encoding (magnitude deliberately discarded)** → group by prior-move direction → compute conditional next-return stats per bucket → **out-of-sample validation pipeline** → signal → trade → evaluate. Framing: pro mean reversion is not Bollinger Bands — it is "recent moves get unwound" measured as conditional probability. Two claims worth keeping: (i) **bounded probability prices make reversion mechanically more likely** (a market at 0.85 cannot trend to infinity); (ii) most published strategies overfit patterns that evaporate by deployment — hence the OOS pipeline as the core discipline. Worked-example result numbers sit deeper in the page (re-read next round); method is the transferable part. **Relevance to us**: this is the conditional-reversal measurement our chop-regime findings and Binance-Square contrarian experiment point to, formalized for our markets; the sign-lag conditional stats are a cheap addition to our next evaluator run.
 
+**PR&R data store + 94-resource directory (round 25, both fetched):**
+- **Data store** ([/data](https://www.polyresearchrobotics.com/data)): pre-built backtest datasets as Parquet ZIPs. **Crypto: full-depth Up/Down books (BTC/ETH/SOL/XRP/BNB/DOGE), 5m+15m cycles, 1-second cadence — each coin folder bundles the order books WITH Binance 1-second klines AND the Chainlink reference feed** (the complete fair-model input bundle; $25/mo or $50/3-mo). Free samples: 80 cycles of BTC/ETH/SOL/XRP books (9 MB) + sports/esports/weather samples, free with account + Discord verification.
+- **Data-resources directory** ([/strategies/resources](https://www.polyresearchrobotics.com/strategies/resources)): the 94 bot-building feeds, categorized — crypto exchange WS/REST (Binance spot+futures WS, Coinbase, Kraken v2, Bybit V5, CoinGecko, CoinMarketCap, CoinDesk/CCData), oracle feeds (**Chainlink Data Streams WS, Pyth Hermes WS+REST, Polymarket RTDS**), sports odds (TheRundown, Sportradar, OddsPapi, SportsGameOdds, The Odds API, ESPN hidden scoreboard, MLB GUMBO, API-Sports), esports (PandaScore, GRID.gg, Riot, Steam Dota2, HLTV, Abios, OpticOdds), weather (NWS, Open-Meteo, Tomorrow.io, Meteomatics, AccuWeather, Weatherbit, Visual Crossing, Xweather, WeatherFlow), macro (FRED, BLS v2, Treasury Fiscal Data).
+- **Verdict: KEEP-CORNERSTONE (input-feed map)** — for our lanes the additions are Chainlink Data Streams WS + Polymarket RTDS (both already action-queued) and Pyth Hermes as an alternative oracle cross-check; the weather/macro/sports feeds map the other verticals' edge sources (gghff-style). Free samples noted as the zero-cost validation path for the data bundle.
+
 **PR&R classification COMPLETE — all 36 reports (round 24):**
 - **bonereaper-update**: 44 days (vs the original's 22), 2.69M trades / 37,228 markets, +$458,493 but at **+0.2% ROI — marginal ROI diluted ~7.5× as the fair-value MM scaled up**. The single most important new data point: even the best forensicated bot's edge decays with size (capacity constraint on the fair-value MM lane).
 - **sinenooneei**: 2,057 trades / 265 markets, **+$349,407 at +16.3% ROI** — the new ROI leader, at LOW frequency (a concentrated specialist, not a bot grid); reinforces that high ROI lives in selectivity, not throughput.
@@ -601,3 +606,9 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   leader, concentrated specialist), doggystyie -1.0% (losing big bot). No
   BTC-specific reports remain unread — crypto lane of PR&R fully mined.
   Drift checks clean (arXiv 2608.30999; changelog Aug 17).
+- 2026-09-02: round 25 — PR&R data store + 94-resource directory captured
+  (§6c-2): full-depth 1s books bundled with Binance 1s klines + Chainlink
+  reference feed ($25/mo, 80-cycle free sample); resources categorized
+  (crypto/oracle/sports/esports/weather/macro feeds). PR&R site now fully
+  perused end-to-end. Drift checks clean (arXiv 2608.30999; changelog
+  Aug 17).
