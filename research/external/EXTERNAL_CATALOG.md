@@ -418,3 +418,12 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
   only reposts/guides + the BlockBeats fee-timeline story (recorded);
   deployment/API-overview/AI-agent articles = REF-grade, copy-trading guide
   DISCARD. Perps fees page remains JS-walled (deferred, low relevance).
+- 2026-09-02: round 11 (monthly cadence) — arXiv q-fin.TR recent scanned with
+  titles (§4: 2608.21888 15m mean-reversion-in-crypto measurement = research-
+  queue cross-check; 5 more REF titles). Changelog watch: NO entries after
+  Aug 17 → no fee/parameter drift since the round-10 pin; watch continues.
+  Perps context from CN scan: launched 2026-04-21, 10x leverage, funding-rate
+  mechanism (separate product, low relevance; fee page stays deferred);
+  QQ News history note: crypto maker rebate share previously 100% → now 20%.
+  CN fee-formula restatement (Foresight) is a garbled version of the docs
+  curve — docs + changelog remain authoritative.
