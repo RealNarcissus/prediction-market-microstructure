@@ -213,6 +213,13 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 - Reproducibility grade: "Logic yes, scale harder" (logic reproducible, capital scale is the barrier).
 - **Resolves the 101¢/rebate question empirically (action #9)**: pair-buying at market costs $1.0183 > $1.00 → mechanical pair-arb at taker prices is NET NEGATIVE; the "101¢ per pair" marketing requires maker-rebate flow, which SLIP-ME (a buyer) doesn't earn.
 
+**SIRMARTINGALE report (Report 008, 2026-04-29) — the working latency-arb archetype:**
+- +$119.6K / 28d, **ROI +82.95%** on ~$361K turnover, 23,440 trades / 3,996 markets, 38.4% win rate, 26/27 green days.
+- Directional micro-arb on 5m+15m BTC (78%) / ETH (22%) Up/Down only: watches the spot tape, fires a directional buy when one side of the book prices under his fair value, then **unloads aggressively into orderbook strength before resolution** — an arbitrageur of the few-second spot-tape↔CLOB lag, NOT a hold-to-settlement trader.
+- Bounded sizing throughout ($366 max fill, $134 P99) despite the Martingale name; 2026 era: this is the lane dynamic taker fees compressed but small capital with fast exits still works.
+- Reproducibility grade: "Hard — spot feed + low latency" (vs SLIP-ME's "logic yes, scale harder").
+- **Design contrast for our records**: SLIP-ME = big capital, presence quoting, holds to resolution, final-90s loading; SIRMARTINGALE = small capital, no presence cost, sells the reversion once the book reprices. Our taker model is closer to SIRMARTINGALE's entry logic (fair-vs-price gap) but holds to settlement — the "sell into the catch-up" exit is a candidate variant to simulate before our next wallet checkpoint.
+
 Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone is now triple-documented (manipulation study, sniper bots, SLIP-ME's profit engine) — it is where real money operates with slip-tolerant tooling; our no-entry rule stays correct for a $5 paper wallet but the zone deserves explicit modeling if we ever scale. (ii) Surface metrics mislead: a "53.4% WR maker" is actually a directional late-loader bleeding spread — the two-leg decomposition lens should be adopted for our own wallet reporting. (iii) Presence-based quoting as an information cost is a maker-mode design input.
 
 ### 6c. Whale tracking / analytics tools (round 3)
@@ -464,3 +471,7 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   pair-arb net-negative at taker prices). New: Gabagool bot profile
   ($100k/mo, waits for cheap mispriced moments = our trade shape),
   r/Polymarket TA-on-live-BTC thread (retail fair-value instinct).
+- 2026-09-02: round 14 — drift checks clean (arXiv 2608.30999; changelog
+  Aug 17). PR&R SIRMARTINGALE report fetched (§6c-2): working latency-arb
+  archetype, +82.95% ROI/28d, sell-into-catch-up exit (hold-vs-exit variant
+  flagged for wallet simulation). ohanism report remains unread (watch).
