@@ -966,6 +966,21 @@ independent implementation.
   4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
   2 ticks on 452 matched seconds — recordings consistent, no systematic
   discrepancy. Tape 1.06h. Drift clean.
+- 2026-09-02: round 56 — **EVALUATOR PLACEHOLDER CONTAMINATION CONFIRMED
+  (record-level)**: of the 2,341 April-era entry prices the 24-bucket
+  evaluator took from the updown price files at open+60s, **68.7% are
+  both-sides-stuck 0.50 placeholders, 10.9% have the up-side stuck, and only
+  20.4% (477) are live** (ETH 5m: 99.1% placeholder; SOL 5m: 99.3%). Two
+  record-level consequences: (i) the Branch-A "no bucket promotes" null was
+  computed on ~80% fake entry prices — it was never a valid test; the
+  accurate statement is that the April-era bucket test is INVALID due to
+  placeholder contamination, not that no edge exists in those buckets;
+  (ii) outcome labels were independent of entry prices, so accuracy metrics
+  stand. The round-31+ fair_v2/λ/re-test work is UNAFFECTED (built on
+  collector quotes, not the updown files). A corrected April-era bucket
+  re-run on the ~477 live entries is possible but N≥150/bucket is unlikely;
+  the live quote-based pipeline supersedes it. Also queued: apply the
+  placeholder filter to any future use of the updown price files.
 - 2026-09-02: round 55 — DEEP kacho pass resolved + a data-hygiene finding:
   the round-54 discrepancy (0.225 median across 671 markets) was **380,000
   placeholder rows (up_price == 0.50 exactly) in our updown price files** —
