@@ -770,3 +770,13 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   (+20-25c/trade conditional on fills) as the price of execution speed —
   SIRMARTINGALE-class latency revenue — and confirms hold-to-settlement is
   the correct baseline at our polling cadence. No deployable edge claimed.
+- 2026-09-02: round 40 — DAILY-BLOCK MILESTONE: collector crossed >=5 gated
+  UTC days; re-test re-run with fresh data (101,581 quotes scored, +4k vs
+  round 31) and the daily-block bootstrap now fires: **v2_ewma EV +7.61c/
+  trade, daily-block CI [+4.92, +10.19]** — excludes zero on the honest
+  day-level basis (v1_r24 +5.89c [+4.03,+7.87]); favorites control negative
+  (-3.69c [-5.05,-2.27]); lambda* stable across the added days (1.86-1.96).
+  The wider CI vs trade-level ([+6.29,+7.32] in round 33) is the expected
+  day-clustering correction. Weekly re-test checkpoints continue; the
+  wallet decision gate (2 consecutive all-weeks-positive weeks on the live
+  $5 ledger) is unchanged and separate.
