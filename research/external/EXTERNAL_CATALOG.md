@@ -1,4 +1,14 @@
 
+### 2k. Calibration-study lane (round 96 — all updated 2026-09-02)
+
+- [0xalgod/weather-prediction](https://github.com/0xalgod/weather-prediction): data-driven quant research for Polymarket weather markets — probabilistic forecasting + calibration. **KEEP-REF** (the gghff lane, open-sourced).
+- [bhavysajha-dev/prediction-market-risk](https://github.com/bhavysajha-dev/prediction-market-risk): offline point-in-time probability lab with calibration and model-risk controls. **KEEP-REF**.
+- [JakeCallcut/prediction-market-calibration](https://github.com/JakeCallcut/prediction-market-calibration): research tooling for evaluating prediction markets. **KEEP-REF** (directly our evaluation discipline).
+- [thierrypdamiba/teeth](https://github.com/thierrypdamiba/teeth): agent evals scored on live prediction markets ("they can't game"). **KEEP-REF (novel application)** — PMs as an AI-agent benchmark.
+- [Vladosyna/prediction-market-forecast-lab](https://github.com/Vladosyna/prediction-market-forecast-lab): pre-registered read-only study of model forecasts vs prediction markets. REF.
+- [meliasean/CourtIQ](https://github.com/meliasean/CourtIQ) (★2): end-to-end ML for ATP tennis prediction with probabilistic calibration. REF.
+- **Signal**: the calibration-methodology lane is ACTIVE — multiple repos published today on exactly the evaluation discipline our round-31+ work implements (Brier/ECE/band tables). The field is converging on calibration-first evaluation.
+
 - 2026-09-02: round 94 — zone still failing fresh resolution (TWAP retry
   active; tape stale ~2.7h). CI checkpoint on fresh data (109,307 quotes):
   **v2_ewma +7.96c/trade, daily-block CI [+5.42,+10.30]** — stable across
@@ -1332,3 +1342,7 @@ two independent, mutually consistent measurements of the same edge class.
   BTC arb bot (strategy B for our product pair) + a synthetic-arb variant —
   the cross-venue lane is live and competitive. Copy-trade/AI repos
   DISCARD. Drift clean (arXiv 2608.30999; changelog unchanged).
+- 2026-09-02: round 96 — calibration-study lane expansion (§2k): six repos
+  updated today on prediction-market calibration/evaluation — the field is
+  converging on calibration-first methodology. CI checkpoint: v2_ewma
+  +8.04c [+5.48,+10.47] (9th stable checkpoint).
