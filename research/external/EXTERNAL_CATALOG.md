@@ -992,6 +992,17 @@ independent implementation.
   prices; queued check); (ii) the tick-level agreement result is now
   confirmed on the deep sample (live rows only). Placeholder-vs-live
   distinction = consecutive identical 0.50 runs, trivially detectable.
+- 2026-09-02: round 58 — strike-basis DISTRIBUTION established (9 windows ×
+  3 assets, tape 1.41h): **27/27 windows negative; basis ≈ −5.5bp
+  systematic** (BTC mean −5.5 [−4.7,−7.5]; ETH −5.2; SOL −5.9 [−0.1,−11.0]).
+  A LEVEL bias between Chainlink-TWAP strikes and Binance-open proxies, not
+  drift (drift would average out across windows). Magnitude: half a
+  calibrated σ (σ_eff ≈ 11bp) — and it produces opposite-sign fair errors
+  on up vs down markets, which the variance-only λ fit cannot absorb. This
+  is the first decomposed component of the extreme-band residual: the
+  corrected fair uses K_chainlink ≈ K_binance × (1 − 5.5e-4) once the 24h
+  tape confirms stability across regimes. collector_verify re-run: PASS
+  (315,884 quotes; tape 14,226 rows clean).
 - 2026-09-02: round 57 — corrected April-era re-run CLOSED as impossible
   with local data: (i) the updown file's `resolution` column is 99% unset
   (708 of 714 BTC 5m entries carry -1) — the labels the historical
