@@ -780,3 +780,15 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   day-clustering correction. Weekly re-test checkpoints continue; the
   wallet decision gate (2 consecutive all-weeks-positive weeks on the live
   $5 ledger) is unchanged and separate.
+- 2026-09-02: round 41 — STRIKE-BASIS JOB STEP 1 COMPLETE: Chainlink TWAP
+  tape collector is LIVE on the credential-free RTDS relay
+  (wss://ws-live-data.polymarket.com). Protocol reverse-engineered from
+  @polymarket/client 0.8.1: subscribe = {"action":"subscribe",
+  "subscriptions":[{"topic":"crypto_prices_twap_sixty","type":"update"},...]}
+  (server keys crypto_prices_twap_{thirty,sixty}; symbols filtered
+  client-side; Origin header REQUIRED — bare connects are reset).
+  research/staleness/twap_collector.py captures ~1s-cadence
+  btc/eth/sol-usd TWAP values for both windows (349 rows in 60s verified,
+  windows disambiguated via envelope topic; connect-retry added for the
+  flaky gateway). Once the tape spans full windows alongside quotes, the
+  strike-basis decomposition replaces the Binance-proxy strike.
