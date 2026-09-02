@@ -184,6 +184,16 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 | [cnyes 鉅亨網: bot wallet analysis](https://news.cnyes.com/news/id/6455403) (CN) | Top profitable wallets ~70% bots; top-5% bot-suspected wallets = 75% of volume; **823 wallets with >$100k net profit since Jan 2025**; thesis "AI hasn't taken over prediction markets yet" | **KEEP-INSIGHT**: profit is concentrated but the tail is real (823 wallets >$100k) — the size of the genuine-edge population is non-trivial; consistent with maker/arb concentration rather than directional skill |
 | r/algotrading: open-source MM bot (MIT) | Author: CLOB liquidity "utterly useless" in most markets | REF — liquidity depth matters for sizing; consistent with our asks 25–75¢ EV concentration and 5-share min |
 
+- 2026-09-02: round 54 — kacho TICK-LEVEL cross-check EXECUTED (btc_ticks
+  downloaded, 4.7M rows of per-second top-of-book with bid/ask/sizes; 182MB
+  kept local): on overlapping markets (2 with exact-second joins ≥60
+  samples; 452 matched seconds) **median |our up_price − kacho mid| = 0.005
+  (half a tick), 64.8% within 1 tick, 86.9% within 2 ticks** — two
+  independent recorders sampling the same book at offset moments, no
+  systematic discrepancy. Complements the outcome-level check (91.56%,
+  round 36) with price-level agreement. Optional deeper pass: ±2s
+  tolerance join across all 2,066 overlapping markets.
+
 ### 5b. BTC5MScour full forensics (round 53, report body fetched)
 
 - The strategy in one line: **"not about knowing where Bitcoin is going; it
@@ -952,3 +962,7 @@ independent implementation.
   capital, 1.77% ROI/26d) + the June 21 anomaly (−$2,460 single-market
   tail) as the documented failure mode our final-90s rule avoids. Tape
   1.02h. Drift clean (arXiv 2608.30999).
+- 2026-09-02: round 54 — kacho tick-level check EXECUTED (182MB tick file,
+  4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
+  2 ticks on 452 matched seconds — recordings consistent, no systematic
+  discrepancy. Tape 1.06h. Drift clean.
