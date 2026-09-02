@@ -900,3 +900,11 @@ public test.
 - 2026-09-02: round 50 — atalaydor dataset inspected: pipeline-in-construction
   (canary-gated, no data published yet) → DEFER on publication. Tape 0.84h.
   Drift clean (arXiv 2608.30999).
+- 2026-09-02: round 51 — collector replay/verify mode IMPLEMENTED and run
+  (research/staleness/collector_verify.py + VERIFY_REPORT.md; the discipline
+  adopted from the 0xpoot-poot recorder, round 49): **PASS** — 315,026
+  quotes with zero duplicate keys and zero non-monotonic markets; 2.33%
+  crossed-book rows (analysis-filtered anyway); top poll gaps 705-813s
+  (WARN only, better than the historical 497+ min gaps); resolutions clean;
+  TWAP tape 10,050 rows zero anomalies. Gates: tape 1.0h / daily-block days
+  accumulating — unchanged.
