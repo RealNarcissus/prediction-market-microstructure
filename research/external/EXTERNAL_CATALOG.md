@@ -1071,6 +1071,13 @@ two independent, mutually consistent measurements of the same edge class.
 - [draxmit/prediction-market-accuracy-study](https://github.com/draxmit/prediction-market-accuracy-study) (created 2026-09-02): EDA on ~100k resolved markets (Kalshi/Manifold/Polymarket). Findings: **confidence is the strongest predictor of directional accuracy** (>90% confidence → <5% wrong-direction; near 50% → coin flip) — matching BONEREAPER's dominance curve and our calibration signature at scale; **YES bias**; keywords "coinflip"/"anytime"/"daily" are 6–9× overrepresented in wrong-direction outcomes. **KEEP-REF (comparative calibration study)**.
 - [Nabeel-javed/polymarket-strategy-lab](https://github.com/Nabeel-javed/polymarket-strategy-lab) (created 2026-08-28): read-only $200 LP-only experiment testing long-duration liquidity rewards + **BTC 15-minute maker rebates**; simulates pro-rata reward accrual, the $1 daily payout minimum, and the live taker-fee schedule; uses the same market WS endpoint as our collector. **KEEP-REF (maker-mode runnable reference)**.
 - [Cleverfuxaqo1668/Polymarket-Telegram-Bot](https://github.com/Cleverfuxaqo1668/Polymarket-Telegram-Bot) (★168 in <1 week): fastest-growing new repo, likely funnel — watch only. The rest of the born-this-week set is unstarred/spam (DISCARD).
+
+### 2j. Kalshi tooling lane (round 81 — repos pushed today)
+
+- [haoo99/Polymarket-Kalshi-Arbitrage-Bot](https://github.com/haoo99/Polymarket-Kalshi-Arbitrage-Bot) (★3, pushed 2026-09-02): real-time arb on **Polymarket↔Kalshi 15-min BTC** price gaps — the compendium's strategy B built for OUR exact product pair. **KEEP-REF**: read when the second-venue port advances (their gap detection and venue-pairing code are directly reusable).
+- [Crayz916/prediction-market-arbitrage-bot](https://github.com/Crayz916/prediction-market-arbitrage-bot) (pushed today): synthetic PM↔Kalshi arb — second implementation, same lane. REF.
+- The copy-trade repos (Singhalesebradycardia99, UnitedStars111) and AI-lane (anglil Gemini bot) remain DISCARD per standing rules; "self-improving bot" marketing (mehpackers13) DISCARD.
+- **Signal**: the PM↔Kalshi 15-min BTC arb lane is live and actively built by multiple parties — the compendium's "windows shrinking" assessment confirmed; our cross-venue entry (if any) would compete here.
 - 2026-09-02: round 54 — kacho tick-level check EXECUTED (182MB tick file,
   4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
   2 ticks on 452 matched seconds — recordings consistent, no systematic
@@ -1235,3 +1242,7 @@ two independent, mutually consistent measurements of the same edge class.
   calibration EDA (~100k markets — confidence-accuracy curve matches ours at
   scale; YES bias; keyword effects) and Nabeel-javed strategy-lab (LP + 15m
   maker-rebate simulation, runnable). Tape 2.58h. Drift clean.
+- 2026-09-02: round 81 — Kalshi tooling lane (§2j): haoo99 PM↔Kalshi 15-min
+  BTC arb bot (strategy B for our product pair) + a synthetic-arb variant —
+  the cross-venue lane is live and competitive. Copy-trade/AI repos
+  DISCARD. Drift clean (arXiv 2608.30999; changelog unchanged).
