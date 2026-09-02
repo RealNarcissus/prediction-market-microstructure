@@ -1,3 +1,8 @@
+
+- 2026-09-02: round 74 — CI checkpoint (103,435 quotes): **v2_ewma +8.50c/
+  trade, daily-block CI [+5.48,+12.05]** — fifth consecutive stable/
+  strengthening confirmation; Brier 0.1716 (still improving); lambda 1.86.
+  Tape 2.64h. Drift clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
 Started 2026-09-01 (sweep ongoing per user objective: broad continuous scan of
