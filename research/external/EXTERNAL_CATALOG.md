@@ -1135,6 +1135,11 @@ two independent, mutually consistent measurements of the same edge class.
   quotes zero dups/non-monotonic; crossed 2.32% stable; TWAP tape 26,417
   rows across 12 files zero anomalies — integrity holds as the tape
   doubles). Reddit fresh scan: blocked (known pattern). Drift clean (arXiv
+
+- 2026-09-02: round 69 — CI checkpoint (103,281 quotes): **v2_ewma +8.46c/
+  trade, daily-block CI [+5.48,+11.94]** — fourth consecutive stable
+  confirmation, Brier marginally improving (0.1717). Reddit search-based
+  scan: empty shell (blocked). Drift clean (arXiv 2608.30999).
   2608.30999).
   clean (arXiv 2608.30999).
   (521, known pattern).
