@@ -38,6 +38,17 @@
   concept). Nothing research-grade beyond watch items; Cleverfuxaqo
   Telegram bot now ★168. Tape 8.64h (unchanged span — the service session
   is steady). Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 79 — spread-capture guide's "no exit management" section
+  extracted: **once a balanced pair is locked at blended cost < $1.00, any
+  exit destroys guaranteed margin** ("no stop-losses, no take-profits, no
+  mid-window sells... the correct behavior given the structure"). NOTE the
+  scope: that logic is PAIR-specific — a one-sided directional position
+  (ours) carries direction risk, so exits remain a live design question for
+  us (round-33/39/abrownfox analyses). Their settlement-listener pattern
+  (resolution events → per-market P&L → session totals) mirrors our live
+  wallet's resolution handling. Tape 8.64h (span unchanged — wall-clock
+  minutes since round 78). Drift clean (arXiv 2608.30999).
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
