@@ -734,3 +734,12 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   fee_rate_bps=1000 populated on 15,055 markets from 2026-03-27 (Fee
   Structure V2 era), then unset (-1) on 63,953 later markets (feeRateBps
   deprecated at CLOB V2 Apr 28, fees set at match time). Drift clean.
+- 2026-09-02: round 37 — kacho cross-validation extended to ETH and SOL
+  (data/external/{eth,sol}_markets.parquet): ETH 93.34% (575/616), SOL
+  91.07% (561/616) — combined with BTC, 1,848 both-known market pairs at
+  ~92.0% agreement, uniform across assets. The consistent ~8% divergence is
+  a systematic source difference (kacho tick-inferred outcome vs venue
+  official resolution field), not asset noise and not label inversion.
+  External label cross-check for the April-era updown lane: COMPLETE.
+  Tick-level files available on HF for a deeper future check (redirect
+  sizes to be confirmed via ranged GET). Drift clean (arXiv 2608.30999).
