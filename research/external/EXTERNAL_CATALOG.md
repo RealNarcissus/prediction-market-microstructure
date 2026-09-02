@@ -89,6 +89,11 @@
   correctly backing off (retry 60s); tape stale ~2.3h = a capture gap to
   note in the strike-basis analysis. Drift clean (arXiv 2608.30999).
 
+- 2026-09-02: round 88 — polymarket.com zone still failing fresh resolution
+  (service retry loop active and correct; tape stale ~2.4h). The tape gap
+  will be treated as a coverage hole in the strike-basis analysis. Drift
+  clean (arXiv 2608.30999).
+
 - 2026-09-02: round 80 — CI checkpoint on a substantial fresh batch (108,538
   quotes, +5,107): **v2_ewma EV +7.75c/trade, daily-block CI [+5.30,+9.95]**
   — the estimate re-centered from +8.50 as new days arrived (normal
