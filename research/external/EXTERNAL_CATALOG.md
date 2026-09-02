@@ -103,6 +103,17 @@
 
 - 2026-09-02: round 89 — polymarket.com zone still unresolved (TWAP retry
   loop active; tape stale ~2.4h). Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 90 — ROOT CAUSE CONFIRMED: the polymarket.com DNS zone
+  itself is down — Google's public resolver (dns.google) returns REFUSED
+  (status 5) for the zone's records, matching our local resolver failure.
+  This is a Polymarket-side infrastructure outage, not local. Implications:
+  (i) established connections keep working (the main collector is fresh),
+  but ANY new connection fails — the main collector will drop when its
+  current streams recycle; (ii) the TWAP tape gap persists until Polymarket
+  repairs the zone; (iii) the paper wallet's resolution/quote feeds will
+  pause the same way. All three services' retry logic handles this by
+  design. Watch: zone recovery (check dns.google REFUSED -> NOERROR).
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
