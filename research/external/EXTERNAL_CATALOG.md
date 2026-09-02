@@ -1029,6 +1029,13 @@ independent implementation.
   quote-based pipeline (round 31-40) supersedes it. **Operational fact
   recorded: kline_1m storage is rolling ~12 days — any backtest needing
   older klines must re-download from Binance REST.** Gates: tape 1.06h+.
+- 2026-09-02: round 61 — kacho tick deeper pass CLOSED at its maximum
+  sample: relaxed thresholds still yield only 3 markets / 559 pairs
+  (381,333 placeholder rows dropped — the updown files are overwhelmingly
+  0.50 placeholders in the kacho overlap era). Within that maximal sample:
+  **median 0.005 (half tick), p90 0.025, 95.5% within 5 ticks** — the
+  tick-level agreement result is final. The kacho tick lane is complete;
+  no further depth is available from these files.
 - 2026-09-02: round 60 — daily-block CI re-check on fresh data (102,911
   quotes, +1,330 vs round 40): **v2_ewma EV +8.42c/trade, daily-block CI
   [+5.48, +11.87]** — strengthened from +7.61c [+4.92,+10.19]; v1_r24
