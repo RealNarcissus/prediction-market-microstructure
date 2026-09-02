@@ -52,6 +52,18 @@
   wallet's resolution handling. Tape 8.64h (span unchanged — wall-clock
   minutes since round 78). Drift clean (arXiv 2608.30999).
 
+- 2026-09-02: round 83 — abrownfox engine.ts slot lifecycle read (completing
+  the analysis): the NEW engine enters EARLY (median ~47s after open — the
+  180-270s window was the OLD pre-pivot bot), gated to a fair-band ask
+  (askInFairBand 45-55¢), budget-capped clips (min(clipUsd, maxSlotUsd −
+  spent)), fresh fetchBook at entry, per-slot runtime rate-limiting.
+  **Architecturally the closest to our engine**: open+60s entry, mid-band
+  asks, fee-gated — differences remain their hand-tuned signal vs our
+  derived z and their scratch-culling vs our hold. The late-window spectrum
+  attribution is unchanged (old-abrownfox/soulcrancer/BTC5MScour in the
+  late zone; new-abrownfox and us in the early coin-flip band). Tape 8.64h
+  (steady). Drift clean (arXiv 2608.30999).
+
 - 2026-09-02: round 80 — CI checkpoint on a substantial fresh batch (108,538
   quotes, +5,107): **v2_ewma EV +7.75c/trade, daily-block CI [+5.30,+9.95]**
   — the estimate re-centered from +8.50 as new days arrived (normal
