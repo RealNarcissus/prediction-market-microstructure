@@ -743,3 +743,17 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   External label cross-check for the April-era updown lane: COMPLETE.
   Tick-level files available on HF for a deeper future check (redirect
   sizes to be confirmed via ranged GET). Drift clean (arXiv 2608.30999).
+- 2026-09-02: round 38 — sign-lag conditionals + A/B/C spikes EXECUTED
+  (research/staleness/signlag_spikes.py + SIGNLAG_SPIKES.md):
+  (i) 1m klines show MILD CONTINUATION on all three assets (next-ret after
+  UP +0.20/+0.14/+0.37 bp for BTC/ETH/SOL; after DOWN −0.22/−0.16/−0.28) —
+  the G·001 reversion edge is NOT alive at the 1m bar level here, and
+  positive autocorrelation mechanistically supports part of the λ≈1.9
+  σ understatement (autocorrelated moves inflate multi-minute variance vs
+  the iid formula); (ii) A/B/C spike classification on BTC 5m collector
+  quotes (1,432 spikes, |Δmid|≥4c/2min): **95% are class B (external flat)
+  and their post-5m reversion is +0.11c — essentially ZERO**: fade-the-book
+  is dead on average, PM repricings stick without external news (likely
+  intra-minute information the 1m close-to-close misses); class A (32,
+  external-aligned) CONTINUES (−29c reversion); class C (40, external-
+  opposite) reverts hard (+27c) — the only fade candidate, but rare.
