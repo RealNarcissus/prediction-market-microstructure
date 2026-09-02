@@ -1006,6 +1006,12 @@ same structural lane (settlement-anchored fair in the coin-flip band),
 hand-tuned where ours is derived, live-traded where ours is paper. Their
 measured 60.7%/150-markets and our +8.42¢/26.8k-trades daily-block CI are now
 two independent, mutually consistent measurements of the same edge class.
+
+### 2i. Created-this-week scan (round 50, round 73 — repos born since Aug 25)
+
+- [draxmit/prediction-market-accuracy-study](https://github.com/draxmit/prediction-market-accuracy-study) (created 2026-09-02): EDA on ~100k resolved markets (Kalshi/Manifold/Polymarket). Findings: **confidence is the strongest predictor of directional accuracy** (>90% confidence → <5% wrong-direction; near 50% → coin flip) — matching BONEREAPER's dominance curve and our calibration signature at scale; **YES bias**; keywords "coinflip"/"anytime"/"daily" are 6–9× overrepresented in wrong-direction outcomes. **KEEP-REF (comparative calibration study)**.
+- [Nabeel-javed/polymarket-strategy-lab](https://github.com/Nabeel-javed/polymarket-strategy-lab) (created 2026-08-28): read-only $200 LP-only experiment testing long-duration liquidity rewards + **BTC 15-minute maker rebates**; simulates pro-rata reward accrual, the $1 daily payout minimum, and the live taker-fee schedule; uses the same market WS endpoint as our collector. **KEEP-REF (maker-mode runnable reference)**.
+- [Cleverfuxaqo1668/Polymarket-Telegram-Bot](https://github.com/Cleverfuxaqo1668/Polymarket-Telegram-Bot) (★168 in <1 week): fastest-growing new repo, likely funnel — watch only. The rest of the born-this-week set is unstarred/spam (DISCARD).
 - 2026-09-02: round 54 — kacho tick-level check EXECUTED (182MB tick file,
   4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
   2 ticks on 452 matched seconds — recordings consistent, no systematic
@@ -1166,3 +1172,7 @@ two independent, mutually consistent measurements of the same edge class.
   2608.30999).
   clean (arXiv 2608.30999).
   (521, known pattern).
+- 2026-09-02: round 73 — created-this-week scan (§2i): draxmit accuracy/
+  calibration EDA (~100k markets — confidence-accuracy curve matches ours at
+  scale; YES bias; keyword effects) and Nabeel-javed strategy-lab (LP + 15m
+  maker-rebate simulation, runnable). Tape 2.58h. Drift clean.
