@@ -1095,3 +1095,8 @@ two independent, mutually consistent measurements of the same edge class.
   the closest external analogue to our engine (TWAP-anchored ~50¢ directional
   with scratch culling; public signal = hand-tuned fair_z; 60.7% WR on 150
   resolved at ~50¢, +24.5% ROI sample, on-chain verifiable).
+- 2026-09-02: round 64 — CI checkpoint on refreshed data (103,027 quotes,
+  +116): **v2_ewma +8.42c/trade, daily-block CI [+5.48,+11.89] — stable**;
+  v1_r24 +6.70c; favorites control -3.75c; lambda* fixed at 1.86 (Brier
+  0.1718). The +8c/trade day-level result is reproducible across refreshes.
+  Drift clean (arXiv 2608.30999).
