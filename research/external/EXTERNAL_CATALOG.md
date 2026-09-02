@@ -1153,6 +1153,14 @@ two independent, mutually consistent measurements of the same edge class.
   filters, order management, risk/bankroll, **market-synchronized
   scheduling**, pre-launch health checks. Structure mirrors our daemon
   design independently (validation by convergence). Tape 2.48h. Drift clean
+
+- 2026-09-02: round 72 — PR&R signal-engine section deep-read: base signal =
+  spot-vs-reference direction + the market's implied probability (our
+  fair-vs-ask at its simplest); **two pre-signal filters: spread > 6¢ →
+  skip; seconds_to_expiry < 120 → skip ("late entries have high adverse
+  selection risk")** — the THIRD independent implementation of the
+  late-window exclusion (our 90s rule, abrownfox's pivot, PR&R's 120s).
+  Tape 2.54h. Drift clean (arXiv 2608.30999).
   (arXiv 2608.30999).
   (arXiv 2608.30999).
   2608.30999).
