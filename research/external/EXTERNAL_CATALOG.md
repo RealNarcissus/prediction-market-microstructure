@@ -1,4 +1,8 @@
 
+- 2026-09-02: round 91 — zone still REFUSED (outage ongoing). Main
+  collector fresh by 23.5s (established connections aging but live — watch
+  for the drop when streams recycle). arXiv unchanged (2608.30999).
+
 - 2026-09-02: round 82 — haoo99 DOWNGRADED to DISCARD-CAUTION (exe-distribution funnel pattern; README is end-user marketing). The PM↔Kalshi gap-arb concept stands; the tooling entry does not. Tape 8.64h (steady). Drift clean (arXiv 2608.30999).
 
 - 2026-09-02: round 74 — CI checkpoint (103,435 quotes): **v2_ewma +8.50c/
