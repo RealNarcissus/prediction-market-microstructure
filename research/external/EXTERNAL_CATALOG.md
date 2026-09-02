@@ -75,6 +75,12 @@
   (steady). Drift clean (arXiv 2608.30999).
 
 - 2026-09-02: round 84 — watch rotation: arXiv unchanged (2608.30999 still
+
+- 2026-09-02: round 93 — zone still down at Google resolver (REFUSED);
+  main collector fresh (11.5s — its DNS path working); TWAP tape stale
+  ~2.6h (its retry loop still hitting the failing resolver path). arXiv
+  unchanged. Watch: TWAP recovery (its resolver path vs the collector's)
+  and the zone's global recovery.
   newest; no new papers posted since the round-55 scan), tape steady at
   8.64h/51,096 rows (growing with wall-clock). No new items.
 
