@@ -72,6 +72,14 @@
   changelog newest still Aug 17, PR&R stable at 36 reports, tape steady at
   8.64h/51,096 rows. No new items.
 
+- 2026-09-02: round 86 — CI checkpoint: **v2_ewma +7.95c/trade, daily-block
+  CI [+5.39,+10.28]** — sixth consecutive stable confirmation (wobble within
+  CI as days arrive); lambda* 1.90 confirmed, ECE 0.0276. TWAP service
+  diagnosis: active and writing (tape files through 11:36 UTC, span 8.64h
+  = real accumulated time); current gaierror = transient DNS failure,
+  correctly caught by the retry loop (backoff 60s) — capture resumes when
+  DNS recovers. Drift clean (arXiv 2608.30999).
+
 - 2026-09-02: round 80 — CI checkpoint on a substantial fresh batch (108,538
   quotes, +5,107): **v2_ewma EV +7.75c/trade, daily-block CI [+5.30,+9.95]**
   — the estimate re-centered from +8.50 as new days arrived (normal
