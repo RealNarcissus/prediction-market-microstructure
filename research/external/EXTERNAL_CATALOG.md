@@ -839,6 +839,16 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
 
 Drift: arXiv unchanged (2608.30999); changelog newest still Aug 17; tape healthy (5,030 rows, span 0.37h, fresh within 5s).
 
+### 2d. 0xpoot-poot/polymarket-5m-recorder cross-check (round 49, README + twap-collector source read)
+
+TypeScript data infrastructure for the same 5m series (BTC/ETH/SOL/XRP/DOGE/BNB/HYPE):
+- **Architecture confirms ours from an independent implementation**: multi-oracle collectors (Binance/Bybit/Coinbase/OKX + Chainlink), a dedicated TWAP collector, book reconstruction from the WS feed with drift callbacks, per-market tapes on disk.
+- **TWAP protocol cross-check**: they use `wss://ws.dataengine.chain.link` DIRECT with HMAC credentials (paid Data Streams), recording both 30s+60s feeds tagged by feedID with the window "resolved in post". Our quantbtc-twap uses the credential-free RTDS relay with the window resolved from the envelope topic — same data, simpler path. Validated.
+- **Key quote confirms the HN visibility asymmetry with implementation detail**: "The Polymarket market WebSocket gives you a fast, complete view of the book — and zero wallet identity... scanning Polygon OrderFilled logs and joining them back on transaction_hash is the only thing here that knows who anyone is."
+- **Their on-chain attribution pipeline** (OrderFilled scan → `traders.db` → wallet leaderboard) is the PR&R forensics method as a runnable pipeline — a candidate to adopt if we ever do our own forensics.
+- **Verification discipline exceeds ours**: 61 offline tests + `npm run replay` that re-checks every recorded snapshot against reconstruction. **Adopt**: add a replay/verify mode to our collector (queued).
+- Read-only ("nothing places an order"). Verdict: **KEEP-CORNERSTONE (infrastructure reference)**.
+
 ### 2c. 0xzkleo code-read — the 25-feature vector vs our fair_z (round 48)
 
 FEATURE_NAMES from core/strategy/ml_engine.py (fetched in full): rsi,
@@ -876,3 +886,8 @@ public test.
   stack = NautilusTrader + XGBoost gate + late-window entry (180-270s) —
   third documented entrant in the contested zone; features not enumerated
   publicly (code-read queued). Tape span 0.40h (decomposition still gated).
+- 2026-09-02: round 49 — recorder cross-check EXECUTED (§2d): their
+  architecture validates ours (multi-oracle + TWAP collector + on-chain
+  attribution); their Data Streams HMAC path vs our RTDS relay = same data
+  simpler; replay-verify discipline adopted as a queued collector upgrade.
+  Drift clean (arXiv 2608.30999).
