@@ -1146,6 +1146,14 @@ two independent, mutually consistent measurements of the same edge class.
   BRTI, 60s averaging window) stand as the cross-venue settlement record.
   A dedicated Kalshi API session (trading-api.readme.io) remains the path
   if the second-venue port advances. Tape 2.43h (healthy). Drift clean
+
+- 2026-09-02: round 71 — PR&R main build guide indexed (83KB .md fetched;
+  "How to Build a Polymarket Trading Bot"): full task-by-task tutorial —
+  Gamma market resolution, CLOB WS streaming, signal engine + volume/spread
+  filters, order management, risk/bankroll, **market-synchronized
+  scheduling**, pre-launch health checks. Structure mirrors our daemon
+  design independently (validation by convergence). Tape 2.48h. Drift clean
+  (arXiv 2608.30999).
   (arXiv 2608.30999).
   2608.30999).
   clean (arXiv 2608.30999).
