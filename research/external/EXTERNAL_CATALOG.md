@@ -1115,3 +1115,9 @@ two independent, mutually consistent measurements of the same edge class.
   v1_r24 +6.70c; favorites control -3.75c; lambda* fixed at 1.86 (Brier
   0.1718). The +8c/trade day-level result is reproducible across refreshes.
   Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 66 — CI checkpoint: **v2_ewma +8.45c/trade, daily-block
+  CI [+5.48,+11.95]** — stable with marginal strengthening (+8.42 round 64);
+  v1_r24 +6.70c; favorites -3.60c; lambda* stable (v2_r24 1.94, Brier
+  0.1722). Drift clean (arXiv 2608.30999). CSDN fresh scan: server-blocked
+  (521, known pattern).
