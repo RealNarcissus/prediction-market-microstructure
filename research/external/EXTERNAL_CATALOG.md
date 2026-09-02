@@ -975,6 +975,37 @@ independent implementation.
   settlement-trigger logic after the loss. Worth a code read next session.
 - funstersland/twap-hunter (Aug 19): unknown quality, on watch.
 - Drift: arXiv unchanged (2608.30999); changelog newest still Aug 17.
+
+### 2h. abrownfox001 twap60 trigger system — CODE-READ (round 53+, round 63; README + signal.ts + tree fetched)
+
+The −37.81% postmortem author's pivot, now live-traded with a published
+wallet (`0x12b7…0b0b`, active since Jan 2026) and TypeScript source.
+
+- **The archetype flip**: from late-window directional entries (−37.81%) to
+  **coin-flip-band entries (~45–55¢, ≈90% of trades) with breakeven scratch
+  exits** — "low-conviction tickets flatten at ~breakeven; only strong reads
+  ride to redemption" (~930 markets of scratch exits at avg buy 0.504 / sell
+  0.503). This is the live-traded answer to our round-39 exit question.
+- **The public signal (signal.ts)**: `pUp = sigmoid(2.5·raw)`,
+  `raw = 0.7·(clip(twapBps/8) + 0.3·clip(twapMom20s/5)) + 0.2·clip(cexMom20s/5)
+  + 0.1·((t/300 − 0.5)·2·twapTerm)` — a **TWAP-anchored directional read that
+  is conceptually our fair_z with hand-tuned constants**: the 8bp divisor is
+  a fixed σ proxy (ours: measured r24/EWMA × λ=1.9), the weights replace our
+  closed-form settlement math, and the time-term scales the lean by time-in-slot.
+- **Measured claim** (150 resolved markets at ~50¢, Jul 2026, public
+  trade/resolution data): **60.7% held-side win rate, ≈ +24.5% ROI sample**.
+  Small, self-selected, but on-chain verifiable.
+- **Explicit archetype contrast in their own README**: convergence farming
+  (94–99¢, BTC5MScour-style toll collection) vs this account (50¢ directional
+  with conviction culling) — matching our forensics taxonomy.
+- Fees "far less binding at ~50¢ than at 99¢" (fee curve shape) — consistent
+  with our EV math.
+
+Verdict: **KEEP-CORNERSTONE (the closest external analogue to our engine)** —
+same structural lane (settlement-anchored fair in the coin-flip band),
+hand-tuned where ours is derived, live-traded where ours is paper. Their
+measured 60.7%/150-markets and our +8.42¢/26.8k-trades daily-block CI are now
+two independent, mutually consistent measurements of the same edge class.
 - 2026-09-02: round 54 — kacho tick-level check EXECUTED (182MB tick file,
   4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
   2 ticks on 452 matched seconds — recordings consistent, no systematic
@@ -1060,3 +1091,7 @@ independent implementation.
   in the post-Aug-7 bot niche (multiple keyword-stuffed repos); abrownfox's
   twap60 trigger system flagged for next-session code read. Changelog and
   arXiv drift clean.
+- 2026-09-02: round 63 — abrownfox twap60 CODE-READ (§2h): KEEP-CORNERSTONE —
+  the closest external analogue to our engine (TWAP-anchored ~50¢ directional
+  with scratch culling; public signal = hand-tuned fair_z; 60.7% WR on 150
+  resolved at ~50¢, +24.5% ROI sample, on-chain verifiable).
