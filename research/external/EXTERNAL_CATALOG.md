@@ -1120,4 +1120,15 @@ two independent, mutually consistent measurements of the same edge class.
   CI [+5.48,+11.95]** — stable with marginal strengthening (+8.42 round 64);
   v1_r24 +6.70c; favorites -3.60c; lambda* stable (v2_r24 1.94, Brier
   0.1722). Drift clean (arXiv 2608.30999). CSDN fresh scan: server-blocked
+
+- 2026-09-02: round 67 — abrownfox engine.ts scratch-culling logic fully
+  captured: entry on `edge ≥ edgeThreshold` (edge = |pUp − 0.5|); hold while
+  conviction positive; **scratch (limit-sell near bid) when edge <
+  entryEdge − decayThreshold OR edge < decayThreshold** (decay-from-entry
+  OR absolute floor); scratchAttempts tracked; per-window slot caps
+  (clipUsd + maxSlotUsd). Two edge definitions now on record for the
+  integration design: theirs = conviction vs coin-flip; ours = value vs
+  price paid (prob − ask > fee) — economically stricter (theirs would buy
+  a fairly-priced 50¢; ours requires the discount). Tape 2.17h. Drift
+  clean (arXiv 2608.30999).
   (521, known pattern).
