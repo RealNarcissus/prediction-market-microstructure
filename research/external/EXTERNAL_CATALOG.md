@@ -829,7 +829,7 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
 
 | Repo | What it is | Verdict |
 |---|---|---|
-| [0xzkleo/polymarket-5min-crypto-trading-bot](https://github.com/0xzkleo/polymarket-5min-crypto-trading-bot) (★136) | **The most-starred open-source 5m BTC bot found in the sweep**: XGBoost edge model | REF — read next session (feature list vs ours) |
+| [0xzkleo/polymarket-5min-crypto-trading-bot](https://github.com/0xzkleo/polymarket-5min-crypto-trading-bot) (★136; README fetched round 47) | NautilusTrader bot, multi-signal fusion + **XGBoost edge gate vs Polymarket price**, entry window **seconds 180–270 of the 300s market (late-window)**, one bet/window, TP/SL + anti-chase + spread filter, sim/live modes, Grafana. **Freemium funnel**: premium claims "98.8%+ win rate on 200k+ trades" with "proof shared only on a call"; public model trains on "general / warming" data; feature list not enumerated publicly | **REF (stack pattern) / DISCARD (claims)** per the catalog weighting rule: the XGBoost-gate + late-window-entry architecture is the third documented entrant in the final-90s zone (soulcrancer claims, abrownfox −37.81%, 0xzkleo ★136); the 98.8% claim is unverifiable call-only marketing. Feature-vs-fair_z comparison deferred to a code read (models/ dir) — README enumerates none |
 | [PricePepel/polymarket-tracker](https://github.com/PricePepel/polymarket-tracker) (★4, updated 2026-09-02) | Auto-tracks top-50 Polymarket crypto traders' BTC 5m bets, 15-min refresh | REF (smart-money tracking on our exact markets) |
 | [0xpoot-poot/polymarket-5m-recorder](https://github.com/0xpoot-poot/polymarket-5m-recorder) (updated 2026-09-01) | Recorder + orderbook-reconstruction library for 5m markets | REF (second validator for our collector join) |
 | [atalaydor/polymarket-15m-seven-canonical-data](https://github.com/atalaydor/polymarket-15m-seven-canonical-data) (updated 2026-09-02) | Canonical historical dataset, 15m markets | REF (third validation dataset candidate) |
@@ -838,3 +838,8 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
 | thxthanxwe / DiegoBermud65 "bot" repos | Keyword-stuffed marketing / copy-trading | DISCARD (fake-repo pattern per §6d) |
 
 Drift: arXiv unchanged (2608.30999); changelog newest still Aug 17; tape healthy (5,030 rows, span 0.37h, fresh within 5s).
+- 2026-09-02: round 47 — 0xzkleo README read (§2b): freemium funnel with
+  unverifiable 98.8% premium claims (DISCARD per weighting rule); public
+  stack = NautilusTrader + XGBoost gate + late-window entry (180-270s) —
+  third documented entrant in the contested zone; features not enumerated
+  publicly (code-read queued). Tape span 0.40h (decomposition still gated).
