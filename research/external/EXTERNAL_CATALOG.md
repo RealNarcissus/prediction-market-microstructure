@@ -3,6 +3,12 @@
   collector fresh by 23.5s (established connections aging but live — watch
   for the drop when streams recycle). arXiv unchanged (2608.30999).
 
+- 2026-09-02: round 92 — zone still down (REFUSED); main collector
+  re-connected and fresh (12.6s — its retry loop caught the stream recycle
+  and re-established after a DNS attempt succeeded through a cached/other
+  resolver, or the zone partially recovered for some resolvers). arXiv
+  unchanged.
+
 - 2026-09-02: round 82 — haoo99 DOWNGRADED to DISCARD-CAUTION (exe-distribution funnel pattern; README is end-user marketing). The PM↔Kalshi gap-arb concept stands; the tooling entry does not. Tape 8.64h (steady). Drift clean (arXiv 2608.30999).
 
 - 2026-09-02: round 74 — CI checkpoint (103,435 quotes): **v2_ewma +8.50c/
