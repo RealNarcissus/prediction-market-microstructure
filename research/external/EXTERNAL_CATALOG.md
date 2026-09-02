@@ -100,6 +100,9 @@
   re-estimation; still solidly positive), lambda* refined to 1.90 (from
   1.86), ECE improving to 0.0271. Tape span 8.64h of real accumulated time
   since deployment. Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 89 — polymarket.com zone still unresolved (TWAP retry
+  loop active; tape stale ~2.4h). Drift clean (arXiv 2608.30999).
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
