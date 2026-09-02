@@ -818,3 +818,10 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   n=1 per asset pending days of accumulation — unchanged plan: full
   decomposition when the tape spans 1-2 days. Drift clean (arXiv
   2608.30999).
+- 2026-09-02: round 45 — watch rotation (arXiv unchanged; PR&R still 36
+  reports; tape span 0.33h — decomposition gated on ~24h, as planned).
+  G·001 worked-example detail now fetched first-hand and matches the
+  round-21 snippet exactly ($0.40/trade, ~35k trades/yr, ~$14K/yr on $10K,
+  weekly re-validation, "the bot doesn't need to be smart — it needs to be
+  honest about its edge"); oracle-lag strategy page confirmed to carry no
+  UMA timing specifics (round-17 verdict stands).
