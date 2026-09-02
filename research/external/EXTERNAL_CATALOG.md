@@ -1095,6 +1095,21 @@ two independent, mutually consistent measurements of the same edge class.
   the closest external analogue to our engine (TWAP-anchored ~50¢ directional
   with scratch culling; public signal = hand-tuned fair_z; 60.7% WR on 150
   resolved at ~50¢, +24.5% ROI sample, on-chain verifiable).
+- 2026-09-02: round 65 — spread-capture guide FULL BODY extracted (69KB .md;
+  the earlier pass only caught the TOC): (i) worked arithmetic — Up
+  accumulates on dips at blended $0.36 while Down trades $0.64, then Down
+  dips to $0.53 while Up bounces to $0.47 → **pair cost $0.89 vs $1.00
+  settlement**; (ii) **reference wallet: median paired cost $0.809/session,
+  +3.79% on ~$9,700 (+$369)** — the sequential-dip method is worth ~21¢/pair
+  over SLIP-ME's $1.0183 simultaneous cost (the dip-waiting IS the edge);
+  (iii) the actual sizing code: depth-scaled clips (BASE 10 / MAX 20 shares,
+  DEPTH_GAIN 60 on the dip depth below the side's ceiling = ceiling −
+  other_avg, imbalance guard 40 shares); (iv) "a 37% win rate is healthy
+  here" — third explicit win-rate-meaningless statement, now from the
+  strategy designer; (v) no exit management by design, with a dedicated
+  section on what adding one costs. Updates the maker-mode design numbers
+  in the catalog: sequential-dip pairing at $0.81 blended is the benchmark,
+  not $1.02 simultaneous.
 - 2026-09-02: round 64 — CI checkpoint on refreshed data (103,027 quotes,
   +116): **v2_ewma +8.42c/trade, daily-block CI [+5.48,+11.89] — stable**;
   v1_r24 +6.70c; favorites control -3.75c; lambda* fixed at 1.86 (Brier
