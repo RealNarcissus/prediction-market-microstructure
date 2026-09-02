@@ -1,4 +1,8 @@
 
+- 2026-09-02: round 97 — zone still down (REFUSED at dns.google); tape
+  frozen at 51,096 rows / 8.64h, stale ~2.9h. Main collector fresh (24.3s).
+  TWAP retry loop active. Drift clean (arXiv 2608.30999).
+
 ### 2k. Calibration-study lane (round 96 — all updated 2026-09-02)
 
 - [0xalgod/weather-prediction](https://github.com/0xalgod/weather-prediction): data-driven quant research for Polymarket weather markets — probabilistic forecasting + calibration. **KEEP-REF** (the gghff lane, open-sourced).
