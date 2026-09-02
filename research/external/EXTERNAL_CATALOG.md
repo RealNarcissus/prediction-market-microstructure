@@ -1,4 +1,10 @@
 
+- 2026-09-02: round 94 — zone still failing fresh resolution (TWAP retry
+  active; tape stale ~2.7h). CI checkpoint on fresh data (109,307 quotes):
+  **v2_ewma +7.96c/trade, daily-block CI [+5.42,+10.30]** — stable across
+  seven checkpoints; lambda 1.90, ECE 0.0275. The daily-block CI monitoring
+  continues; the +7.7-8.5c band is holding.
+
 - 2026-09-02: round 91 — zone still REFUSED (outage ongoing). Main
   collector fresh by 23.5s (established connections aging but live — watch
   for the drop when streams recycle). arXiv unchanged (2608.30999).
