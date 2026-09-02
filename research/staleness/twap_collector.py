@@ -58,14 +58,14 @@ async def run(seconds: int) -> None:
     path = OUT_DIR / f"twap_{time.strftime('%Y%m%d_%H%M%S')}.parquet"
     rows: list[dict] = []
     last_flush = time.time()
-    deadline = time.time() + seconds
+    deadline = (time.time() + seconds) if seconds > 0 else None  # 0 = continuous
     print(f"connecting {URL} ...", flush=True)
     # Origin header required — bare connects get reset by the gateway
     headers = {"Origin": "https://polymarket.com", "User-Agent": "Mozilla/5.0"}
     async with websockets.connect(URL, ping_interval=20, additional_headers=headers, open_timeout=15) as ws:
         await ws.send(subscribe_msg())
         print(f"subscribed: {SYMBOLS} windows={WINDOWS}", flush=True)
-        while time.time() < deadline:
+        while deadline is None or time.time() < deadline:
             try:
                 raw = await asyncio.wait_for(ws.recv(), timeout=10)
             except asyncio.TimeoutError:
@@ -108,18 +108,18 @@ async def run(seconds: int) -> None:
 
 
 def main() -> None:
-    seconds = int(sys.argv[1]) if len(sys.argv) > 1 else 60
-    # gateway intermittently resets repeated connects — retry with backoff
-    for attempt in range(5):
+    seconds = int(sys.argv[1]) if len(sys.argv) > 1 else 0  # 0 = continuous (service mode)
+    attempt = 0
+    while True:
         try:
             asyncio.run(run(seconds))
-            return
+            if seconds > 0:
+                return
         except (ConnectionResetError, OSError) as e:
-            wait = 5 * (attempt + 1)
+            attempt += 1
+            wait = min(5 * attempt, 60)
             print(f"connect failed ({type(e).__name__}); retry in {wait}s", flush=True)
             time.sleep(wait)
-    print("giving up after 5 attempts", flush=True)
-    sys.exit(1)
 
 
 if __name__ == "__main__":

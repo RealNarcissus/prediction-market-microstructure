@@ -792,3 +792,11 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   windows disambiguated via envelope topic; connect-retry added for the
   flaky gateway). Once the tape spans full windows alongside quotes, the
   strike-basis decomposition replaces the Binance-proxy strike.
+- 2026-09-02: round 42 — TWAP collector DEPLOYED as systemd user service
+  quantbtc-twap.service (mirrors quantbtc.service: Restart=always,
+  WorkingDirectory=repo, logs to data/twap_collector.log; continuous mode
+  added to the script: seconds=0 runs forever). Verified capturing: 222+
+  rows in the first session file, both windows, all three symbols, tape
+  growing across 30s checks. The strike-basis decomposition unblocks once
+  the tape spans full windows alongside collector quotes. Drift clean
+  (arXiv 2608.30999).
