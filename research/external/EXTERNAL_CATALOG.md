@@ -11,6 +11,9 @@
 
 - 2026-09-02: round 100 — zone still down (REFUSED); tape stale ~3.0h;
   collector fresh (3.1s). Drift clean (arXiv 2608.30999). 100 rounds
+
+- 2026-09-02: round 101 — zone still down (REFUSED); tape stale ~3.1h;
+  collector fresh (17.4s). Drift clean (arXiv 2608.30999).
   complete.
 
 ### 2k. Calibration-study lane (round 96 — all updated 2026-09-02)
