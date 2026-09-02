@@ -3,6 +3,13 @@
   trade, daily-block CI [+5.48,+12.05]** — fifth consecutive stable/
   strengthening confirmation; Brier 0.1716 (still improving); lambda 1.86.
   Tape 2.64h. Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 75 — PR&R llms.txt FAQ cross-confirms the settlement
+  model a third time: "Up/Down markets settle against the 60-second TWAP of
+  the reference feed, not the spot tick"; their /data/price-feed sells the
+  rebuilt 60s TWAP series (our tape's commercial twin, also available as
+  free samples). YouTube lane: JS-walled (deferred). Tape 2.67h. Drift
+  clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
 Started 2026-09-01 (sweep ongoing per user objective: broad continuous scan of
