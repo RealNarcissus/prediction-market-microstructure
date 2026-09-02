@@ -19,6 +19,16 @@
   informed flow moved them) — the measured +8.5c/trade EV is the residual
   AFTER that adverse selection, earned because our fair is faster than the
   slowest quoters. Tape 2.75h. Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 77 — TWAP-settlement glossary page captured (PR&R's
+  crispest formulation: "a bot reading the last trade price will disagree
+  with settlement near a close, because spot and the 60-second average are
+  different numbers"; "the single most consequential mechanical detail for
+  anyone automating short-cycle crypto markets — and the one most often
+  missed"; backtesting requires the reconstructed 60s TWAP series, not a
+  spot tape — their /data/price-feed sells exactly that, our tape collects
+  it live). Tape span 8.64h (wall-clock passed during the goal pause) —
+  the strike-basis stability gate is now 1/3 satisfied.
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
