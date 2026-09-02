@@ -29,6 +29,15 @@
   spot tape — their /data/price-feed sells exactly that, our tape collects
   it live). Tape span 8.64h (wall-clock passed during the goal pause) —
   the strike-basis stability gate is now 1/3 satisfied.
+
+- 2026-09-02: round 78 — pushed-this-week GitHub scan (~10 repos/day birth
+  rate in the niche): new themes spotted — post-only maker strategies
+  ("GTC Post-Only, Zero Fees"), weather-consensus vs Polymarket weather
+  markets, and audience-sentiment signals (danmu-intel: esports chat crowd
+  wisdom mapped to Polymarket esports markets — a novel signal source
+  concept). Nothing research-grade beyond watch items; Cleverfuxaqo
+  Telegram bot now ★168. Tape 8.64h (unchanged span — the service session
+  is steady). Drift clean (arXiv 2608.30999).
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
