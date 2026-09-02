@@ -811,3 +811,10 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   noted: kline files flush with lag (03:10 at 08:40 UTC) — fresh-Binance
   strikes for the tape era came from the REST endpoint; the service tape
   is healthy (1,906+ rows, real-time within 6s).
+- 2026-09-02: round 44 — watch rotation + tape health check: service active
+  and flushing (last flush seconds before check); tape span corrected to
+  its true value (~17 min — the entire TWAP deployment happened within the
+  last quarter-hour of wall clock; no malfunction). Basis measurement still
+  n=1 per asset pending days of accumulation — unchanged plan: full
+  decomposition when the tape spans 1-2 days. Drift clean (arXiv
+  2608.30999).
