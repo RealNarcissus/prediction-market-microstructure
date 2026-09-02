@@ -757,3 +757,16 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   intra-minute information the 1m close-to-close misses); class A (32,
   external-aligned) CONTINUES (−29c reversion); class C (40, external-
   opposite) reverts hard (+27c) — the only fade candidate, but rare.
+- 2026-09-02: round 39 — sell-into-catch-up exit simulation EXECUTED
+  (research/staleness/exit_sim.py + EXIT_SIM.md; 26,077 gated entries,
+  lambda(train)=1.95, exits at bid with both-leg fees): catch-up 2c/3c/5c/8c
+  show +27.6/+28.6/+30.3/+32.2c per trade at 82-95% win rate vs hold's
+  +7.57c. **ARTIFACT WARNING (recorded as the primary finding)**: exits fire
+  on the NEXT collector snapshot (30-60s stale) — the "catch-up" profit is
+  the staleness itself, claimable only by faster actors; our own entry ask
+  would have moved in reality. This is the exact stale-quote illusion the
+  r/algotrading free-dataset author and OpenMarket's one-tick-spread note
+  warn about. Honest value of the result: it QUANTIFIES the exit premium
+  (+20-25c/trade conditional on fills) as the price of execution speed —
+  SIRMARTINGALE-class latency revenue — and confirms hold-to-settlement is
+  the correct baseline at our polling cadence. No deployable edge claimed.
