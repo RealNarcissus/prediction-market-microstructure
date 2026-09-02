@@ -891,3 +891,12 @@ public test.
   attribution); their Data Streams HMAC path vs our RTDS relay = same data
   simpler; replay-verify discipline adopted as a queued collector upgrade.
   Drift clean (arXiv 2608.30999).
+
+### 2e. atalaydor 15m canonical dataset — pipeline-in-construction (round 50, repo tree + README read)
+
+- **Not yet a dataset**: production "locked until one Actions canary establishes usable evidence for all seven assets" — the repo ships the pipeline (acquire/audit/discovery/manifest via PMXT as the acquisition source; content-addressed Releases; canary receipts; per-UTC-day partitions) but no published data files yet.
+- Engineering quality is high (canary/receipt/audit discipline; dataset contract + quality policy docs) — revisit when it publishes; candidate fourth validation source for the 15m lane.
+- Verdict: **DEFER (revisit on publication)**. Tape at 0.84h (growing).
+- 2026-09-02: round 50 — atalaydor dataset inspected: pipeline-in-construction
+  (canary-gated, no data published yet) → DEFER on publication. Tape 0.84h.
+  Drift clean (arXiv 2608.30999).
