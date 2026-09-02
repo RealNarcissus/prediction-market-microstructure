@@ -80,6 +80,15 @@
   correctly caught by the retry loop (backoff 60s) — capture resumes when
   DNS recovers. Drift clean (arXiv 2608.30999).
 
+- 2026-09-02: round 87 — TWAP DNS-failure diagnosed: the ENTIRE
+  polymarket.com zone fails fresh resolution (ws-live-data, polymarket.com,
+  clob.polymarket.com all "Temporary failure in name resolution") while
+  other hosts (api.binance.com, arxiv.org) resolve fine — a domain-level
+  resolver issue, not general network. Main collector UNAFFECTED (quotes
+  fresh by 6s — established connections still streaming). TWAP service
+  correctly backing off (retry 60s); tape stale ~2.3h = a capture gap to
+  note in the strike-basis analysis. Drift clean (arXiv 2608.30999).
+
 - 2026-09-02: round 80 — CI checkpoint on a substantial fresh batch (108,538
   quotes, +5,107): **v2_ewma EV +7.75c/trade, daily-block CI [+5.30,+9.95]**
   — the estimate re-centered from +8.50 as new days arrived (normal
