@@ -825,3 +825,16 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   weekly re-validation, "the bot doesn't need to be smart — it needs to be
   honest about its edge"); oracle-lag strategy page confirmed to carry no
   UMA timing specifics (round-17 verdict stands).
+### 2b. Fresh GitHub scan — repos updated this week (round 46, sorted by updated)
+
+| Repo | What it is | Verdict |
+|---|---|---|
+| [0xzkleo/polymarket-5min-crypto-trading-bot](https://github.com/0xzkleo/polymarket-5min-crypto-trading-bot) (★136) | **The most-starred open-source 5m BTC bot found in the sweep**: XGBoost edge model | REF — read next session (feature list vs ours) |
+| [PricePepel/polymarket-tracker](https://github.com/PricePepel/polymarket-tracker) (★4, updated 2026-09-02) | Auto-tracks top-50 Polymarket crypto traders' BTC 5m bets, 15-min refresh | REF (smart-money tracking on our exact markets) |
+| [0xpoot-poot/polymarket-5m-recorder](https://github.com/0xpoot-poot/polymarket-5m-recorder) (updated 2026-09-01) | Recorder + orderbook-reconstruction library for 5m markets | REF (second validator for our collector join) |
+| [atalaydor/polymarket-15m-seven-canonical-data](https://github.com/atalaydor/polymarket-15m-seven-canonical-data) (updated 2026-09-02) | Canonical historical dataset, 15m markets | REF (third validation dataset candidate) |
+| [reeleen-bit/5mUpDownBTC-Lite](https://github.com/reeleen-bit/5mUpDownBTC-Lite) | Free live Price-to-Beat tracker, 7 coins | REF |
+| [Ameerqasqas/polymarket-directional-arbitrage-bot](https://github.com/Ameerqasqas/polymarket-directional-arbitrage-bot) (Rust) | Classic locked-arb on Up/Down | REF |
+| thxthanxwe / DiegoBermud65 "bot" repos | Keyword-stuffed marketing / copy-trading | DISCARD (fake-repo pattern per §6d) |
+
+Drift: arXiv unchanged (2608.30999); changelog newest still Aug 17; tape healthy (5,030 rows, span 0.37h, fresh within 5s).
