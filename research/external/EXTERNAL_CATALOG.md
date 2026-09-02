@@ -1130,5 +1130,11 @@ two independent, mutually consistent measurements of the same edge class.
   integration design: theirs = conviction vs coin-flip; ours = value vs
   price paid (prob − ask > fee) — economically stricter (theirs would buy
   a fairly-priced 50¢; ours requires the discount). Tape 2.17h. Drift
+
+- 2026-09-02: round 68 — collector_verify periodic re-run: **PASS** (316,990
+  quotes zero dups/non-monotonic; crossed 2.32% stable; TWAP tape 26,417
+  rows across 12 files zero anomalies — integrity holds as the tape
+  doubles). Reddit fresh scan: blocked (known pattern). Drift clean (arXiv
+  2608.30999).
   clean (arXiv 2608.30999).
   (521, known pattern).
