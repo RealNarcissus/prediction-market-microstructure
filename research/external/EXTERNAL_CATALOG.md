@@ -49,6 +49,13 @@
   (resolution events → per-market P&L → session totals) mirrors our live
   wallet's resolution handling. Tape 8.64h (span unchanged — wall-clock
   minutes since round 78). Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 80 — CI checkpoint on a substantial fresh batch (108,538
+  quotes, +5,107): **v2_ewma EV +7.75c/trade, daily-block CI [+5.30,+9.95]**
+  — the estimate re-centered from +8.50 as new days arrived (normal
+  re-estimation; still solidly positive), lambda* refined to 1.90 (from
+  1.86), ECE improving to 0.0271. Tape span 8.64h of real accumulated time
+  since deployment. Drift clean (arXiv 2608.30999).
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
