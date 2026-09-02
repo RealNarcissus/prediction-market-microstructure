@@ -992,3 +992,14 @@ independent implementation.
   prices; queued check); (ii) the tick-level agreement result is now
   confirmed on the deep sample (live rows only). Placeholder-vs-live
   distinction = consecutive identical 0.50 runs, trivially detectable.
+- 2026-09-02: round 57 — corrected April-era re-run CLOSED as impossible
+  with local data: (i) the updown file's `resolution` column is 99% unset
+  (708 of 714 BTC 5m entries carry -1) — the labels the historical
+  evaluator used are not in the surviving snapshot; (ii) the kline files
+  have been ROTATED — data/raw only spans 2026-08-21 → 09-02, so April-era
+  Binance strikes are gone locally (re-downloadable via Binance REST if
+  ever required). The round-56 re-qualification stands as final: the April
+  bucket analysis is invalid-and-unrecoverable locally; the live
+  quote-based pipeline (round 31-40) supersedes it. **Operational fact
+  recorded: kline_1m storage is rolling ~12 days — any backtest needing
+  older klines must re-download from Binance REST.** Gates: tape 1.06h+.
