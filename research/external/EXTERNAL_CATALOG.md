@@ -908,3 +908,24 @@ public test.
   (WARN only, better than the historical 497+ min gaps); resolutions clean;
   TWAP tape 10,050 rows zero anomalies. Gates: tape 1.0h / daily-block days
   accumulating — unchanged.
+
+### 2f. 0xzkleo settlement/twap_feed.py cross-check (round 52)
+
+Their 19KB TWAP reader vs our quantbtc-twap tape collector — **independent
+implementations agree on every protocol detail**: same endpoint
+(`wss://ws-live-data.polymarket.com`), same topics
+(`crypto_prices_twap_thirty` / `_sixty`), window_s carried per tick, and the
+same structural insight: **the "Price to Beat" is locked from the TWAP
+observation AT the market-open boundary, and settlement closes off the
+end-boundary TWAP** — both boundaries are TWAP observations, confirming the
+changelog-based strike/settlement model in fair_v2. Their scoring weights
+(twap_open 80, twap_near 50) reveal their late-window signal mixes the
+opening strike with the near-boundary TWAP. They also cache ticks on disk to
+survive restarts (our per-session Parquet files + systemd Restart=always
+serve the same purpose). Verdict: **KEEP (protocol cross-validation)** —
+our collector's endpoint/topics/strike-model now validated against a second
+independent implementation.
+- 2026-09-02: round 52 — 0xzkleo twap_feed.py cross-check (§2f): same
+  endpoint/topics/semantics as our tape collector; "PTB locked from the
+  open-boundary TWAP" confirms fair_v2's strike model from a second
+  implementation. Tape 0.94h (decomposition still gated).
