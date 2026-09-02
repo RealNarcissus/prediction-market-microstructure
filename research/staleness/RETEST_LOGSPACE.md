@@ -4,14 +4,14 @@ split: 1788004800000 (2026-08-29 12:00 UTC); lambda+isotonic fit on train only
 
 ## v1_r24  —  lambda(train) 1.70
 
-train n=37,594  test n=63,987  gated trades=25,237
-EV/trade +5.89c  CI [+4.03, +7.87]c  (daily-block)
-win rate 0.425  avg ask 0.353
-favorites control (N=25237): EV -3.62c CI [-4.94, -2.29]c
+train n=37,594  test n=65,317  gated trades=25,831
+EV/trade +6.70c  CI [+4.22, +10.39]c  (daily-block)
+win rate 0.437  avg ask 0.358
+favorites control (N=25831): EV -3.64c CI [-4.98, -2.26]c
 
 ## v2_ewma  —  lambda(train) 1.95
 
-train n=37,594  test n=63,987  gated trades=26,135
-EV/trade +7.61c  CI [+4.92, +10.19]c  (daily-block)
-win rate 0.517  avg ask 0.428
-favorites control (N=26135): EV -3.69c CI [-5.05, -2.27]c
+train n=37,594  test n=65,317  gated trades=26,783
+EV/trade +8.42c  CI [+5.48, +11.87]c  (daily-block)
+win rate 0.527  avg ask 0.431
+favorites control (N=26783): EV -3.75c CI [-5.14, -2.32]c

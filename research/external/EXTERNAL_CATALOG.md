@@ -1029,3 +1029,10 @@ independent implementation.
   quote-based pipeline (round 31-40) supersedes it. **Operational fact
   recorded: kline_1m storage is rolling ~12 days — any backtest needing
   older klines must re-download from Binance REST.** Gates: tape 1.06h+.
+- 2026-09-02: round 60 — daily-block CI re-check on fresh data (102,911
+  quotes, +1,330 vs round 40): **v2_ewma EV +8.42c/trade, daily-block CI
+  [+5.48, +11.87]** — strengthened from +7.61c [+4.92,+10.19]; v1_r24
+  +6.70c [+4.22,+10.39]; favorites control still negative (-3.75c); lambda*
+  stable (v2_ewma 1.86, Brier 0.1718 — marginally improving with data). The
+  calibrated gate's positive EV continues to hold and strengthen as gated
+  days accumulate. Drift clean (arXiv 2608.30999).
