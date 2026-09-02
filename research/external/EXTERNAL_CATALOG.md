@@ -962,6 +962,19 @@ independent implementation.
   capital, 1.77% ROI/26d) + the June 21 anomaly (−$2,460 single-market
   tail) as the documented failure mode our final-90s rule avoids. Tape
   1.02h. Drift clean (arXiv 2608.30999).
+
+### 2g. TWAP-keyword GitHub scan (round 62)
+
+- The post-Aug-7 "TWAP bot" keyword is now SEO-polluted: multiple
+  keyword-stuffed repos (0xohioism ★107, MattheusFeittosa, n9xdev "$150k+
+  trader", thxthanxwe-class) repeat bot-keywords in descriptions — the
+  §6d fake-repo signature. Benjam1nCup's education repo now ★170.
+- **abrownfox0/abrownfox001-twap60-prediction-trigger-system** (updated
+  2026-09-01): the −37.81% postmortem author's continuation — a TWAP-60
+  prediction trigger system, i.e. they pivoted from directional entries to
+  settlement-trigger logic after the loss. Worth a code read next session.
+- funstersland/twap-hunter (Aug 19): unknown quality, on watch.
+- Drift: arXiv unchanged (2608.30999); changelog newest still Aug 17.
 - 2026-09-02: round 54 — kacho tick-level check EXECUTED (182MB tick file,
   4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
   2 ticks on 452 matched seconds — recordings consistent, no systematic
@@ -1043,3 +1056,7 @@ independent implementation.
   stable (v2_ewma 1.86, Brier 0.1718 — marginally improving with data). The
   calibrated gate's positive EV continues to hold and strengthen as gated
   days accumulate. Drift clean (arXiv 2608.30999).
+- 2026-09-02: round 62 — TWAP-keyword GitHub scan: SEO pollution arrived
+  in the post-Aug-7 bot niche (multiple keyword-stuffed repos); abrownfox's
+  twap60 trigger system flagged for next-session code read. Changelog and
+  arXiv drift clean.
