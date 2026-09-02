@@ -838,6 +838,39 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
 | thxthanxwe / DiegoBermud65 "bot" repos | Keyword-stuffed marketing / copy-trading | DISCARD (fake-repo pattern per §6d) |
 
 Drift: arXiv unchanged (2608.30999); changelog newest still Aug 17; tape healthy (5,030 rows, span 0.37h, fresh within 5s).
+
+### 2c. 0xzkleo code-read — the 25-feature vector vs our fair_z (round 48)
+
+FEATURE_NAMES from core/strategy/ml_engine.py (fetched in full): rsi,
+macd_line, macd_signal, pct_b, ret1/3/5/15, vol_regime, cvd_delta_norm,
+ob_imbalance, funding_rate, oi_change, liq_imbalance, liq_total_norm,
+tick_vel_60s, tick_vel_30s, poly_ob_imbalance, spot_momentum, poly_prob,
+hour_sin, hour_cos, is_ny_open, is_asia_open, is_dead_zone.
+
+- **Their model**: 25-feature discriminative XGBoost predicting P(UP) from
+  market state. **Ours**: a 3-parameter structural model (strike distance,
+  σ, final-window variance → closed-form Φ + λ calibration).
+- **Overlap**: spot_momentum/returns ≈ our z numerator; vol_regime ≈ our
+  regime buckets; session flags ≈ our sessions; poly_prob = the venue's own
+  price (they use it as a feature; we compare against it).
+- **Their unique features are the falsified lane**: CVD, tick velocity,
+  liquidations, funding/OI, Deribit PCR — venue/order-flow features that
+  OpenMarket's 43-feature null and our Phase-B RESETs already covered.
+- **The decisive absence**: no settlement-process feature anywhere — no TWAP
+  reconstruction, no time-to-settlement variance, no strike-distance
+  normalization by remaining variance. Their XGBoost must *learn* what our
+  closed form *derives* from the venue's documented settlement process.
+- Fusion weights confirm the live signal set is just **OrderBookImbalance
+  0.60 + SpikeDetection 0.40** (8 other processors shipped at weight 0.0) —
+  and round 38 measured exactly those two classes: 95% of book moves don't
+  revert (B) and information-aligned moves continue (A).
+- Also: they ship their own `core/settlement/twap_feed.py` (19KB) — the
+  post-Aug-7 TWAP feed reader, validating our tape-collector necessity.
+
+Verdict: **KEEP-CORNERSTONE (comparative)** — the most-starred public bot on
+our markets sits entirely in the lane the evidence falsifies and lacks the
+settlement math that defines ours. Our differentiator survives its strongest
+public test.
 - 2026-09-02: round 47 — 0xzkleo README read (§2b): freemium funnel with
   unverifiable 98.8% premium claims (DISCARD per weighting rule); public
   stack = NautilusTrader + XGBoost gate + late-window entry (180-270s) —
