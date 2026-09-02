@@ -5,6 +5,12 @@
   seven checkpoints; lambda 1.90, ECE 0.0275. The daily-block CI monitoring
   continues; the +7.7-8.5c band is holding.
 
+- 2026-09-02: round 95 — watch rotation: zone still failing fresh
+  resolution (TWAP retry active; tape stale ~2.7h). CI checkpoint on fresh
+  data (109,382 quotes): **v2_ewma +8.00c/trade, daily-block CI
+  [+5.46,+10.39]** — eighth stable checkpoint, the +7.7-8.5c band holding
+  exactly. lambda 1.90, ECE 0.0275.
+
 - 2026-09-02: round 91 — zone still REFUSED (outage ongoing). Main
   collector fresh by 23.5s (established connections aging but live — watch
   for the drop when streams recycle). arXiv unchanged (2608.30999).
