@@ -800,3 +800,14 @@ Verdict: **KEEP-CORNERSTONE (forensics method + facts)**. (i) The final-90s zone
   growing across 30s checks. The strike-basis decomposition unblocks once
   the tape spans full windows alongside collector quotes. Drift clean
   (arXiv 2608.30999).
+- 2026-09-02: round 43 — strike-basis PRELIMINARY measurement (tape ~13 min
+  of 60s-window data; full decomposition deferred until the tape spans
+  1-2 days): first 5m-window strike basis (Chainlink 60s-TWAP strike −
+  Binance 1m-open proxy) = **−4.73bp (BTC), −3.58bp (ETH), −4.76bp (SOL)**
+  — consistently negative ~4-5bp across assets on this single window,
+  i.e. ~0.4-0.5 σ_m. If persistent, the Binance-proxy strike carries a
+  small systematic negative bias (Chainlink prints slightly below Binance
+  spot) — a component of, but not the whole, the λ≈1.9 residual. Also
+  noted: kline files flush with lag (03:10 at 08:40 UTC) — fresh-Binance
+  strikes for the tape era came from the REST endpoint; the service tape
+  is healthy (1,906+ rows, real-time within 6s).
