@@ -68,6 +68,10 @@
   newest; no new papers posted since the round-55 scan), tape steady at
   8.64h/51,096 rows (growing with wall-clock). No new items.
 
+- 2026-09-02: round 85 — full drift check: arXiv unchanged (2608.30999),
+  changelog newest still Aug 17, PR&R stable at 36 reports, tape steady at
+  8.64h/51,096 rows. No new items.
+
 - 2026-09-02: round 80 — CI checkpoint on a substantial fresh batch (108,538
   quotes, +5,107): **v2_ewma EV +7.75c/trade, daily-block CI [+5.30,+9.95]**
   — the estimate re-centered from +8.50 as new days arrived (normal
