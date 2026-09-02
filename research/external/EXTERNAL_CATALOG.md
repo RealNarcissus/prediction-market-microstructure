@@ -184,6 +184,24 @@ Source: [changelog/predictions.md](https://docs.polymarket.com/changelog/predict
 | [cnyes 鉅亨網: bot wallet analysis](https://news.cnyes.com/news/id/6455403) (CN) | Top profitable wallets ~70% bots; top-5% bot-suspected wallets = 75% of volume; **823 wallets with >$100k net profit since Jan 2025**; thesis "AI hasn't taken over prediction markets yet" | **KEEP-INSIGHT**: profit is concentrated but the tail is real (823 wallets >$100k) — the size of the genuine-edge population is non-trivial; consistent with maker/arb concentration rather than directional skill |
 | r/algotrading: open-source MM bot (MIT) | Author: CLOB liquidity "utterly useless" in most markets | REF — liquidity depth matters for sizing; consistent with our asks 25–75¢ EV concentration and 5-share min |
 
+### 5b. BTC5MScour full forensics (round 53, report body fetched)
+
+- The strategy in one line: **"not about knowing where Bitcoin is going; it
+  is about knowing where Bitcoin already is"** — sweep stale offers at
+  $0.96–0.99 on the near-certain side in the final window (~900 trades/day,
+  single slug btc-updown-5m, zero diversification).
+- Economics: +$26,520 / 26 days / $1.498M deployed (1.77% ROI); **98.8% of
+  capital in the $0.90–1.00 band at a 99.3% win rate** (+$18,543); the
+  remaining 1.2% "gets complicated".
+- **The June 21 anomaly**: a 2-hour cluster produced +$13,000 across
+  adjacent windows AND the single worst market (−$2,460) — the tail risk of
+  being a late-window toll collector when BTC moves violently. This is the
+  concrete failure mode our final-90s exclusion rule is built against.
+- Completes the late-window spectrum with hard numbers: BTC5MScour
+  +1.77%/26d (toll collection) ↔ abrownfox −37.81% (same trade, wider
+  entries) ↔ soulcrancer unverifiable claims ↔ 0xzkleo's ★136 public bot
+  entering at 180–270s.
+
 ## 6. Kalshi / other venues
 
 | Source | Content | Verdict |
@@ -929,3 +947,8 @@ independent implementation.
   endpoint/topics/semantics as our tape collector; "PTB locked from the
   open-boundary TWAP" confirms fair_v2's strike model from a second
   implementation. Tape 0.94h (decomposition still gated).
+- 2026-09-02: round 53 — BTC5MScour full forensics fetched (§5b): toll-
+  collection anatomy confirmed ($0.96-0.99 entries, 99.3% WR on 98.8% of
+  capital, 1.77% ROI/26d) + the June 21 anomaly (−$2,460 single-market
+  tail) as the documented failure mode our final-90s rule avoids. Tape
+  1.02h. Drift clean (arXiv 2608.30999).
