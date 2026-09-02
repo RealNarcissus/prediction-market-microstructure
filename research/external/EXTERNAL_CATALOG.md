@@ -1140,6 +1140,13 @@ two independent, mutually consistent measurements of the same edge class.
   trade, daily-block CI [+5.48,+11.94]** — fourth consecutive stable
   confirmation, Brier marginally improving (0.1717). Reddit search-based
   scan: empty shell (blocked). Drift clean (arXiv 2608.30999).
+
+- 2026-09-02: round 70 — Kalshi KXBTC15M docs probe: JS-rendered shells
+  (curl-inaccessible); the round-42 search-recorded facts (CF Benchmarks
+  BRTI, 60s averaging window) stand as the cross-venue settlement record.
+  A dedicated Kalshi API session (trading-api.readme.io) remains the path
+  if the second-venue port advances. Tape 2.43h (healthy). Drift clean
+  (arXiv 2608.30999).
   2608.30999).
   clean (arXiv 2608.30999).
   (521, known pattern).
