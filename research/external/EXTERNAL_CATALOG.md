@@ -9,6 +9,16 @@
   the reference feed, not the spot tick"; their /data/price-feed sells the
   rebuilt 60s TWAP series (our tape's commercial twin, also available as
   free samples). YouTube lane: JS-walled (deferred). Tape 2.67h. Drift
+
+- 2026-09-02: round 76 — PR&R adverse-selection glossary page captured
+  (precise formulation: "a passive quote is filled precisely when it is
+  wrong... the fills a market maker receives are a biased sample of the
+  ones it offered"; the common mistake = widening quotes permanently
+  instead of detecting-and-withdrawing). Sharpens our own interpretation:
+  our taker fills are also a biased sample (we take offers stale because
+  informed flow moved them) — the measured +8.5c/trade EV is the residual
+  AFTER that adverse selection, earned because our fair is faster than the
+  slowest quoters. Tape 2.75h. Drift clean (arXiv 2608.30999).
   clean (arXiv 2608.30999).
 # External Research Catalog — prediction markets / short-horizon trading
 
