@@ -992,6 +992,21 @@ independent implementation.
   prices; queued check); (ii) the tick-level agreement result is now
   confirmed on the deep sample (live rows only). Placeholder-vs-live
   distinction = consecutive identical 0.50 runs, trivially detectable.
+- 2026-09-02: round 59 — STRIKE-BASIS DECOMPOSITION COMPLETE: joint
+  (delta, lambda) fit on the fair residuals gives **delta* = 0.00 exactly**
+  (lambda*=1.85, Brier unchanged) — the -5.5bp Chainlink-vs-Binance level
+  bias does NOT appear in the fair residuals. Why: the collector stores
+  up-token books only (the -1 down-token markets carry no quotes — that is
+  the collector's design, discovered via the side-join), so every scored
+  quote is an up-market yes token, and our z uses Binance-vs-Binance for
+  BOTH strike and settlement — the +5.5bp source bias cancels in the
+  difference. Decomposition conclusion: **the extreme-band residual is
+  pure variance understatement (lambda=1.9) plus small fat tails; no
+  strike correction is needed in fair_v2**, and the Binance-proxy strike
+  is validated for probability purposes despite the level difference. The
+  24h tape remains useful for regime stability checks of the basis. The
+  side-join also revealed a collector design fact: down-token books are
+  not collected (only the -0 up-market series is polled, both sides).
 - 2026-09-02: round 58 — strike-basis DISTRIBUTION established (9 windows ×
   3 assets, tape 1.41h): **27/27 windows negative; basis ≈ −5.5bp
   systematic** (BTC mean −5.5 [−4.7,−7.5]; ETH −5.2; SOL −5.9 [−0.1,−11.0]).
