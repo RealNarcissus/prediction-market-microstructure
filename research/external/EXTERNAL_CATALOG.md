@@ -1,4 +1,6 @@
 
+- 2026-09-02: round 82 — haoo99 DOWNGRADED to DISCARD-CAUTION (exe-distribution funnel pattern; README is end-user marketing). The PM↔Kalshi gap-arb concept stands; the tooling entry does not. Tape 8.64h (steady). Drift clean (arXiv 2608.30999).
+
 - 2026-09-02: round 74 — CI checkpoint (103,435 quotes): **v2_ewma +8.50c/
   trade, daily-block CI [+5.48,+12.05]** — fifth consecutive stable/
   strengthening confirmation; Brier 0.1716 (still improving); lambda 1.86.
@@ -1074,7 +1076,7 @@ two independent, mutually consistent measurements of the same edge class.
 
 ### 2j. Kalshi tooling lane (round 81 — repos pushed today)
 
-- [haoo99/Polymarket-Kalshi-Arbitrage-Bot](https://github.com/haoo99/Polymarket-Kalshi-Arbitrage-Bot) (★3, pushed 2026-09-02): real-time arb on **Polymarket↔Kalshi 15-min BTC** price gaps — the compendium's strategy B built for OUR exact product pair. **KEEP-REF**: read when the second-venue port advances (their gap detection and venue-pairing code are directly reusable).
+- ~~[haoo99/Polymarket-Kalshi-Arbitrage-Bot](https://github.com/haoo99/Polymarket-Kalshi-Arbitrage-Bot)~~ (★3, pushed 2026-09-02; **DOWNGRADED round 82 after README read**): end-user funnel — pre-built Windows `.exe` distribution, "no coding needed" marketing; the TS source (arbitrage.ts, marketMatcher.ts, redeemer.ts) exists but the distribution model is the §6d malware red flag. **DISCARD-CAUTION**; the concept (PM↔Kalshi 15-min BTC gap arb) remains valid — write our own if the port advances.
 - [Crayz916/prediction-market-arbitrage-bot](https://github.com/Crayz916/prediction-market-arbitrage-bot) (pushed today): synthetic PM↔Kalshi arb — second implementation, same lane. REF.
 - The copy-trade repos (Singhalesebradycardia99, UnitedStars111) and AI-lane (anglil Gemini bot) remain DISCARD per standing rules; "self-improving bot" marketing (mehpackers13) DISCARD.
 - **Signal**: the PM↔Kalshi 15-min BTC arb lane is live and actively built by multiple parties — the compendium's "windows shrinking" assessment confirmed; our cross-venue entry (if any) would compete here.
