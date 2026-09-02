@@ -966,3 +966,14 @@ independent implementation.
   4.7M rows): price-level agreement median 0.005 (half tick), 86.9% within
   2 ticks on 452 matched seconds — recordings consistent, no systematic
   discrepancy. Tape 1.06h. Drift clean.
+- 2026-09-02: round 55 — DEEP kacho pass resolved + a data-hygiene finding:
+  the round-54 discrepancy (0.225 median across 671 markets) was **380,000
+  placeholder rows (up_price == 0.50 exactly) in our updown price files** —
+  the venue recorder's no-book default. After excluding placeholders, the
+  surviving live rows agree with kacho at **median 0.005 (half tick), 84.8%
+  within 2 ticks** — matching round 54. Two implications: (i) any consumer
+  of the updown price files must filter exact-0.50 rows (the April-era
+  evaluator's filters may not have caught them all — a caveat for its entry
+  prices; queued check); (ii) the tick-level agreement result is now
+  confirmed on the deep sample (live rows only). Placeholder-vs-live
+  distinction = consecutive identical 0.50 runs, trivially detectable.
