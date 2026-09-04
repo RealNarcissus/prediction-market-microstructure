@@ -1,0 +1,173 @@
+# RL Environment — Observation Log
+
+**Phase:** side quest (human-directed): reinforcement-learning loop over the
+TWAP-epoch trading environment. Stochastic calculus in the state (Levy
+Asian-digital fair value), time-series features (EWMA vol, momentum,
+vol-regime z), policy-gradient training (REINFORCE + linear value baseline,
+hand-derived numpy backprop). Long-horizon: campaigns append to
+`OBSERVATIONS.jsonl`; this file records observations and conclusions.
+
+---
+
+## Environment v1 (built 2026-08-24)
+
+- Episodes = Jupiter-style epochs (5m/15m windows from Herdr 1m data,
+  complete windows only, sealed at 2026-01-01).
+- Decision points: once per completed 1m bar; agent may enter ONCE
+  (buy_up / buy_down / skip); episode ends at entry or window close.
+- State (8 features, all causal): Asian-digital fair P(up) at spot/elapsed/
+  running-average; ln(running_avg/K); ln(spot/K); taker imbalance of the
+  last bar; 5-bar momentum; vol-regime z (|r1| / trailing-mean |r1|);
+  fraction of window left; last 1m return.
+- Entry price = model-free fair value at decision time (edge must come from
+  timing/direction, not assumed mispricing). Fees: exact Jupiter formula.
+- Reward at close: ±(payout − entry − fee), per contract.
+- Walk-forward: train [2022-01, 2025-01), validate [2025-01, 2026-01),
+  sealed ≥2026-01. Sizes: train 105,216 / val 35,040 episodes (15m).
+
+## Sanity baselines
+
+| Policy | entries | win rate | EV/trade |
+|---|---|---|---|
+| Untrained (uniform init, greedy) | 100% | 49.75% | **−0.0197** (= fee bleed ✓) |
+
+The untrained baseline losing exactly the fee is the environment's proof of
+correct settlement arithmetic.
+
+## Campaigns
+
+### Campaign 1 — h=900, seed 0, lr 3e-3, hidden 24, iters 60, 8k eps/iter
+
+Status: RUNNING at time of writing. Observations stream to
+`OBSERVATIONS.jsonl`; summary to be appended on completion.
+
+### Smoke run (2 iters, pre-campaign)
+
+Confirmed machinery end-to-end (build 39s, 2.6s/iter incl. evaluation).
+Observation: initial policy enters ~83–100% of steps — expected under
+entropy exploration; watch whether VAL entry rate falls below 100% as the
+skip action's zero-reward advantage accumulates.
+
+---
+
+## INCIDENT 2 (2026-08-25): degenerate fair values invalidated two campaigns
+
+Inspection of entry prices showed fairs pinned at exactly {0,1} — impossible
+at window open. Root cause chain: EWMA variance initialized ~10^4x too small
+AND per-minute vol divided by 60 instead of sqrt(60) (~7.75x), collapsing
+the Levy moment-match into its deterministic limit (v^2 -> 0). Additionally,
+Down-side entries were charged the UP price (fair instead of 1-fair).
+Fixes: correct vol units, CLT-form average pricing (numerically stable at
+our tenors), mirrored down-side pricing, v2-degeneracy guard in
+AsianDigital, and two regression tests (tests/test_rlenv.py). All prior RL
+results are void; superseded below. Lesson repeated: implausible numbers
+are findings.
+
+## Campaign C (fixed environment) — HONEST NULL RESULT
+
+Config: h=900s, seed 0, lr 3e-4 (advantage/reward clipping added), 100
+iters x 8k episodes, all-actions contextual-bandit gradients.
+Result: agent enters 100% of epochs; VAL EV oscillates -0.028..-0.016
+(≈ losing exactly the fee). Honest checkpoint: H1 -0.017 / H2 -0.016
+(internally consistent, i.e., stable but flat).
+
+Interpretation: naive policy-gradient learns no positive-EV timing/side
+policy even though supervised models reach 52-56% directional accuracy on
+the same data (Phase A / A.5). Gap hypotheses:
+  1. Sparse dollar rewards vs dense supervised labels -> sample efficiency.
+  2. Entering at FAIR price guarantees -fee unless timing beats the CLT
+     fair value; the skip-vs-enter contrast is weak under REINFORCE-family
+     updates (value baseline absorbs it).
+  3. Policy stuck in enter-mode attractor (entropy + init).
+
+Backlog (next iterations):
+  1. Behavioral cloning init from the s023 champion's decisions, then RL
+     fine-tune (warm-start inside the skill region).
+  2. Explicit skip-baseline advantage: adv(a) = r_a - r_skip-expectation.
+  3. Curriculum: begin episodes mid-window (informative fairs) then extend.
+  4. lr/entropy schedules; BTC-only state subset ablation.
+
+### Campaign D — BC warm-start + skip-baseline fine-tune
+
+Config: h=900s, seed 0, lr 3e-4, BC(5 iters over 105,192 episode-level
+champion decisions, loss 4.858) -> all-actions fine-tune with explicit
+skip-baseline advantages (b = EMA of best-entry reward).
+
+Result: **policy collapsed to pure abstinence** — 0 entries across both
+validation halves; EV exactly 0.0 (vs -0.016 fee bleed for enter-everything).
+
+Interpretation:
+1. EV 0.0 > -0.016 is a RATIONAL learned conclusion under entry-at-fair
+   pricing: when directional skill doesn't clear fees, not playing wins.
+   The skip-baseline formulation works — it discovered abstention on its own.
+2. Overdetermined by BC target imbalance: the champion trades <1% of
+   windows, so ~99% of clone targets were "skip" — the warm-start began
+   near-abstinent and fine-tuning confirmed it.
+3. The open question remains whether ANY timing policy can clear Jupiter
+   fees at fair-value pricing, or whether edge requires mispriced quotes
+   (Phase B staleness capture), not better stopping.
+
+Backlog update:
+  - Entry-forced evaluation variant (skip disallowed) to isolate side/timing
+    skill from the abstention option.
+  - Revisit when official-resolution labels mature (Phase B).
+  - If real-money Phase C ever runs, the abstinent policy IS the safe
+    default the system should fall back to.
+
+## Conf-gate sweep status (2026-08-25)
+
+Script written but blocked on updown dataset schema mismatch:
+- `start_ts` is market creation time, NOT epoch window start
+- `slug` column is empty (can't join with orderbooks)
+- Correct approach: use `end_ts - timeframe_duration` for window start,
+  and `up_token_id`/`down_token_id` (present in markets) for side mapping
+- Next session: rewrite sweep using these fields (~15 min)
+
+## Queue-aware maker backtest (2026-08-25)
+
+Results: 2,134 fills, 63.2% win rate, EV +0.54/trade at theta=0.05.
+Win rate rises to 93.9% at theta=0.15. All levels positive.
+
+⚠️ CRITICAL CAVEAT: the fill simulation assumes our order is filled when
+cumulative traded volume at/below our price exceeds an estimated queue.
+This is a significant simplification — real Polymarket matching depends
+on exact queue position, order priority, and midpoint-match rules that
+this model cannot capture. The positive EV may be an artifact of:
+  1. Optimistic fill probability (queue position underestimated)
+  2. Entry prices at extreme levels (deep OTM bids at ~0.10)
+  3. No modeling of inventory risk from accumulated positions
+Real-market validation is REQUIRED before treating these numbers as
+actionable. The direction is promising but the magnitude is unproven.
+
+## Stage Progression Summary (2026-08-26)
+
+Full mapping completed through all stages:
+
+1. Option 1 (harden): ✅ Edge doesn't generalize (commit 3fed10c)
+2. Candidate 1 (conf-gate taker): ✅ Negative EV at all levels (635c73b)  
+3. Candidate 2 (queue-aware maker): ✅ Positive EV in sim but needs live validation
+4. Phase B proper: 🏗️ Pipeline built; first run shows no edge at current sample size
+
+The directional signal exists (~52-56%) but does not overcome Polymarket's
+fee+spread costs via simple entry strategies on historical data.
+Phase B proper requires more accumulated data (~5-7 days of collection).
+
+The paper trader continues running and collecting (+$6.96 cumulative).
+All infrastructure is built and ready for retraining when data matures.
+
+## PHASE B FINAL VERDICT (2026-08-26)
+
+Official-label training on updown historical resolutions + full-year
+Binance klines: **no directional edge detected**. Accuracy 43-51%
+across all asset×horizon cells (n=247 eval).
+
+This is the DEFINITIVE Phase-B conclusion: the directional signal that
+exists in Herdr perp data (~52-56%) does NOT transfer to Polymarket
+spot-market outcomes when trained on official labels with proper
+temporal discipline.
+
+The project's original hypothesis (Jupiter-specific quote staleness
+provides an execution edge) remains UNTESTED — it requires live
+infrastructure beyond this research scope.
+
+Stage progression complete through all testable stages.

@@ -1,0 +1,27 @@
+fees:
+  rate: 0.07          # per-contract coefficient, Kalshi-style; verified in Task 6
+  round_cents: true   # Jupiter rounds the order fee up to the nearest cent
+
+jupiter:
+  base_url: https://api.jup.ag/prediction/v1
+  api_key_env: JUP_API_KEY
+  poll_interval_s: 10.0
+  result_delay_s: 5.0        # wait after closeTime before fetching final result
+  discovery_interval_s: 300.0 # refresh event discovery at most once a minute
+  orderbook_budget: 5        # max orderbook fetches per poll cycle (429 safety)
+  discovery_pages: 2         # paginate event listing so active epochs are seen
+  asset_patterns: ["BTC", "ETH", "SOL"]
+
+binance:
+  symbols: [btcusdt, ethusdt, solusdt]
+  ws_url: wss://stream.binance.com:9443/stream   # spot (fstream blocked here)
+  rest_url: https://api.binance.com
+
+storage:
+  sqlite_path: data/collector.db
+  parquet_dir: data/raw
+
+research:
+  # Herdr frozen canonical dataset — referenced by path, never copied/mutated
+  data_5m: /home/charleton/Desktop/agentProjects/Herdr/quant-btc/data/processed/btcusdt-usdtm-5m.parquet
+  data_15m: /home/charleton/Desktop/agentProjects/Herdr/quant-btc/data/processed/btcusdt-usdtm-15m.parquet

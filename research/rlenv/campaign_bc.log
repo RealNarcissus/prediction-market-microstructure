@@ -1,0 +1,72 @@
+/home/charleton/Desktop/agentProjects/ZCode/quant-btc/research/strategies/s018_lgbm_weighted_imbalance.py:17: RuntimeWarning: invalid value encountered in divide
+  imb = np.where(v > 0, 2.0 * tbv / v - 1.0, 0.0)
+episodes: train 105216, val 35040 (34s to build)
+BC warm-start: 105192 episodes cloned (loss 4.858, 60s)
+iter   1 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 11.8s
+iter   2 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter   3 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 11.9s
+iter   4 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 11.9s
+iter   5 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter   6 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter   7 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 11.9s
+iter   8 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter   9 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  10 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  11 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  12 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  13 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  14 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  15 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  16 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  17 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  18 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  19 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  20 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  21 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  22 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  23 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.2s
+iter  24 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  25 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  26 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.4s
+iter  27 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  28 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  29 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  30 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  31 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.3s
+iter  32 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  33 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.4s
+iter  34 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  35 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  36 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  37 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  38 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  39 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.3s
+iter  40 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  41 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.2s
+iter  42 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  43 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  44 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.4s
+iter  45 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.3s
+iter  46 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  47 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  48 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  49 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  50 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  51 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 11.9s
+iter  52 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  53 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  54 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  55 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  56 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.0s
+iter  57 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.1s
+iter  58 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.3s
+iter  59 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.2s
+iter  60 | train R +0.0000 (enter 0%) | VAL entries 0/35040 win None EV +0.0000 CI [0.0, 0.0] | 12.3s
+
+BASELINE (untrained): {"episodes": 35040, "entries": 17626, "entry_rate": 0.503, "win_rate": 0.9792, "ev_per_trade": -0.0132, "ev_ci95": [-0.0153, -0.0112], "total_pnl": -232.77}
+BEST VAL EV (biased — selected on same set): 0.0
+HONEST CHECKPOINT (selected on 2025-H1):
+  selection half (H1): {"episodes": 17376, "entries": 0, "entry_rate": 0.0, "win_rate": null, "ev_per_trade": 0.0, "ev_ci95": [0.0, 0.0], "total_pnl": 0}
+  reporting half (H2): {"episodes": 17664, "entries": 0, "entry_rate": 0.0, "win_rate": null, "ev_per_trade": 0.0, "ev_ci95": [0.0, 0.0], "total_pnl": 0}
+policy -> research/rlenv/best_policy.npz
+observations -> /home/charleton/Desktop/agentProjects/ZCode/quant-btc/research/rlenv/OBSERVATIONS.jsonl

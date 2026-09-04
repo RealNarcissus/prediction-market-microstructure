@@ -2,3 +2,11 @@ data/
 __pycache__/
 *.pyc
 .venv/
+.env
+*.egg-info/
+reports/
+research/results.db
+research/__pycache__/
+.zcode/
+research/staleness/__pycache__/
+research/staleness/scored_quotes.parquet

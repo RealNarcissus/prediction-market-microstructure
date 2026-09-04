@@ -1,0 +1,16 @@
+{
+  "marketId": "abc123",
+  "eventId": "evt456",
+  "title": "BTC Up or Down - 5 minute - 2026-08-23 14:00 ET",
+  "status": "open",
+  "result": null,
+  "openTime": 1784773200,
+  "closeTime": 1784773500,
+  "pricing": {
+    "buyYesPriceUsd": 125000,
+    "buyNoPriceUsd": 90000,
+    "sellYesPriceUsd": 100000,
+    "sellNoPriceUsd": 850000,
+    "volume": 500000000
+  }
+}

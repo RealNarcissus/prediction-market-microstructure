@@ -1,0 +1,340 @@
+from __future__ import annotations
+
+import asyncio
+import time
+
+import httpx
+
+from quantbtc.jupiter import (
+    JupiterClient,
+    best_bid_ask,
+    parse_epoch_event,
+    parse_orderbook,
+)
+from quantbtc.store import Store
+
+# Verified live (docs/RECON.md): up/down epochs are discovered per horizon tag.
+HORIZON_TAGS = ("5m", "15m")
+# Recency-ranked search phrases per asset (search beats deep pagination
+# for surfacing the CURRENTLY-live epoch).
+ASSET_QUERY = {
+    "BTC": "bitcoin up or down",
+    "ETH": "ethereum up or down",
+    "SOL": "solana up or down",
+}
+# Slug prefixes per asset: {prefix}-updown-{5m|15m}-{epoch_start_unix}.
+# Windows align to the clock, so the current slug is pure arithmetic —
+# deterministic discovery immune to listing order (RECON: listings buried
+# the active epoch past page 3 before).
+SLUG_PREFIX = {"BTC": "btc", "ETH": "eth", "SOL": "sol"}
+HORIZON_S = {"5m": 300, "15m": 900}
+
+
+class JupiterPoller:
+    """Polls up/down epochs; records best bid/ask for active epochs and
+    final resolutions after close. Rate-limited: discovery is cached and
+    refreshed periodically, orderbook fetches are budgeted per cycle and
+    round-robined across active epochs, and 429s trigger backoff.
+
+    poll_once is the pure testable step.
+    """
+
+    def __init__(
+        self,
+        client: JupiterClient,
+        store: Store,
+        assets: tuple[str, ...] = ("BTC", "ETH", "SOL"),
+        result_delay_s: float = 5.0,
+        poll_interval_s: float = 10.0,
+        discovery_interval_s: float = 60.0,
+        orderbook_budget: int = 5,
+        discovery_pages: int = 3,
+    ):
+        self.client = client
+        self.store = store
+        self.assets = assets
+        self.result_delay_ms = int(result_delay_s * 1000)
+        self.poll_interval_s = poll_interval_s
+        self.discovery_interval_s = discovery_interval_s
+        self.orderbook_budget = orderbook_budget
+        self.discovery_pages = discovery_pages
+        self._epochs: list = []  # cached EpochEvent list
+        self._last_discovery_ms = 0
+        self._rr_index = 0
+        self._probe_backoff: dict[str, int] = {}  # slug -> next-attempt ms
+        self._cycle = 0
+
+    async def _discover(self, now_ms: int, force: bool = False) -> None:
+        if (
+            not force
+            and self._epochs
+            and now_ms - self._last_discovery_ms
+            < self.discovery_interval_s * 1000
+        ):
+            return
+        # retention window: keep epochs until 6h after close (Jupiter's
+        # result can land late — resolution retries need the window) and no
+        # further than 2h pre-listed; seed the new cache from the old one so
+        # once-seen epochs are never evicted by listing roulette
+        def _keep(ep) -> bool:
+            return (
+                ep.close_ms >= now_ms - 6 * 3600_000
+                and ep.epoch_start_ms <= now_ms + 2 * 3600_000
+            )
+
+        by_event: dict[str, object] = {
+            ep.event_id: ep for ep in self._epochs if _keep(ep)
+        }
+
+        async def collect(events: list) -> None:
+            for event in events:
+                ep = parse_epoch_event(event)
+                if ep is None or ep.asset not in self.assets:
+                    continue
+                # keep current/upcoming epochs AND recently-closed ones
+                # (resolution pickup needs them); skip deep history —
+                # search returns old events and hydrating wastes requests
+                if ep.close_ms < now_ms - 15 * 60_000:
+                    continue
+                if ep.up_market_id is None and ep.event_id:
+                    # search payload omits market fields: hydrate once
+                    try:
+                        full = await self.client.get_event(ep.event_id)
+                        hydrated = parse_epoch_event(full)
+                        if hydrated is not None:
+                            ep = hydrated
+                    except Exception as exc:
+                        print(f"[jupiter] hydrate {ep.event_id} failed: {exc!r}")
+                if ep.up_market_id is not None:
+                    by_event.setdefault(ep.event_id, ep)
+                await asyncio.sleep(0.3)  # pace: never burst the API
+
+        # 1) recency-ranked search per asset: catches the LIVE epoch even
+        #    when the tags listing buries it under past ones
+        for asset in self.assets:
+            if asset in ASSET_QUERY:
+                try:
+                    await collect(
+                        await self.client.get_event_search(ASSET_QUERY[asset])
+                    )
+                except Exception as exc:
+                    print(f"[jupiter] search {asset} failed: {exc!r}")
+                await asyncio.sleep(0.3)
+        # 2) paginated tags listing: breadth (pre-listed future epochs)
+        for tag in HORIZON_TAGS:
+            for offset in range(0, self.discovery_pages * 10, 10):
+                events = await self.client.get_events(
+                    category="crypto",
+                    tags=tag,
+                    include_markets=True,
+                    start=offset,
+                )
+                await collect(events)
+                await asyncio.sleep(0.3)
+                if not (isinstance(events, list) and len(events) >= 10):
+                    break
+        # keep only epochs relevant around now (bounded memory)
+        self._epochs = [ep for ep in by_event.values() if _keep(ep)]
+        self._last_discovery_ms = now_ms
+
+    async def poll_once(self, now_ms: int | None = None, force: bool = False) -> None:
+        now_ms = now_ms if now_ms is not None else int(time.time() * 1000)
+        await self._discover(now_ms, force=force)
+        await self._slug_probe(now_ms)
+
+        for ep in self._epochs:
+            for market_id in (ep.up_market_id, ep.down_market_id):
+                if not market_id:
+                    continue
+                self.store.upsert_market(
+                    {
+                        "market_id": market_id,
+                        "event_id": ep.event_id,
+                        "title": ep.title,
+                        "asset": ep.asset,
+                        "horizon_s": ep.horizon_s,
+                        "open_time_ms": ep.epoch_start_ms,
+                        "close_time_ms": ep.close_ms,
+                        "strike": None,
+                        "first_seen_ms": now_ms,
+                    }
+                )
+
+        active = [
+            ep
+            for ep in self._epochs
+            if ep.epoch_start_ms <= now_ms < ep.close_ms
+            and ep.status == "open"
+            and ep.up_market_id
+        ]
+        # freshest epochs first WITHIN asset priority: BTC (the paper-traded
+        # asset) gets the first cut of the quote budget; ETH/SOL follow
+        active.sort(key=lambda ep: (ep.asset != "BTC", -ep.epoch_start_ms))
+        fetched = 0
+        n = len(active)
+        while fetched < self.orderbook_budget and fetched < n:
+            ep = active[self._rr_index % n]
+            self._rr_index += 1
+            try:
+                await self._record_quotes(ep, now_ms)
+            except Exception as exc:
+                # one rate-limited/failed fetch must not abort the whole
+                # cycle — other epochs still get their quotes
+                print(f"[jupiter] quote {ep.slug} failed: {exc!r}")
+                await asyncio.sleep(1.0)  # breathe before the next attempt
+            fetched += 1
+
+        resolved = 0
+        # oldest-pending first: those expire out of the 6h retry window soonest
+        pending = sorted(
+            [ep for ep in self._epochs],
+            key=lambda ep: ep.close_ms,
+        )
+        for ep in pending:
+            if resolved >= 1:  # paced hard: one resolution per cycle max
+                break
+            try:
+                if await self._maybe_resolve(ep, now_ms):
+                    resolved += 1
+            except Exception as exc:
+                print(f"[jupiter] resolve {ep.slug} failed: {exc!r}")
+
+    async def _slug_probe(self, now_ms: int) -> None:
+        """Deterministically fetch the CURRENT epoch per asset x horizon
+        (BTC additionally pre-caches the next window for paper entries).
+
+        Failed probes back off exponentially per slug — an unfindable slug
+        must never be re-requested every cycle (that was throttling the API).
+        """
+        now_s = now_ms // 1000
+        cached = {ep.slug for ep in self._epochs}
+        attempts = 0
+        for asset, prefix in SLUG_PREFIX.items():
+            if asset not in self.assets:
+                continue
+            for hz, seconds in HORIZON_S.items():
+                win_start = (now_s // seconds) * seconds
+                # next-window pre-caching only for the paper-traded asset
+                windows = (
+                    (win_start, win_start + seconds)
+                    if asset == "BTC"
+                    else (win_start,)
+                )
+                for start in windows:
+                    slug = f"{prefix}-updown-{hz}-{start}"
+                    if slug in cached:
+                        continue
+                    if self._probe_backoff.get(slug, 0) > now_ms:
+                        continue  # recently failed: exponential backoff
+                    if attempts >= 2:  # hard per-cycle attempt budget
+                        return
+                    attempts += 1
+                    try:
+                        events = await self.client.get_event_search(slug, limit=3)
+                        found = False
+                        for event in events:
+                            ep = parse_epoch_event(event)
+                            if ep is None or ep.slug != slug:
+                                continue
+                            if ep.up_market_id is None and ep.event_id:
+                                full = await self.client.get_event(ep.event_id)
+                                hydrated = parse_epoch_event(full)
+                                if hydrated is not None:
+                                    ep = hydrated
+                            if ep.up_market_id is not None:
+                                self._epochs.append(ep)
+                                cached.add(slug)
+                                self._probe_backoff.pop(slug, None)
+                                print(f"[jupiter] slug-probe found {slug}")
+                            found = True
+                            break
+                        if not found:
+                            prev = self._probe_backoff.get(slug, 30_000)
+                            self._probe_backoff[slug] = (
+                                now_ms + min(max(60_000, prev * 2), 600_000)
+                            )
+                    except Exception as exc:
+                        prev = self._probe_backoff.get(slug, 30_000)
+                        self._probe_backoff[slug] = (
+                            now_ms + min(max(60_000, prev * 2), 600_000)
+                        )
+                        print(f"[jupiter] slug-probe {slug} failed: {exc!r}")
+
+    async def _record_quotes(self, ep, now_ms: int) -> None:
+        # The Up market's yes/no arrays are BID LADDERS (buying no-Up == betting
+        # Down). Best bid per side = max(ladder); the ask to BUY a side is the
+        # mirror: 1 - best bid of the opposite side. One orderbook call covers
+        # the epoch.
+        ob = parse_orderbook(await self.client.get_orderbook(ep.up_market_id))
+        bid_up = max((lv.price for lv in ob["yes"]), default=None)
+        bid_down = max((lv.price for lv in ob["no"]), default=None)
+        qty_up = max(ob["yes"], key=lambda lv: lv.price).qty if ob["yes"] else None
+        qty_down = max(ob["no"], key=lambda lv: lv.price).qty if ob["no"] else None
+
+        def ask(side_bid: float | None, opp_bid: float | None):
+            if side_bid is None or opp_bid is None:
+                return None
+            return min(1.0, 1.0 - opp_bid)
+
+        self.store.insert_quotes(
+            [
+                {
+                    "ts_ms": now_ms, "market_id": ep.up_market_id, "side": "up",
+                    "bid": bid_up, "ask": ask(bid_up, bid_down),
+                    "bid_qty": qty_up, "ask_qty": qty_down,
+                },
+                {
+                    "ts_ms": now_ms, "market_id": ep.up_market_id, "side": "down",
+                    "bid": bid_down, "ask": ask(bid_down, bid_up),
+                    "bid_qty": qty_down, "ask_qty": qty_up,
+                },
+            ]
+        )
+
+    async def _maybe_resolve(self, ep, now_ms: int) -> bool:
+        """Fetch the official outcome for a closed epoch. Jupiter's result
+        field can land well after close (Chainlink TWAP + on-chain
+        resolution), so the retry window spans 6h; returns True if this
+        call resolved an epoch."""
+        if (
+            now_ms < ep.close_ms + self.result_delay_ms
+            or now_ms > ep.close_ms + 6 * 3600_000
+            or not ep.up_market_id
+            or not ep.down_market_id
+            or self.store.resolution(ep.up_market_id) is not None
+        ):
+            return False
+        fresh = await self.client.get_market(ep.up_market_id)
+        if fresh.get("result") in ("yes", "no"):
+            up_won = fresh["result"] == "yes"
+            self.store.upsert_resolution(
+                ep.up_market_id,
+                "up" if up_won else "down",
+                resolved_ms=ep.close_ms,
+                checked_ms=now_ms,
+            )
+            self.store.upsert_resolution(
+                ep.down_market_id,
+                "down" if up_won else "up",
+                resolved_ms=ep.close_ms,
+                checked_ms=now_ms,
+            )
+            return True
+        return False
+
+    async def run_forever(self) -> None:
+        backoff_s = self.poll_interval_s
+        while True:
+            try:
+                await self.poll_once()
+                self.store.set_state("last_poll_ms", str(int(time.time() * 1000)))
+                backoff_s = self.poll_interval_s
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code == 429:
+                    backoff_s = min(backoff_s * 2, 120.0)
+                    print(f"[jupiter] 429 rate-limited; backing off {backoff_s}s")
+                else:
+                    print(f"[jupiter] poll error: {exc!r}")
+            except Exception as exc:  # keep the daemon alive on API hiccups
+                print(f"[jupiter] poll error: {exc!r}")
+            await asyncio.sleep(backoff_s)

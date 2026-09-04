@@ -1,0 +1,1549 @@
+{
+  "data": [
+    {
+      "eventId": "POLY-893343",
+      "isActive": true,
+      "isLive": true,
+      "category": "esports",
+      "subcategory": "dota2",
+      "tags": [
+        "esports",
+        "dota-2",
+        "games",
+        "sports",
+        "dota2"
+      ],
+      "metadata": {
+        "slug": "dota2-vsn2-ts8-2026-08-23",
+        "title": "Dota 2: TEAM VISION vs Team Spirit (BO5) - The International Playoffs",
+        "isLive": false,
+        "league": "Dota 2",
+        "series": "polymarket",
+        "eventId": "POLY-893343",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dota2-7ffacddb21.jpg",
+        "subtitle": "",
+        "closeTime": "2026-08-23T11:00:00Z"
+      },
+      "volumeUsd": "20584634000000",
+      "volume24hr": "20745624000000",
+      "beginAt": "1787465700",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3793017-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "TEAM VISION",
+          "openTime": 1787458784,
+          "closeTime": 1787487300,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Dota 2 Grand final match between TEAM VISION and Team Spirit in the The International Playoffs, initially scheduled for August 23, 2026 at 1:00 AM ET.\n\nThis market will resolve to \"TEAM VISION\" if TEAM VISION win the match against Team Spirit.\n\nThis market will resolve to \"Team Spirit\" if Team Spirit win the match against TEAM VISION.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 1:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://www.dotabuff.com. However, if https://www.dotabuff.com has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 760000,
+            "sellYesPriceUsd": 750000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 8456503
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dota2-7ffacddb21.jpg",
+          "team": {
+            "name": "TEAM VISION",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/dota2/team vision.png",
+            "color": "#2fffe8",
+            "abbreviation": "vsn2"
+          },
+          "outcomes": [
+            "TEAM VISION",
+            "Team Spirit"
+          ],
+          "clobTokenIds": [
+            "105717336415824188396323710698848701902178478068973000541904427172521007243289",
+            "57622421710893252242586221145464607184247457679278807895234035552685214942526"
+          ],
+          "marketOptions": [
+            {
+              "label": "TEAM VISION",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3793017-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Team Spirit",
+          "openTime": 1787458784,
+          "closeTime": 1787487300,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Dota 2 Grand final match between TEAM VISION and Team Spirit in the The International Playoffs, initially scheduled for August 23, 2026 at 1:00 AM ET.\n\nThis market will resolve to \"TEAM VISION\" if TEAM VISION win the match against Team Spirit.\n\nThis market will resolve to \"Team Spirit\" if Team Spirit win the match against TEAM VISION.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 1:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://www.dotabuff.com. However, if https://www.dotabuff.com has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 250000,
+            "sellYesPriceUsd": 240000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 8456503
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dota2-7ffacddb21.jpg",
+          "team": {
+            "name": "Team Spirit",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/dota2/dota-2_team spirit_1669.png",
+            "color": "#4E4E4E",
+            "abbreviation": "ts8"
+          },
+          "outcomes": [
+            "TEAM VISION",
+            "Team Spirit"
+          ],
+          "clobTokenIds": [
+            "105717336415824188396323710698848701902178478068973000541904427172521007243289",
+            "57622421710893252242586221145464607184247457679278807895234035552685214942526"
+          ],
+          "marketOptions": [
+            {
+              "label": "Team Spirit",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-891764",
+      "isActive": true,
+      "isLive": true,
+      "category": "esports",
+      "subcategory": "cs2",
+      "tags": [
+        "esports",
+        "counter-strike-2",
+        "games",
+        "sports",
+        "cs2"
+      ],
+      "metadata": {
+        "slug": "cs2-fut-ts7-2026-08-23",
+        "title": "Counter-Strike: FUT Esports vs Spirit (BO5) - Esports World Cup Playoffs",
+        "isLive": false,
+        "league": "Counter Strike",
+        "series": "polymarket",
+        "eventId": "POLY-891764",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/counter-strike-image-16c415c538.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T17:30:00Z"
+      },
+      "volumeUsd": "1435752000000",
+      "volume24hr": "1437871000000",
+      "beginAt": "1787487300",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3787071-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "FUT Esports",
+          "openTime": 1787431534,
+          "closeTime": 1787508900,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Counter-Strike Grand final match between FUT Esports and Spirit in the Esports World Cup Playoffs, initially scheduled for August 23, 2026 at 7:30 AM ET.\n\nThis market will resolve to \"FUT Esports\" if FUT Esports win the match against Spirit.\n\nThis market will resolve to \"Spirit\" if Spirit win the match against FUT Esports.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:30 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://hltv.org. However, if https://hltv.org has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 280000,
+            "sellYesPriceUsd": 270000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 1009003
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/counter-strike-image-16c415c538.png",
+          "team": {
+            "name": "FUT Esports",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/cs2/cs-go_fut esports_136955.png",
+            "color": "#E00020",
+            "abbreviation": "fut"
+          },
+          "outcomes": [
+            "FUT Esports",
+            "Spirit"
+          ],
+          "clobTokenIds": [
+            "67819071028010921288544697428644386023361410661023810587705450609789144619567",
+            "50126043796244171148630370660825339215195896706873456174579896498610092792556"
+          ],
+          "marketOptions": [
+            {
+              "label": "FUT Esports",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3787071-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Spirit",
+          "openTime": 1787431534,
+          "closeTime": 1787508900,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Counter-Strike Grand final match between FUT Esports and Spirit in the Esports World Cup Playoffs, initially scheduled for August 23, 2026 at 7:30 AM ET.\n\nThis market will resolve to \"FUT Esports\" if FUT Esports win the match against Spirit.\n\nThis market will resolve to \"Spirit\" if Spirit win the match against FUT Esports.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:30 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://hltv.org. However, if https://hltv.org has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 730000,
+            "sellYesPriceUsd": 720000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 1009003
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/counter-strike-image-16c415c538.png",
+          "team": {
+            "name": "Spirit",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/cs2/Spirit-Lo5xnoaRCKvn.png",
+            "color": "#9d9595",
+            "abbreviation": "ts7"
+          },
+          "outcomes": [
+            "FUT Esports",
+            "Spirit"
+          ],
+          "clobTokenIds": [
+            "67819071028010921288544697428644386023361410661023810587705450609789144619567",
+            "50126043796244171148630370660825339215195896706873456174579896498610092792556"
+          ],
+          "marketOptions": [
+            {
+              "label": "Spirit",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-849987",
+      "isActive": true,
+      "isLive": true,
+      "category": "esports",
+      "subcategory": "lol",
+      "tags": [
+        "esports",
+        "league-of-legends",
+        "games",
+        "sports",
+        "lol"
+      ],
+      "metadata": {
+        "slug": "lol-blg-al-2026-08-23",
+        "title": "LoL: Bilibili Gaming vs Anyone's Legend (BO3) - LPL Group Ascend",
+        "isLive": false,
+        "league": "League of Legends",
+        "series": "polymarket",
+        "eventId": "POLY-849987",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/league-of-legends-61a4f083a6.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T17:00:00Z"
+      },
+      "volumeUsd": "139813000000",
+      "volume24hr": "118838000000",
+      "beginAt": "1787487600",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3589312-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Bilibili Gaming",
+          "openTime": 1786734684,
+          "closeTime": 1787509200,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the LoL match between Bilibili Gaming and Anyone's Legend in the LPL Group Ascend, initially scheduled for August 23, 2026 at 7:00 AM ET.\n\nThis market will resolve to \"Bilibili Gaming\" if Bilibili Gaming win the match against Anyone's Legend.\n\nThis market will resolve to \"Anyone's Legend\" if Anyone's Legend win the match against Bilibili Gaming.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://gol.gg/esports/home. However, if https://gol.gg/esports/home has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 720000,
+            "sellYesPriceUsd": 710000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 172910
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/league-of-legends-61a4f083a6.png",
+          "team": {
+            "name": "Bilibili Gaming",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/lol/league-of-legends_bilibili gaming_1566.png",
+            "color": "#20bfdf",
+            "abbreviation": "blg"
+          },
+          "outcomes": [
+            "Bilibili Gaming",
+            "Anyone's Legend"
+          ],
+          "clobTokenIds": [
+            "55534075447207247970736977748693515088328688387344342647078608177827390626426",
+            "60134309353453840822046215747981992835365596249433590075410458946258601405218"
+          ],
+          "marketOptions": [
+            {
+              "label": "Bilibili Gaming",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3589312-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Anyone's Legend",
+          "openTime": 1786734684,
+          "closeTime": 1787509200,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the LoL match between Bilibili Gaming and Anyone's Legend in the LPL Group Ascend, initially scheduled for August 23, 2026 at 7:00 AM ET.\n\nThis market will resolve to \"Bilibili Gaming\" if Bilibili Gaming win the match against Anyone's Legend.\n\nThis market will resolve to \"Anyone's Legend\" if Anyone's Legend win the match against Bilibili Gaming.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://gol.gg/esports/home. However, if https://gol.gg/esports/home has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 290000,
+            "sellYesPriceUsd": 280000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 172910
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/league-of-legends-61a4f083a6.png",
+          "team": {
+            "name": "Anyone's Legend",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/lol/league-of-legends_anyone's legend_129971.png",
+            "color": "#c02121",
+            "abbreviation": "al"
+          },
+          "outcomes": [
+            "Bilibili Gaming",
+            "Anyone's Legend"
+          ],
+          "clobTokenIds": [
+            "55534075447207247970736977748693515088328688387344342647078608177827390626426",
+            "60134309353453840822046215747981992835365596249433590075410458946258601405218"
+          ],
+          "marketOptions": [
+            {
+              "label": "Anyone's Legend",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-892213",
+      "isActive": true,
+      "isLive": true,
+      "category": "esports",
+      "subcategory": "cs2",
+      "tags": [
+        "esports",
+        "counter-strike-2",
+        "games",
+        "sports",
+        "cs2"
+      ],
+      "metadata": {
+        "slug": "cs2-wbt-noirve-2026-08-23",
+        "title": "Counter-Strike: WBT vs Noir Verse (BO3) - CCT Europe Challengers Series Playoffs",
+        "isLive": false,
+        "league": "Counter Strike",
+        "series": "polymarket",
+        "eventId": "POLY-892213",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/counter-strike-image-16c415c538.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T17:00:00Z"
+      },
+      "volumeUsd": "111336000000",
+      "volume24hr": "111436000000",
+      "beginAt": "1787482800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3789559-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "WBT",
+          "openTime": 1787438726,
+          "closeTime": 1787504400,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Counter-Strike Lower bracket final match between WBT and Noir Verse in the CCT Europe Challengers Series Playoffs, initially scheduled for August 23, 2026 at 7:00 AM ET.\n\nThis market will resolve to \"WBT\" if WBT win the match against Noir Verse.\n\nThis market will resolve to \"Noir Verse\" if Noir Verse win the match against WBT.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://hltv.org. However, if https://hltv.org has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 900000,
+            "sellYesPriceUsd": 870000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 100224
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/counter-strike-image-16c415c538.png",
+          "team": {
+            "name": "WBT",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/csgo/wbt.png",
+            "color": "#28397f",
+            "abbreviation": "wbt"
+          },
+          "outcomes": [
+            "WBT",
+            "Noir Verse"
+          ],
+          "clobTokenIds": [
+            "33846124952863540943530382962229326667994635232429249367615648375361103269153",
+            "11659105390280990478174638879145654277037444284866130843970762579921291465401"
+          ],
+          "marketOptions": [
+            {
+              "label": "WBT",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3789559-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Noir Verse",
+          "openTime": 1787438726,
+          "closeTime": 1787504400,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Counter-Strike Lower bracket final match between WBT and Noir Verse in the CCT Europe Challengers Series Playoffs, initially scheduled for August 23, 2026 at 7:00 AM ET.\n\nThis market will resolve to \"WBT\" if WBT win the match against Noir Verse.\n\nThis market will resolve to \"Noir Verse\" if Noir Verse win the match against WBT.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://hltv.org. However, if https://hltv.org has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 130000,
+            "sellYesPriceUsd": 100000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 100224
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/counter-strike-image-16c415c538.png",
+          "team": {
+            "name": "Noir Verse",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/csgo/noir-verse-138812.png",
+            "color": "#28397f",
+            "abbreviation": "noirve"
+          },
+          "outcomes": [
+            "WBT",
+            "Noir Verse"
+          ],
+          "clobTokenIds": [
+            "33846124952863540943530382962229326667994635232429249367615648375361103269153",
+            "11659105390280990478174638879145654277037444284866130843970762579921291465401"
+          ],
+          "marketOptions": [
+            {
+              "label": "Noir Verse",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-822227",
+      "isActive": true,
+      "isLive": true,
+      "category": "sports",
+      "subcategory": "dfb",
+      "tags": [
+        "sports",
+        "games",
+        "soccer",
+        "dfb-pokal",
+        "dfb"
+      ],
+      "metadata": {
+        "slug": "dfb-fur-boc-2026-08-23",
+        "title": "SpVgg Greuther F\u00fcrth vs. VfL Bochum",
+        "isLive": false,
+        "league": "DFB-Pokal",
+        "series": "polymarket",
+        "eventId": "POLY-822227",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/DFB-Pokal-ebed3c1834.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T11:00:00Z"
+      },
+      "volumeUsd": "91949000000",
+      "volume24hr": "92564000000",
+      "beginAt": "1787482800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3453574",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "VfL Bochum",
+          "openTime": 1786295715,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf VfL Bochum wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 770000,
+            "sellYesPriceUsd": 760000,
+            "sellNoPriceUsd": 230000,
+            "buyNoPriceUsd": 240000,
+            "volume": 75092
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "VfL Bochum",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/soccer/dfb/dfbp_boc_90002523.png",
+            "color": "#164B99",
+            "abbreviation": "boc"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "57403593770676379522121988463971340152737918794639409701454061502863454254862",
+            "66035115443325909322454557507460439720784529582638093889110591797791379692616"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3453571",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Draw",
+          "openTime": 1786295715,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 220000,
+            "sellYesPriceUsd": 210000,
+            "sellNoPriceUsd": 780000,
+            "buyNoPriceUsd": 790000,
+            "volume": 7250
+          },
+          "imageUrl": null,
+          "team": null,
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "2980360070718334004326085040671593792447382796391689255411620478756419165172",
+            "43920814427505579073402817322955630856994202991871215521525020880584017741179"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3453570",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "SpVgg Greuther F\u00fcrth",
+          "openTime": 1786295715,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf SpVgg Greuther F\u00fcrth wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 38000,
+            "sellYesPriceUsd": 30000,
+            "sellNoPriceUsd": 962000,
+            "buyNoPriceUsd": 970000,
+            "volume": 9607
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "SpVgg Greuther F\u00fcrth",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/soccer/dfb/dfbp_fur_90002522.png",
+            "color": "#20a240",
+            "abbreviation": "fur"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "93661628013301817687784018650061028939243251136022204746667571139082958332646",
+            "107000951625084151293092593276286977667140299624385048315606602210673919816184"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-812527",
+      "isActive": true,
+      "isLive": true,
+      "category": "sports",
+      "subcategory": "den",
+      "tags": [
+        "sports",
+        "games",
+        "soccer",
+        "denmark-superliga",
+        "den"
+      ],
+      "metadata": {
+        "slug": "den-agf-ode-2026-08-21",
+        "title": "Aarhus GF vs. Odense BK",
+        "isLive": false,
+        "league": "Denmark Superliga",
+        "series": "polymarket",
+        "eventId": "POLY-812527",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/superliga-b28b8e3c7c.png",
+        "subtitle": "",
+        "closeTime": "2026-08-21T17:00:00Z"
+      },
+      "volumeUsd": "71350000000",
+      "volume24hr": "71333000000",
+      "beginAt": "1787486400",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3407813",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Aarhus GF",
+          "openTime": 1786132815,
+          "closeTime": 1787486400,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 21, 2026\nIf Aarhus GF wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 510000,
+            "sellYesPriceUsd": 390000,
+            "sellNoPriceUsd": 490000,
+            "buyNoPriceUsd": 610000,
+            "volume": 66564
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "Aarhus GF",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Aarhus GF-c9cbdc8c09.png",
+            "color": "#d62e1f",
+            "abbreviation": "agf"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "102557213793678701206032453097702045512754417199433962441154952401343039383050",
+            "4665027062730031677090581600710060585297920404309110593082425985111770680630"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3407814",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Draw",
+          "openTime": 1786132815,
+          "closeTime": 1787486400,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 21, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 300000,
+            "sellYesPriceUsd": 270000,
+            "sellNoPriceUsd": 700000,
+            "buyNoPriceUsd": 730000,
+            "volume": 439
+          },
+          "imageUrl": null,
+          "team": null,
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "21666303261045103492658817974667426445609172012538707609701401321708828388894",
+            "103570814917530710611777269141384244328257939627402146599764357950645386020399"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3407815",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Odense BK",
+          "openTime": 1786132815,
+          "closeTime": 1787486400,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 21, 2026\nIf Odense BK wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 260000,
+            "sellYesPriceUsd": 210000,
+            "sellNoPriceUsd": 740000,
+            "buyNoPriceUsd": 790000,
+            "volume": 4346
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "Odense BK",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Odense BK-bf9f6b30f2.png",
+            "color": "#125381",
+            "abbreviation": "ode"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "3415500619051508664777360049468029655168324857274642703089089482463121085858",
+            "50257679541449799866930095432127240673212794127719220885452726744554281374913"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-825555",
+      "isActive": true,
+      "isLive": true,
+      "category": "sports",
+      "subcategory": "elc",
+      "tags": [
+        "sports",
+        "games",
+        "soccer",
+        "efl-championship",
+        "elc"
+      ],
+      "metadata": {
+        "slug": "elc-wba-bur-2026-08-23",
+        "title": "West Bromwich Albion FC vs. Burnley FC",
+        "isLive": false,
+        "league": "EFL Championship",
+        "series": "polymarket",
+        "eventId": "POLY-825555",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/efl-championship-icon-2026-d5493f69b0.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T11:00:00Z"
+      },
+      "volumeUsd": "56676000000",
+      "volume24hr": "56525000000",
+      "beginAt": "1787482800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3474265",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "West Bromwich Albion FC",
+          "openTime": 1786334420,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf West Bromwich Albion FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 991000,
+            "sellYesPriceUsd": 982000,
+            "sellNoPriceUsd": 9000,
+            "buyNoPriceUsd": 18000,
+            "volume": 22919
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "West Bromwich Albion FC",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/soccer/elc/elc_wba_90000526.png",
+            "color": "#2929e0",
+            "abbreviation": "wba"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "56514336563444785705573578004309876021387118301271009242767509308416384769377",
+            "34080929703348135103384317713356093853422903702025467247391614547370448535463"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3474268",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Draw",
+          "openTime": 1786334420,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 20000,
+            "sellYesPriceUsd": 10000,
+            "sellNoPriceUsd": 980000,
+            "buyNoPriceUsd": 990000,
+            "volume": 10906
+          },
+          "imageUrl": null,
+          "team": null,
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "77226461715991223620741046361694149422469520435444786825921320954599130434324",
+            "34720653522946616800637354163934566716281965122980127167202347692968634264296"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3474271",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Burnley FC",
+          "openTime": 1786334420,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf Burnley FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 1000,
+            "sellYesPriceUsd": 0,
+            "sellNoPriceUsd": 999000,
+            "buyNoPriceUsd": 1000000,
+            "volume": 22851
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "Burnley FC",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Burnley FC-1bb0ee849a.png",
+            "color": "#911468",
+            "abbreviation": "bur"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "981169629473023384015895273614734146663816254606195392436083498002874016031",
+            "41132721306192939752000159048443041389487340716661263218001065653985656764555"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-824232",
+      "isActive": true,
+      "isLive": true,
+      "category": "sports",
+      "subcategory": "chi",
+      "tags": [
+        "sports",
+        "games",
+        "soccer",
+        "chinese-super-league",
+        "chi"
+      ],
+      "metadata": {
+        "slug": "chi-tie-hen-2026-08-23",
+        "title": "Liaoning Tieren FC vs. Henan FC",
+        "isLive": false,
+        "league": "Chinese Super League",
+        "series": "polymarket",
+        "eventId": "POLY-824232",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/chinese-super-league-39d902bcb6.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T11:00:00Z"
+      },
+      "volumeUsd": "42214000000",
+      "volume24hr": "40892000000",
+      "beginAt": "1787482800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3469358",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Henan FC",
+          "openTime": 1786308313,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf Henan FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 745000,
+            "sellYesPriceUsd": 739000,
+            "sellNoPriceUsd": 255000,
+            "buyNoPriceUsd": 261000,
+            "volume": 20435
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "Henan FC",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Henan FC-dac646a09d.png",
+            "color": "#107039",
+            "abbreviation": "hen"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "69317058173811664225854140401148308547343887648634916236028417203617191878115",
+            "86567273573555136008087765645584421443881618370054882834065283041487917231768"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3469357",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Draw",
+          "openTime": 1786308313,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 220000,
+            "sellYesPriceUsd": 217000,
+            "sellNoPriceUsd": 780000,
+            "buyNoPriceUsd": 783000,
+            "volume": 9111
+          },
+          "imageUrl": null,
+          "team": null,
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "51204137513342772778466329557792067391025379519702523317196637699347767774317",
+            "40365978846645578014042693643514146585562036965665677187139363478840964743166"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3469356",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Liaoning Tieren FC",
+          "openTime": 1786308313,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf Liaoning Tieren FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 41000,
+            "sellYesPriceUsd": 40000,
+            "sellNoPriceUsd": 959000,
+            "buyNoPriceUsd": 960000,
+            "volume": 12668
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "Liaoning Tieren FC",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Liaoning Tieren-f951b51c5f.png",
+            "color": "#c31d1d",
+            "abbreviation": "tie"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "24441398061735681820453603560292041317842404712134428710692458842867209929337",
+            "14513693963115737371248617354432143623616386909708097651498488438126862011685"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-822234",
+      "isActive": true,
+      "isLive": true,
+      "category": "sports",
+      "subcategory": "dfb",
+      "tags": [
+        "sports",
+        "games",
+        "soccer",
+        "dfb-pokal",
+        "dfb"
+      ],
+      "metadata": {
+        "slug": "dfb-jed-hei-2026-08-23",
+        "title": "SSV Jeddeloh II vs. 1. FC Heidenheim 1846",
+        "isLive": false,
+        "league": "DFB-Pokal",
+        "series": "polymarket",
+        "eventId": "POLY-822234",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/DFB-Pokal-ebed3c1834.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T11:00:00Z"
+      },
+      "volumeUsd": "39160000000",
+      "volume24hr": "40134000000",
+      "beginAt": "1787482800",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3453595",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "SSV Jeddeloh II",
+          "openTime": 1786295733,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf SSV Jeddeloh II wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 1000000,
+            "sellYesPriceUsd": 956000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 44000,
+            "volume": 17456
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "SSV Jeddeloh II",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/dfb/ssv-jeddeloh-ii-5307.png",
+            "color": "#0269b2",
+            "abbreviation": "jed"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "106072454734295434628130159872722383161291881997372278195182468835399852350821",
+            "95006855830214035816771328207299732538854943888315206614611053231097376902366"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3453597",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "Draw",
+          "openTime": 1786295733,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 14000,
+            "sellYesPriceUsd": 1000,
+            "sellNoPriceUsd": 986000,
+            "buyNoPriceUsd": 999000,
+            "volume": 5647
+          },
+          "imageUrl": null,
+          "team": null,
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "11529289417110118022411250010597324687423934443742982732348369141633497681808",
+            "40047289338408245671452414314233689365417547632361622475485680152054212011152"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3453599",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "1. FC Heidenheim 1846",
+          "openTime": 1786295733,
+          "closeTime": 1787482800,
+          "isTeamMarket": false,
+          "rulesPrimary": "In the upcoming game, scheduled for August 23, 2026\nIf 1. FC Heidenheim 1846 wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 1000,
+            "sellYesPriceUsd": 0,
+            "sellNoPriceUsd": 999000,
+            "buyNoPriceUsd": 1000000,
+            "volume": 16057
+          },
+          "imageUrl": null,
+          "team": {
+            "name": "1. FC Heidenheim 1846",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/soccer/dfb/dfbp_hei_90002668.png",
+            "color": "#1847a5",
+            "abbreviation": "hei"
+          },
+          "outcomes": [
+            "Yes",
+            "No"
+          ],
+          "clobTokenIds": [
+            "107377490428616268038708094098224701419274159820153943979516678350182005081055",
+            "104912191103316519225040360614160886234562682208861790996324190602065500482999"
+          ],
+          "marketOptions": [
+            {
+              "label": "Yes",
+              "buyYes": true
+            },
+            {
+              "label": "No",
+              "buyYes": false
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    },
+    {
+      "eventId": "POLY-890284",
+      "isActive": true,
+      "isLive": true,
+      "category": "esports",
+      "subcategory": "val",
+      "tags": [
+        "esports",
+        "valorant",
+        "games",
+        "sports",
+        "val"
+      ],
+      "metadata": {
+        "slug": "val-t1-dfm1-2026-08-23",
+        "title": "Valorant: T1 vs DetonatioN FocusMe (BO3) - VCT Pacific Play-In",
+        "isLive": false,
+        "league": "Valorant",
+        "series": "polymarket",
+        "eventId": "POLY-890284",
+        "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/valorant-logo-6fab741a16.png",
+        "subtitle": "",
+        "closeTime": "2026-08-23T17:00:00Z"
+      },
+      "volumeUsd": "36116000000",
+      "volume24hr": "36116000000",
+      "beginAt": "1787483700",
+      "closeCondition": "This market will close and expire after a winner is declared.",
+      "rulesPdf": "",
+      "markets": [
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779617-0",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "T1",
+          "openTime": 1787412576,
+          "closeTime": 1787505300,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Valorant Lower bracket round 3 match between T1 and DetonatioN FocusMe in the VCT Pacific Play-In, initially scheduled for August 23, 2026 at 7:00 AM ET.\n\nThis market will resolve to \"T1\" if T1 win the match against DetonatioN FocusMe.\n\nThis market will resolve to \"DetonatioN FocusMe\" if DetonatioN FocusMe win the match against T1.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://vlr.gg. However, if https://vlr.gg has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 1000000,
+            "sellYesPriceUsd": 999000,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 27861
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/valorant-logo-6fab741a16.png",
+          "team": {
+            "name": "T1",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/valorant/valorant_t1_128647.png",
+            "color": "#E00020",
+            "abbreviation": "t1"
+          },
+          "outcomes": [
+            "T1",
+            "DetonatioN FocusMe"
+          ],
+          "clobTokenIds": [
+            "43201034559071437018572100569589415471098266106146839644212504403901588630027",
+            "80770820134344098793928431190069402552428748174650942181615727820518861721768"
+          ],
+          "marketOptions": [
+            {
+              "label": "T1",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        },
+        {
+          "provider": "polymarket",
+          "marketId": "POLY-3779617-1",
+          "status": "open",
+          "result": null,
+          "marketResultPubkey": null,
+          "title": "DetonatioN FocusMe",
+          "openTime": 1787412576,
+          "closeTime": 1787505300,
+          "isTeamMarket": true,
+          "rulesPrimary": "This market refers to the Valorant Lower bracket round 3 match between T1 and DetonatioN FocusMe in the VCT Pacific Play-In, initially scheduled for August 23, 2026 at 7:00 AM ET.\n\nThis market will resolve to \"T1\" if T1 win the match against DetonatioN FocusMe.\n\nThis market will resolve to \"DetonatioN FocusMe\" if DetonatioN FocusMe win the match against T1.\n\nIf the match is canceled (not played at all) or ends in a tie, this market will resolve to 50-50.\n\nIf the match is postponed, it must be rescheduled to a start time on or before September 6, 2026 at 11:59 PM ET (14 calendar days after the originally scheduled start of August 23, 2026 at 7:00 AM ET). If, by that deadline, the most recently announced rescheduled start time is on or before the deadline, this market resolves based on the result of the match as played. Otherwise, this market resolves 50-50, regardless of whether the match is subsequently played.\n\nIf the match begins but is not completed, and one team wins due to the opponent's forfeiture, disqualification, or walkover, this market will resolve to the team who wins. \n\nIf the match ends in a forfeit, disqualification, or walkover (team withdraws before the start and the other wins automatically), this market will resolve to 50-50. \n\nThe resolution source for this market will be official information from https://vlr.gg. However, if https://vlr.gg has not published final results within 2 hours after the event\u2019s conclusion, a consensus of credible reporting may be used instead including video evidence.\n\nIn cases where a team\u2019s listed name includes minor discrepancies from the resolution source, this market will resolve based on the underlying real-world match rather than exact name matching. Recognizable abbreviations, alternate or erroneous spellings, sponsor tags, affiliate or academy designations, regional identifiers, and minor formatting differences will be treated as referring to the same team, provided the intended team can be clearly and uniquely identified within the relevant competition. If a listed team name has no reasonable connection to any participating team, or if it matches or could reasonably refer to another team in the same competition such that the intended team cannot be unambiguously determined, this market will resolve 50-50.",
+          "rulesSecondary": "",
+          "resolveAt": null,
+          "pricing": {
+            "buyYesPriceUsd": 1000,
+            "sellYesPriceUsd": 0,
+            "sellNoPriceUsd": 0,
+            "buyNoPriceUsd": 0,
+            "volume": 27861
+          },
+          "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/valorant-logo-6fab741a16.png",
+          "team": {
+            "name": "DetonatioN FocusMe",
+            "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/team_logos/esports/valorant/valorant_detonation focusme_131974.png",
+            "color": "#2060E0",
+            "abbreviation": "dfm1"
+          },
+          "outcomes": [
+            "T1",
+            "DetonatioN FocusMe"
+          ],
+          "clobTokenIds": [
+            "43201034559071437018572100569589415471098266106146839644212504403901588630027",
+            "80770820134344098793928431190069402552428748174650942181615727820518861721768"
+          ],
+          "marketOptions": [
+            {
+              "label": "DetonatioN FocusMe",
+              "buyYes": true
+            }
+          ],
+          "sportsMarketType": "moneyline",
+          "sportsLine": null,
+          "periodType": null,
+          "periodNumber": null,
+          "gameNumber": null
+        }
+      ],
+      "sportsMarketGroups": []
+    }
+  ],
+  "pagination": {
+    "start": 0,
+    "end": 10,
+    "hasNext": true
+  }
+}

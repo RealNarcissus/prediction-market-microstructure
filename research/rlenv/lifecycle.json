@@ -1,0 +1,16 @@
+{
+  "step": 2,
+  "papers_swept": 2,
+  "helpful_count": 0,
+  "rlenv_steps_taken": 2,
+  "session_elapsed_s": 0.0,
+  "condition": "learning_progress",
+  "goal_complete": false,
+  "stall_counter": 2,
+  "budget": {
+    "step_budget": null,
+    "session_wall_seconds": null,
+    "papers_target": 20,
+    "helpful_target": 3
+  }
+}
