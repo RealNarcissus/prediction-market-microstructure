@@ -1363,3 +1363,88 @@ two independent, mutually consistent measurements of the same edge class.
   updated today on prediction-market calibration/evaluation — the field is
   converging on calibration-first methodology. CI checkpoint: v2_ewma
   +8.04c [+5.48,+10.47] (9th stable checkpoint).
+- 2026-09-03: round 102 — per-day EV published (Step 3): all 5 gated days
+  positive (+3.84/+5.15/+10.65/+9.36/+10.75c) — no single day carries the
+  pooled CI; the one-good-day concern is refuted. Side-separated delta fit
+  (Step 4): ALL 109,429 scored quotes are UP (-0) markets, join shown
+  explicitly — round-59's up-only claim was correct in effect, my DB
+  objection (paired up/down storage) attacked the premise while the
+  conclusion stands. CORRECTION RECORDED: with a single-sided population
+  the strike basis provably cannot appear in the residuals (up-market z and
+  down-market z would move oppositely, but no down quotes are scored) —
+  delta*=0.00 is structural, and lambda=1.9 absorbs all remaining basis
+  noise. Research paper: research/staleness/ROUND102_PERDAY_DELTA.md.
+- 2026-09-04: round 103 — five-lane external sweep (parallel agents,
+  catalog-deduped). GitHub EN: Bwijn/polymarket-btc-5m-quant KEEP-REF
+  (Binance flow factors, 615+3560 fills net of fee, only live net-EV
+  proof); abrahamjohn78889-spec/lufy KEEP-REF (purest TWAP-settlement
+  maker, signal_TWAP-PTB post-only); 0xgetz/polymarket-btc-5m KEEP-REF
+  (explicit q-p gate, ~120s entries); 0xntpower/PolyTraderLightning
+  KEEP-REF (regime-gated Kelly, maker-first); Hiberius/bot-graveyard
+  KEEP-REF (cornerstone negative: 6 bots killed, Chainlink-maker lost);
+  EliasAN1/DataSaver + hahahaha954/orderbook-collector + funstersland/
+  twap-hunter KEEP-REF (recorder/depth/visualizer infra); masterputra169
+  XGB+LGBM, dearolaf ★21, salaiyuga toolkit, Akpan sweep, GitHubMagnus
+  calibration WATCH; ohioism shell, n9xdev marketing, Marjathirtyfour391
+  exe-funnel, alfabrandao SEO cluster, DegenStar buy-both, chile38 zip
+  DISCARD. CN lane: FrondEnt BTC15mAssistant WATCH (exact-venue vote-weight
+  code, uncalibrated); JLBcode arb scanner, FKPolyTools infra, LinggeTracer
+  labeling, ohioism live account WATCH; rabapuba feed-pro KEEP-formula
+  (TWAP flip-price Target=(Strike*300-TWAP*t)/(300-t), generalises 300->900s);
+  Pablozh123 paper-scanner KEEP-INSIGHT (independent OpenMarket null:
+  non_positive_executable_edge top rejection); meloner3 sports, thuquant
+  index, CSDN farm DISCARD; malware-cluster WARNING (haoo99/kmjjjj/
+  samuel483/kenfri13/Marjathirtyfour391 exe-funnel, key-theft risk).
+  Papers: 2606.19517 PM-vs-option gap 5.6pp half-life 4h HELPFUL (q=option-
+  implied staleness edge); 2608.00666 executable-arb HELPFUL (YES+NO<1 is
+  NAIVE_PORT unless direction-executable); 2607.08199 structural vol
+  HELPFUL (tau-gating skeleton); 2606.31675 settlement-manipulation HELPFUL
+  (trade 15m, restrict final-seconds 5m); 2607.14430 Kalshi 23M HELPFUL
+  (final-10min curvature flips, shrink/gate by tau); 2508.06788 VAR-OFI,
+  2408.03594 Hawkes-OFI, 2607.09426 quarter-hour, 2603.05544 Yates-Brier,
+  2605.02287 leakage/ILS HELPFUL-CANDIDATES; prophets-profit, uniform-AMM,
+  Kalshi-macro, microprice-Tsetlin, exs-Hawkes, meta-stable, ML-binaries
+  negative, Brier-misconceptions, forecast-martingale REF; APMM, SoftMCC,
+  verifiable-rewards DISCARD. Practitioner: lkto1m 11,717-trade framework
+  KEEP-TACTIC (5m 30-90s entry, T-90s cutoff, 15m agreement, 77% at ~$0.75);
+  cpinto-dev scalper KEEP-TACTIC (enter >=$0.74, cap $0.995, no-entry last
+  36s, force-sell 15s, only open-source timed-exit params); chudi 0.3%/60s
+  trigger, casatrick substack WATCH; indiehackers stable-bot,
+  predictengine guide DISCARD. Venue: zero drift since Aug-17 changelog;
+  KXBTC15M unchanged; PR&R TWAP Settlement line NEW (cheapest venue-native
+  tape, consider $1-2.50 buy); RTDS topic-migration cross-check ACTION;
+  Aug-10 fee-basis fields ACTION (wallet PnL fee-inclusive); Nabeel
+  maker-rebate sim, draxmit, kacho, 0xpoot-poot KEEP; drilled exe-funnel
+  repos, whale boards WATCH.
+- 2026-09-04: round 104 — CODE-READS (both via gh API / page fetch).
+  FrondEnt/BTC15mAssistant full scoring captured (probability.js +
+  edge.js): scoreDirection vote-weights price-vs-VWAP +-2, VWAP-slope +-2,
+  RSI(55/45)+slope +-2, expanding-MACD-hist +-2 + MACD-sign +-1, Heiken x2
+  +-1, failed-VWAP-reclaim DOWN +3 (priors 1/1) -> rawUp=up/(up+down);
+  applyTimeAwareness decays linearly to 0.5 in remaining/window;
+  computeEdge normalises YES+NO sum; decide phase gates EARLY(>10m)
+  edge>=5%+prob>=55%, MID(5-10m) 10%/60%, LATE(<=5m) 20%/65%.
+  Assessment: only exact-venue fully-readable playbook (WATCH stands);
+  uncalibrated votes, NO fee term in edge (their 5% EARLY bar is ~3x our
+  ~1.75c fee gate at 50c but on uncalibrated scores); time-decay-to-0.5
+  mirrors paper 2607.08199's deadline component — convergent tau-shrinkage
+  evidence; benchmark candidate for our calibrated stack.
+  Bwijn/5m-quant gates captured (gates.py): deny-by-default, graduate only
+  net EV>5% + t>1.65, cap 800 attempts/10 wks, Jaccard dedup 0.75; 27/43
+  candidates killed; survivors net of 7% fee: R4 bn_taker_buy_ratio_pre_300
+  >0.755 +1.58% (n=569), chgdn900_zs7d_dn +12.83% (n=56), chgdn300 +10.45%
+  (n=44). Assessment: KEEP-REF stands — only live net-EV proof in the
+  sweep; taker-buy-ratio = flow-imbalance family (pairs with OFI/Hawkes
+  paper candidates); small-n big-% factors need our daily-block CI
+  discipline before any adoption.
+- 2026-09-04: round 105 — 6-STEP SEQUENCE EXECUTED. Step 1: calibration
+  gate verified (exit 1, COLLAPSED verdict — would have blocked the broken
+  launch). Steps 3+4: staged (per-day EV 5/5 positive; delta*=0.00
+  structural on all-UP scored population). Steps 2+5: integrated-gate
+  paper daemon BUILT + RUNNING as quantbtc-paper-gate.service (fair_v2 +
+  lambda 1.95 + train-only isotonic in calibration_v2.npz, n_fit=37,594,
+  distinct=42, tercile gap 0.650 — genuinely discriminating; first trade
+  SOL 300s ask 0.22 fair_cal 0.267). Live $5 daemon untouched as control
+  (own ledger/report/npz; 112 settled, -730c). Step 6: commit + merge this
+  session. Report: research/staleness/PAPER_GATE_LIVE.md (daemon-owned);
+  ledger data/paper_gate.db (gitignored).

@@ -12,3 +12,37 @@ Rules (frozen — see `research/staleness/live_wallet.py` docstring):
 Decision gate: live per-contract EV day-block CI after >=2 weeks, all-weeks-positive, before any capital discussion.
 
 Daily status appended below by the daemon at UTC day rollover.
+
+## 2026-09-02 00:00 UTC — wallet status
+
+| entry day | trades | wins | realized PnL |
+|---|---|---|---|
+| **total** | 0 | 0 | **+0.00** |
+
+
+## 2026-09-03 05:37 UTC — wallet status
+
+| entry day | trades | wins | realized PnL |
+|---|---|---|---|
+| 2026-09-02 | 68 | 36 | -2.73 |
+| **total** | 68 | 36 | **-2.73** |
+
+
+## 2026-09-04 02:15 UTC — wallet status
+
+| entry day | trades | wins | realized PnL |
+|---|---|---|---|
+| 2026-09-02 | 68 | 36 | -2.73 |
+| 2026-09-03 | 23 | 7 | -5.00 |
+| **total** | 91 | 43 | **-7.73** |
+
+
+## 2026-09-04 06:33 UTC — wallet status
+
+| entry day | trades | wins | realized PnL |
+|---|---|---|---|
+| 2026-09-02 | 68 | 36 | -2.73 |
+| 2026-09-03 | 23 | 7 | -5.00 |
+| 2026-09-04 | 8 | 6 | +1.38 |
+| **total** | 99 | 49 | **-6.35** |
+
