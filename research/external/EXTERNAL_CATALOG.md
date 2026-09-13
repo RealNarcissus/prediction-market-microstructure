@@ -2910,3 +2910,8 @@ two independent, mutually consistent measurements of the same edge class.
   -1.75c / +60s -0.60c / +120s +0.16c; survival p90 27.7c —
   measurement STABLE, not drifting. HN all-known. Verdict clock
   unchanged (Sep-18 15:02 UTC).
+- 2026-09-14: round 226 — pre-cycle round (19:30 UTC; arXiv cycle
+  at ~00:00 UTC). "Building Indices from Prediction Markets"
+  (lookbacklabs.com) JS-WALLED — title only: geopolitical-risk
+  index construction from PM prices, WATCH-queued. Post-cycle
+  re-listing deferred to round 227.
