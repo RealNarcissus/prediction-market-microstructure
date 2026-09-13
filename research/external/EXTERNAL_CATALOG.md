@@ -2898,3 +2898,15 @@ two independent, mutually consistent measurements of the same edge class.
   announcement cycle — next re-check expected to yield tomorrow.
   No-yield recorded honestly; verdict clock unchanged (Sep-18
   15:02 UTC).
+- 2026-09-14: round 225 — pre-cycle round (19:28 UTC, arXiv cycle
+  not yet run). **2609.11586 skew-stickiness READ** (Fukasawa,
+  math.PR): skew stickiness ratio -> 2 as maturity -> 0 under
+  general time-dependent local volatility; first rigorous general
+  proof; one-half rule for IV skew strengthened. THEORY-QUEUED:
+  formalizes that near-expiry skew is STRUCTURED (sticky) — only
+  actionable if we build a smile-aware fair (our CLT fair is
+  smile-free); relevant to the deep-tail lane where our sizing
+  failed. MARKOUT REFRESH (571 fills, +5 since round 213): +30s
+  -1.75c / +60s -0.60c / +120s +0.16c; survival p90 27.7c —
+  measurement STABLE, not drifting. HN all-known. Verdict clock
+  unchanged (Sep-18 15:02 UTC).
