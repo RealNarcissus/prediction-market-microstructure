@@ -2617,3 +2617,30 @@ two independent, mutually consistent measurements of the same edge class.
   toward; read monte_carlo/ + report.pdf next); isai-mykyta/
   updown-bot (TS + statistics JSONs) WATCH; 6 older updown shells
   (May-Jul) WATCH-thin.
+- 2026-09-14: round 207 — CODE-READ (LinusWeigand updown-MM, full).
+  validation_table.tex (walk-forward OOS, 8 rows): GARCH(1,1) MC
+  Brier 0.179-0.184 on 15m (n=10,664/asset), beats their older
+  bootstrap in EVERY row; base up-rate 0.47-0.51 (fair coin);
+  log-loss 0.526-0.551. **KEY: isotonic post-hoc calibration made
+  their raw output WORSE (+0.0003..+0.0071 dBrier)** — the mirror
+  image of our stack, where isotonic+lambda-0.65 is essential
+  because fair_v2 is misspecified (the shrinkage IS the evidence).
+  Lesson recorded: isotonic is a repair for model misspecification,
+  not a universal layer; a by-construction-calibrated GARCH fair
+  may not need it. Their 15m Brier ~0.18 vs our ~0.167 — not
+  directly comparable (different populations/spans) but our
+  calibration stack scores at least as well.
+  adverse_selection.png (LIVE-measured): (a) adverse-move survival
+  post-fill, bid n=2,348 / ask n=3,335, p90=2.0c p99=4.1c; (b)
+  quoted half-spread vs model fair p by time-left — peaks ~19c at
+  p~0.6 with 120s left, ALWAYS above the adverse p90/p99 lines;
+  (c) loop latency p50=0.51s p90=0.78s p99=1.83s. This is the
+  measurement template our negative live results demand: measure
+  adverse moves at our own fills, quote (or gate) against their
+  distribution.
+  monte_carlo/src/lib.rs: Xoshiro256++ i.i.d. per-minute return
+  resampling + fractional-minute linear scaling; pyo3+rayon
+  parallelism. Simple/honest; vol-clustering handled at the GARCH
+  wrapper layer, not in the sim. arXiv API STILL down (0-byte).
+  Verdict: KEEP-REF stands — top-actionable external find; port
+  the adverse-move-at-fill measurement into our exit/gate design.
