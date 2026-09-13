@@ -2717,3 +2717,25 @@ two independent, mutually consistent measurements of the same edge class.
   WATCH->KEEP-ref (multi-platform: sports CLV + funding arb + PM +
   crypto, 568 tests, claims real PnL — verify); ChiuZzzJamm
   dashboard + wonglaitung WATCH-thin.
+- 2026-09-14: round 212 — queued paper reads x4 + lane status.
+  **2609.10865 EO bivariate-Wilson CI HELPFUL** — closed-form CI for
+  the difference of two proportions that never under-covers under
+  the normal approximation (Wald under-covers almost everywhere);
+  candidate for v1-vs-v2 cohort win-rate comparisons. **2609.04420
+  rare-event stratified allocation HELPFUL** — EQUAL beats
+  proportional allocation for rare positives (gamma=min(2pi/f,1));
+  validated on explosive-price regimes (<1% positives, Spearman
+  rho=1 ordering) with pi-dependence failing — the sampling
+  discipline for evaluating our deep-tail regimes. **2609.06422
+  ALM-GARCH HELPFUL** (abs via curl+browser-UA after WebFetch
+  captcha — method note): sign-dependent injection amplitudes +
+  kernel offsets; joint symmetry REJECTED on 5 indices AND Bitcoin
+  (level channel); memory supported for BTC — our symmetric EWMA
+  sigma is provably misspecified for BTC; upgrade candidate for
+  fair_v2's sigma input. **2609.08581 AlphaRJM REF-method** —
+  symbolic alpha discovery with reward-jump memory + SDE critic
+  (pool-dependent feedback delay mirrors our search-aware deflation
+  concern; no code). Bilibili: 2 rotated keywords (BTC预测 合约,
+  二元期权) BOTH 0 items — 6th/7th attempts; endpoint degraded for
+  this network, lane CLOSED pending a different egress. kalshi-
+  settlement GitHub scan: 3 old thin shells WATCH-thin.
