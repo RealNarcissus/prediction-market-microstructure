@@ -2891,3 +2891,10 @@ two independent, mutually consistent measurements of the same edge class.
   tail behavior of the smile our deep-tail asks sit on. HN window:
   all-known. No-yield otherwise; verdict clock unchanged (Sep-18
   15:02 UTC).
+- 2026-09-14: round 224 — re-check round (19:26 UTC): HN freshest
+  polymarket story still the Sep-11 investigations piece; GitHub
+  rotations (wallet-analysis, 预测 bots, fee tools) all stale
+  Feb-Jun repos or known. arXiv listings refresh on the daily UTC
+  announcement cycle — next re-check expected to yield tomorrow.
+  No-yield recorded honestly; verdict clock unchanged (Sep-18
+  15:02 UTC).
