@@ -2915,3 +2915,11 @@ two independent, mutually consistent measurements of the same edge class.
   (lookbacklabs.com) JS-WALLED — title only: geopolitical-risk
   index construction from PM prices, WATCH-queued. Post-cycle
   re-listing deferred to round 227.
+- 2026-09-14: round 227 — cycle STILL not run (19:33 UTC; ~00:00
+  UTC cycle). Blocked-reads round: Alpha Architect "What the Index
+  Effect's Disappearance means for Market Efficiency" Cloudflare-
+  walled on BOTH curl and WebFetch — title-only, but the known
+  finding (index-inclusion outperformance has largely vanished
+  since ~2000 as arbitrage capital crowded in) is the canonical
+  edge-decay precedent for our backtest-to-live gap. Post-cycle
+  re-listing now round 228.
