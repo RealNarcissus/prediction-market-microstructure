@@ -2850,3 +2850,14 @@ two independent, mutually consistent measurements of the same edge class.
   presumed why does not survive contact with execution. The
   bakeoff lane's burden is exactly this: find the WHO before
   trusting any pattern.
+- 2026-09-14: round 219 — dev.to predictionmarkets tag (20 posts,
+  mostly beginner/copy content) + stat.AP listing (63 papers,
+  mostly bio/spatial off-lane).
+  NEW: "Kalshi's Federal Shield Is Cracking" (09-11) WATCH —
+  regulatory wrap of the round-215 rulings; "Buy Verified Kalshi
+  Account Telegram" (09-10) **SCAM-pattern WARNING** (account-
+  vending violates KYC; same funnel family as the exe repos);
+  stat.AP "Cointegration by Parts: Locating Cointegration in
+  Time" (2609.10020) WATCH-METHOD (time-location of cointegration
+  — pairs-trading diagnostics lane); STV audit graphs off-lane.
+  Light round recorded honestly.
