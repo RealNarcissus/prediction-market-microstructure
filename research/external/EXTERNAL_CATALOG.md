@@ -2883,3 +2883,11 @@ two independent, mutually consistent measurements of the same edge class.
   bocpd.py if flow-bias alone under-segments (could monitor whole
   book-state objects). Rest pure math/prob off-lane (EO-Wilson
   cross-listed here, already read). Verdict clock unchanged.
+- 2026-09-14: round 223 — ALL-q-fin listing (30 papers: superset of
+  category listings, confirms no unscanned q-fin paper remains in
+  the window). ONE NEW: **2609.11586 Short-maturity skew stickiness
+  ratio under local volatility QUEUED** — 15m binaries are extreme
+  short-maturity options; skew stickiness near expiry informs the
+  tail behavior of the smile our deep-tail asks sit on. HN window:
+  all-known. No-yield otherwise; verdict clock unchanged (Sep-18
+  15:02 UTC).
