@@ -3015,3 +3015,15 @@ two independent, mutually consistent measurements of the same edge class.
   discipline) will decide whether conditioning helps at all, but
   the prior is now against micro-regime structure being the WHO.
   Infra committed; report regenerated on snapshot.
+- 2026-09-14: round 234 — cycle STILL pending (19:53 UTC).
+  **BOCPD HAZARD RE-FIT (prior-sensitivity run, last 5,000 min)**:
+  hazard 1/250 -> posterior mean run 27.1m; 1/60 -> 26.1m;
+  1/15 -> 23.1m — STABLE across a 16x prior range => the ~25-min
+  regime scale is DATA-DRIVEN, not prior-mirror (the earlier
+  12.1-min full-run figure was hazard+window artifact). Run-length
+  distribution is heavy-tailed: median 3-4 min but mean 23-27 —
+  bursts punctuated by occasional long regimes. Honest read: a
+  real ~25-min flow-regime structure exists; tradeability for the
+  60s-freshness taker gate remains UNPROVEN pending the
+  prospective EV scoring. arXiv re-listing still pre-cycle,
+  round 235.
