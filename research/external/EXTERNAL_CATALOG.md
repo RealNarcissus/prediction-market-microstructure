@@ -3027,3 +3027,18 @@ two independent, mutually consistent measurements of the same edge class.
   60s-freshness taker gate remains UNPROVEN pending the
   prospective EV scoring. arXiv re-listing still pre-cycle,
   round 235.
+- 2026-09-14: round 235 — cycle STILL pending (19:55 UTC;
+  re-listing now round 236). **BOCPD-EV SCORING RUN (first bakeoff
+  candidate scored, bocpd_ev.py)**: detector at data-driven hazard
+  1/25 over the 19.7k-min snapshot; 631 settled v2 trades split by
+  break-within-25-min-before-entry. RESULT: post-break cohort
+  n=385 EV -4.10c win 0.392 vs stable cohort n=246 EV -3.95c win
+  0.423 — **EV delta -0.16c = NULL**. The 25-min flow regimes are
+  real structure (round-234) but carry NO conditional information
+  about trade outcomes. FIRST BAKEOFF CANDIDATE KILLED HONESTLY —
+  consistent with brti-edge 1%-skill null; the -EV is dominated by
+  fees + adverse selection, not flow regime. Caveats recorded:
+  exploratory in-sample (prospective = frozen detector + future
+  trades), BTC-only bias proxy, cross-asset leakage. Discipline
+  worked as designed: detector ran, scored on realized EV, null
+  accepted without rationalization. Research paper: BOCPD_EV.md.
