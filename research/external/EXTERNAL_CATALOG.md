@@ -2923,3 +2923,16 @@ two independent, mutually consistent measurements of the same edge class.
   since ~2000 as arbitrage capital crowded in) is the canonical
   edge-decay precedent for our backtest-to-live gap. Post-cycle
   re-listing now round 228.
+- 2026-09-14: round 228 — **FINAL SWEEP ROUND** (user closes the
+  continuous-sweep goal after this round; Sep-18 verdict remains
+  as scheduled checkup). Cycle not yet run at 19:36 UTC (listing
+  unchanged); final rotations (settlement-fair GH, CN 量化套利,
+  HN kalshi) ALL all-known — $106k bailout / NYT cluster / CDF
+  already recorded round-215. SWEEP TOTALS (rounds 103-228):
+  ~120 continuous rounds across GitHub EN+CN, arXiv (API+listing
+  routes), SSRN/OpenAlex, HN, dev.to, video/CN lanes, venue docs,
+  datasets (HF/Kaggle probes), code-reads (~25 repos deep-read),
+  CFTC/Federal-Register lane, and 4 detector/method adoptions into
+  the local stack (bocpd.py, adv_move_fills.py, gate_v2 port,
+  markout template). The ongoing Sep-18 15:02 UTC gate verdict is
+  scheduled as an automation and is the sole remaining checkup.
