@@ -2756,3 +2756,20 @@ two independent, mutually consistent measurements of the same edge class.
   edge skill-1% null) and (b) dispersion (p90 adverse 27c) rather
   than mean drift. Research paper: ADV_MOVE_FILLS.md. Bakeoff
   lane now has BOTH detectors running (BOCPD flow-bias + markout).
+- 2026-09-13: round 214 — queued stat.ME reads x3 + edge rescan.
+  **2609.11575 JEAM HELPFUL** (Jungbluth/Lederer/Trimborn): time-
+  dependent network Husler-Reiss with market-informed adjacency
+  (own extremeness x historical joint-extreme patterns), 11-15%
+  better OOS tail log-scores on 1-min equity sectors — the joint-
+  tails tool for our multi-coin book (pairs with round-211 copula
+  finds). 2609.10587 ESFM REF-context (expected-shortfall factors
+  are PRICED: 8-11.7% ann high-minus-low on equities — tail
+  severity as a factor, context for multi-coin tail book).
+  2609.11091 threshold-displacement adequacy test WATCH-METHOD
+  (curvature shifts linearized thresholds; our gate thresholds are
+  flat so limited direct use, but the adequacy-test pattern is
+  portable). Edge rescan: revach159-v38 + ullquiorra-watcher
+  empty shells DISCARD; BallesJr NEW repo (edge-model) WATCH.
+  DATE CHECK: still Sep-13 — v2 two-week window completes Sep-18
+  15:02 UTC (switch was Sep-4 15:02); verdict due then, not the
+  ~Sep-16 the verifier quoted.
