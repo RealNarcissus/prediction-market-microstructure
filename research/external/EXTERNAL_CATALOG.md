@@ -2870,3 +2870,9 @@ two independent, mutually consistent measurements of the same edge class.
   bots this window — games/IDEs/notes; 'Analyst Index' stock-caller
   tracker off-lane). Light round; verdict clock unchanged (Sep-18
   15:02 UTC).
+- 2026-09-14: round 221 — econ.GN listing (24 papers: ESFM known;
+  rest health/housing/labor off-lane) + HN Show-HN combined window
+  (all Feb-May, known or thin: pmxt open-source DomeAPI equivalent
+  re-noted; Panther PM terminal same-shape as apex) + GitHub
+  realtime angle (2 stale Feb repos). No-yield round recorded
+  honestly; verdict clock unchanged (Sep-18 15:02 UTC).
