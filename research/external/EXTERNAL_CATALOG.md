@@ -2998,3 +2998,20 @@ two independent, mutually consistent measurements of the same edge class.
   snapshot file (append-only, like the edgeledger pattern) or a
   collector.db-sourced bias series. Queued as the bakeoff
   infrastructure step. arXiv re-listing now round 233.
+- 2026-09-14: round 233 — cycle still pending (19:49 UTC;
+  re-listing now round 235). **BAKEOFF INFRASTRUCTURE BUILT**:
+  flowbias_snapshot.py (append-only parquet, dedup by ts_ms,
+  idempotent — second run +0 new) AND bocpd.py --snapshot flag.
+  Snapshot revealed the store holds 19,698 minutes (~13.7 days,
+  Sep-1..13) — far more than bocpd.py's last-files slice was
+  reading. FULL-HISTORY BOCPD RUN (19,698 min): bias mean +0.0096
+  sd 0.245; **4,881 breaks, posterior mean run 12.1 min** — the
+  calm evening window (785 min, 73.5-min runs) did NOT generalize;
+  at 1-min granularity the flow-bias process churns regimes at
+  HFT scale. Two honest readings: (a) the hazard prior (1/250) is
+  misspecified for this series — re-fit needed before any scoring;
+  (b) 12-minute flow regimes are likely untradeable for a 60s-
+  freshness taker gate — the prospective EV scoring (round-208
+  discipline) will decide whether conditioning helps at all, but
+  the prior is now against micro-regime structure being the WHO.
+  Infra committed; report regenerated on snapshot.

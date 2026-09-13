@@ -135,9 +135,25 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--symbol", default="BTCUSDT")
     ap.add_argument("--days", type=int, default=30)
+    ap.add_argument("--snapshot", action="store_true",
+                    help="read from the persistent flow-bias snapshot "
+                         "(data/flowbias_<sym>.parquet) instead of the "
+                         "rolling kline store — accumulated history")
     args = ap.parse_args()
 
-    bias, ts = load_flow_bias(args.symbol, args.days)
+    if args.snapshot:
+        import polars as pl
+
+        snap = REPO / "data" / f"flowbias_{args.symbol}.parquet"
+        if not snap.exists():
+            print(f"FATAL: {snap} missing — run flowbias_snapshot.py first",
+                  file=sys.stderr)
+            sys.exit(2)
+        df = pl.read_parquet(str(snap))
+        bias = df["bias"].to_numpy()
+        ts = df["ts_ms"].to_numpy()
+    else:
+        bias, ts = load_flow_bias(args.symbol, args.days)
     # clip extreme bias values (thin-volume minutes) to keep the Student-t sane
     lo, hi = np.quantile(bias, [0.001, 0.999])
     bias = np.clip(bias, lo, hi)
