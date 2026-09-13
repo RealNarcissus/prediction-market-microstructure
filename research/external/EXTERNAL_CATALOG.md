@@ -2876,3 +2876,10 @@ two independent, mutually consistent measurements of the same edge class.
   re-noted; Panther PM terminal same-shape as apex) + GitHub
   realtime angle (2 stale Feb repos). No-yield round recorded
   honestly; verdict clock unchanged (Sep-18 15:02 UTC).
+- 2026-09-14: round 222 — math.ST listing (15 papers, all Sep-11).
+  **2609.10889 Online Change-Point Monitoring for Object-valued
+  Time Series WATCH-METHOD** — CP monitoring generalized beyond
+  scalars to object-valued series; the natural extension of our
+  bocpd.py if flow-bias alone under-segments (could monitor whole
+  book-state objects). Rest pure math/prob off-lane (EO-Wilson
+  cross-listed here, already read). Verdict clock unchanged.
