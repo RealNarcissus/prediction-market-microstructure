@@ -2558,3 +2558,42 @@ two independent, mutually consistent measurements of the same edge class.
   framing). Per pre-registration: no early halt; verdict at the
   full 2-week horizon with day-block CI. This interim is recorded
   as the honest running result, not a verdict.
+- 2026-09-13: round 202 — post-gap rescan (9 days since round 201;
+  /tmp triage tools rebuilt self-contained; false-NEW on owners I
+  previously abbreviated in records — candidates only).
+  NEW: jonawalb/conflict-market-data KEEP (archives prices+wallet
+  trades+depth that PM stops serving post-resolution, unattended
+  Actions — solves data evaporation for resolved-contract research);
+  shirleyshen0106/polymarket-calibration KEEP-INSIGHT (202 markets /
+  529 quote-outcome pairs: aggregate reliability CARRIED BY LONGSHOTS,
+  half of quotes <5c, no band testable in one month — mirrors our
+  deep-tail sizing failure + thin-band discipline); estrada-josh/
+  attention (OddsDrift tracker) WATCH; Egosum79/SeanRoon/fzarki
+  empty shells WATCH-thin.
+- 2026-09-13: round 203 — kalshi delta + lanes (arXiv API DOWN
+  0-bytes, HN-Algolia numericFilters rejected — both banked for
+  retry).
+  Kalshi NEW: freemoneybot/rhonniestar shells + jameswilbanks-wq
+  ledger (JSON activity log, no code) WATCH-thin x3; rest = known
+  owners (abbrev false-NEW). dev.to fresh Sep-05..11 batch (15
+  posts): soulcrancer TWAP-30v60 FULL READ KEEP-TACTIC — window as
+  market state, 30s=faster path-sensitivity vs 60s=inertia,
+  accumulated-avg/current-price/remaining-time/threshold framing =
+  INDEPENDENT CONVERGENCE with our fair_v2 within-window branch
+  (realized_avg + d<1 math); 5-Factors piece = vendor marketing
+  for "PolyScripts" scoring layer (capital-sizing point echoes
+  ours, else platitudes) DISCARD-vendor/WATCH-sizing-point;
+  TWAP-aware-engine + signal-engine + real-time-system posts
+  queued next round.
+- 2026-09-13: round 204 — dev.to deep reads x2.
+  soulcrancer TWAP-AWARE-ENGINE (4596652) KEEP-TACTIC: three-
+  timestamp discipline (source/receipt/decision — look-ahead guard,
+  converges with Tardis dual-ts + edgeledger patterns); "a late
+  move has less influence than its visual magnitude suggests" =
+  our within-window variance math restated in practitioner prose.
+  Bo$onaX real-time-system (4583596) WATCH->KEEP-arch (upgrade from
+  prior DISCARD author): edge = model_prob - executable_prob
+  surviving fees/depth/spread; 5-component separation ("a
+  probability model should not know how an order is signed") —
+  correct discipline, still zero numbers/track record; note
+  polymarket-c unified Python SDK mention (verify separately).
