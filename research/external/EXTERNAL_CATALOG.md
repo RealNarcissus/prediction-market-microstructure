@@ -2597,3 +2597,23 @@ two independent, mutually consistent measurements of the same edge class.
   probability model should not know how an order is signed") —
   correct discipline, still zero numbers/track record; note
   polymarket-c unified Python SDK mention (verify separately).
+- 2026-09-13: round 205 — HN search-by-date (469 recent hits
+  triaged; search_by_date works, numericFilters form rejected).
+  NEW: 3-unreported-US-investigations (09-11) KEEP-RISK (venue
+  regulatory lane grows); 150+-wallets-military-secrets (Reuters
+  research 08-20 cluster) KEEP (wallet-level insider case file —
+  feeds leakage/adverse-selection lane); NACA-vs-Polymarket suit
+  (08-31) WATCH; we-lost-$270-bot post-mortem (uruguabot vendor
+  blog, honest-loss framing) WATCH; fake-wins follow-up (08-26)
+  WATCH; Google-engineer "just gambling" defense (08-28..09-02)
+  WATCH.
+- 2026-09-13: round 206 — updown-lane fresh angle (arXiv API still
+  DOWN, retry queued).
+  NEW: LinusWeigand/updown-MM KEEP-REF (Rust maker for 15m/1h
+  up/down: GARCH(1,1) Monte-Carlo fair + recency-weighted empirical
+  bootstrap + SPREAD FITTED TO MEASURED ADVERSE SELECTION — the
+  most direct methodological competitor found; adverse-selection-
+  fitted spread is exactly what our negative live results point
+  toward; read monte_carlo/ + report.pdf next); isai-mykyta/
+  updown-bot (TS + statistics JSONs) WATCH; 6 older updown shells
+  (May-Jul) WATCH-thin.
