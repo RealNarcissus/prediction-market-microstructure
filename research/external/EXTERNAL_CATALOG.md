@@ -2988,3 +2988,13 @@ two independent, mutually consistent measurements of the same edge class.
   Cycle vs US Monetary Policy etc.) REF-context. Index banked as
   a source for targeted title-hunts; arXiv re-listing still
   round 232 (~00:00 UTC).
+- 2026-09-14: round 232 — cycle STILL pending (19:47 UTC).
+  BOCPD REFRESH run on accrued flow: consistent (277 breaks vs
+  224, posterior mean run 75.6 vs 73.5 min) — detector stable.
+  STRUCTURAL FINDING: the kline store is ROLLING (~13h retention
+  per round-60 note), so the BOCPD window SLIDES rather than
+  extends — prospective EV scoring (round-208 discipline) cannot
+  run off the store alone; it needs either a persistent flow-bias
+  snapshot file (append-only, like the edgeledger pattern) or a
+  collector.db-sourced bias series. Queued as the bakeoff
+  infrastructure step. arXiv re-listing now round 233.
