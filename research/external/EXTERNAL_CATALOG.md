@@ -2861,3 +2861,12 @@ two independent, mutually consistent measurements of the same edge class.
   Time" (2609.10020) WATCH-METHOD (time-location of cointegration
   — pairs-trading diagnostics lane); STV audit graphs off-lane.
   Light round recorded honestly.
+- 2026-09-14: round 220 — q-fin.RM listing (9 papers: EVaR-parity,
+  JEAM, cross-impact already queued/known; NEW off-lane: credit-
+  scoring adversarial robustness, cyber-cat power laws, lognormal
+  comonotonic approximation, dividend optimization, DisclosureBeta
+  regime-betas-from-LLM-disclosures REF-context for the guardrails-
+  only LLM lane) + HN Show-HN bot stream (577 hits, ZERO trading
+  bots this window — games/IDEs/notes; 'Analyst Index' stock-caller
+  tracker off-lane). Light round; verdict clock unchanged (Sep-18
+  15:02 UTC).
