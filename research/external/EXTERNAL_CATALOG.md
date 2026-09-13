@@ -2955,3 +2955,19 @@ two independent, mutually consistent measurements of the same edge class.
   created and destroyed the pattern. Bilibili egress note: Wayback
   cannot serve dynamic search results, so that lane stays closed,
   but other walled static content is now reachable.
+- 2026-09-14: round 230 — lookbacklabs CONFIRMED JS-walled even in
+  Wayback (SPA, 2 captures, wrapper only) — Building-Indices lane
+  closed pending a render-capable fetch. RobotWealth "The
+  Metamorphosis" READ (Part 4/6 stat-arb series, Kris Longmore):
+  **KEEP-METHOD — cross-sectional spread networks**: compute
+  z-scores across OVERLAPPING spreads (6 energy stocks -> 8
+  spreads); every spread involving XOM stretched while the rest
+  sit near zero => XOM is THE mispriced security. Applied to us:
+  same-expiry up/down markets across BTC/ETH/SOL/XRP form an
+  overlapping-spread network — network outlier detection is a
+  feature-bakeoff candidate (identify the single mispriced coin
+  vs the cross-coin consensus), a structural WHO distinct from
+  the crowded staleness pattern. Beta-stability caveats noted by
+  the author (betas unstable; direct modeling helps on average
+  but is a big if). arXiv cycle still ~4h out; re-listing in
+  round 231.
