@@ -2773,3 +2773,26 @@ two independent, mutually consistent measurements of the same edge class.
   DATE CHECK: still Sep-13 — v2 two-week window completes Sep-18
   15:02 UTC (switch was Sep-4 15:02); verdict due then, not the
   ~Sep-16 the verifier quoted.
+- 2026-09-13: round 215 — HN kalshi-by-date (783 hits) + dev.to
+  kalshi tag (15 posts, mostly regulatory).
+  **KEEP-CASE-STUDY: greed.bot $106k combo-MM "bailout" post-mortem**
+  (09-11): Kalshi settled WMU-Michigan at clock 0:00 BEFORE a review
+  restored 0:01 (Michigan scored on the final play; $18.6M game
+  volume); Kalshi invoked Rule 5.11 trade cancellations and CREDITED
+  the MM $106k. Maker insights banked: combo MMs price the COPULA of
+  legs (not the legs), and rely on settlement FINALITY to residualize
+  combos for tighter spreads — early settlement breaks finality.
+  Venue-risk lane: Kalshi has a formal trade-cancellation remedy;
+  Polymarket/UMA has none (trades stand) — asymmetry recorded.
+  Insider-enforcement cluster (08-29..09-01): Santos LIFETIME BAN
+  (first ever, insider trading conclusion), NC GOP candidate
+  suspended for own-campaign bets, teleprompter operator fined
+  $172,000 for Trump-speech bets — three named cases with numbers;
+  the self-influence/self-trading exclusion rule (round-112) now
+  has enforcement teeth. NYT workers demand Kalshi deal scrap
+  (09-03, 262pts) + appeals-court "regulate as gambling" (08-31)
+  + FlightAware sues Kalshi over flight-data betting (dev.to x3)
+  — venue-pressure cluster GROWING; data-rights angle (a feed
+  owner suing over unauthorized use) matters for settlement-source
+  licensing. Kalshi $750M raise at $40B valuation (08-16) banked.
+  Our scans: spread/CN queries all-known this round.
