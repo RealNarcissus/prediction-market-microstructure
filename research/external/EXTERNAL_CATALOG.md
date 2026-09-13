@@ -2694,3 +2694,26 @@ two independent, mutually consistent measurements of the same edge class.
   query = name-collision junk (birthdays) except known mattypie
   cluster. Net: the two HELPFULs give the bakeoff lane its first
   two concrete detectors.
+- 2026-09-14: round 211 — listing-page scans q-fin.CP + q-fin.ST
+  (9+9 papers) + CN gap window.
+  Papers: **2609.04712 Yinjun-Wang & Udell, convex cross-impact +
+  transient decay HELPFUL** — PSD cost matrix from vol/volume/
+  correlation forecasts coupling trades across contracts, power-law
+  kernel across periods, manipulation-free provably — the right
+  costing shape for our pair lane (YES+NO legs across time) and
+  multi-coin; **2609.08060 LoL pre-game paired-comparison HELPFUL**
+  — walk-forward-calibrated win-prob (slope 0.995) vs Polymarket on
+  928 matched maps: forecasts MATCH the market except modest edge
+  on cross-region Worlds/series-deciders — third independent
+  efficiency-with-identifiable-niches finding; queued: AlphaRJM
+  (2609.08581 reward-jump alpha memory), 2609.04420 rare-event
+  stratified allocation, 2609.06422 sign-dependent long-memory
+  GARCH (leverage effect for our sigma), 2609.10865 bivariate-Wilson
+  CI (day-block interval candidate), Nyström-efficiency note.
+  CN GitHub: **dylantlwu/prediction-market-arbitrage-math KEEP-REF**
+  (170k-char Chinese course: constraint modeling, Frank-Wolfe,
+  barrier methods, execution — full courseware for the basket-arb
+  machinery KJjjj0 stubbed); xiaolin-bot/polymarket-quant
+  WATCH->KEEP-ref (multi-platform: sports CLV + funding arb + PM +
+  crypto, 568 tests, claims real PnL — verify); ChiuZzzJamm
+  dashboard + wonglaitung WATCH-thin.
