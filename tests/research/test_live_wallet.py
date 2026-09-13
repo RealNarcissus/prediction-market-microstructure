@@ -9,6 +9,7 @@ sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "research"))
 
 from staleness.live_wallet import WalletEngine, fair_yes
+from staleness.gate_v2 import EwmaKlineCache, fair_yes_v2, load_calibration_v2
 
 DAY = "2026-09-02"
 T0 = 1788374400000  # 2026-09-02 00:00:00 UTC in ms
@@ -158,3 +159,41 @@ def test_fair_yes_moves_with_twap_above_strike():
     open_ms = int(ts[30])
     f = fair_yes(data, open_ms, 300, int(ts[32]), True)
     assert f > 0.95
+
+
+def test_engine_tags_gate_version_from_dict_fair():
+    e = WalletEngine(calib_predict=FlatCal(), now_ms=T0 + 60_000)
+    d = e.on_quote(mk_market(), mk_quote(), {"fair": 0.60, "gate": "v2"})
+    assert d["action"] == "trade"
+    assert d["trade"]["gate"] == "v2"
+
+
+def test_engine_rejects_nonfinite_fair():
+    for bad in (float("nan"), float("inf")):
+        e = WalletEngine(calib_predict=FlatCal(), now_ms=T0 + 60_000)
+        d = e.on_quote(mk_market(), mk_quote(), bad)
+        assert d["action"] == "skip" and d["reason"] == "no_fair"
+
+
+def test_fair_yes_v2_returns_z_and_scales_with_time_left():
+    # synthetic flat-then-jump klines; fixed z must SHRINK as expiry nears
+    # (round-107 path variance) — the property v1 lacked
+    n = 200
+    ts = np.arange(n, dtype=np.int64) * 60_000 + T0 - 190 * 60_000
+    px = np.full(n, 100.0)
+    px[191:] = 100.3  # jump AFTER the open bar: strike=100.0, spot later=100.3
+    data = {"ts": ts, "open": px.copy(), "close": px,
+            "ewma": np.full(n, 0.0002)}
+    open_ms = int(ts[190])
+    z_early = fair_yes_v2(data, open_ms, 600, int(ts[191]))
+    z_late = fair_yes_v2(data, open_ms, 600, int(ts[198]))
+    assert z_early is not None and z_late is not None
+    assert abs(z_late) > abs(z_early)  # less time left -> more extreme z
+
+
+def test_load_calibration_v2_mapping_is_discriminating():
+    calib = load_calibration_v2()
+    probs = [calib(z, True) for z in (-3.0, -1.0, 0.0, 1.0, 3.0)]
+    assert probs == sorted(probs)
+    assert len(set(round(p, 4) for p in probs)) == len(probs)
+    assert all(0.0 <= p <= 1.0 for p in probs)

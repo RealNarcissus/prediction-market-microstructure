@@ -5,13 +5,18 @@ calibration (fair_cal pinned at 0.737 — a step function from isotonic fit on
 buggy v1 fairs). A 30-second validation would have caught it pre-launch:
 non-degenerate fair_cal distribution, sane gate rate, non-trivial band table.
 
+Since 2026-09-04 the wallet trades gate_v2 (fair_v2 fixed-z + lambda +
+train-only isotonic in calibration_v2.npz). This report validates the ACTIVE
+v2 mapping on the scored train population; the retired v1 mapping is still
+checked for the record (it must FAIL — proving the old gate stays dead).
+
 Usage:
     .venv/bin/python research/staleness/calibration_report.py [--check-only]
 
-Exit 0 = calibration usable for trading. Exit 1 = COLLAPSED, do not launch.
+Exit 0 = active calibration usable for trading. Exit 1 = COLLAPSED, do not launch.
 Also writes research/staleness/CALIBRATION_REPORT.md.
 
-Checks (all must pass):
+Checks on the ACTIVE mapping (all must pass):
   1. Non-degenerate: fair_cal must take >= 10 distinct values on the
      validation sample (catches constant/step-function collapse).
   2. Gate rate: fraction of quotes passing (fair_cal - ask > fee) must be
@@ -38,25 +43,18 @@ sys.path.insert(0, str(REPO))
 from research.staleness.live_wallet import (  # noqa: E402
     CALIBRATION, LIVE_START_MS, FEE_RATE, load_calibration,
 )
+from research.staleness.gate_v2 import load_calibration_v2  # noqa: E402
+from research.staleness.retest_logspace import (  # noqa: E402
+    PARQUET as COMPARE_PARQUET, SPLIT_MS, sigmoid,
+)
 
 OUT = REPO / "research" / "staleness" / "CALIBRATION_REPORT.md"
 SRC = REPO / "research" / "staleness" / "scored_quotes.parquet"
 
 
-def main() -> int:
-    print("=== Pre-launch calibration report ===")
-    calib = load_calibration()
-    df = pl.read_parquet(str(SRC)).filter(pl.col("ts_ms") < LIVE_START_MS)
-    print(f"validation sample: {len(df)} pre-launch quotes")
-    fair = df["fair"].to_numpy()
-    # NOTE: scored_quotes.parquet holds v1 fairs — this reproduces the exact
-    # input the live calibration was built on. A collapsed input here means
-    # the frozen mapping cannot discriminate, regardless of later fair_v2 work.
-    fair_cal = np.array([calib(f) for f in fair])
-    won = df["won"].to_numpy().astype(float)
-    ask = df["ask"].to_numpy()
-
-    lines = ["# Pre-Launch Calibration Report", ""]
+def run_checks(name: str, fair_cal: np.ndarray, won: np.ndarray,
+               ask: np.ndarray) -> tuple[list[str], bool]:
+    lines: list[str] = [f"## {name}", ""]
     ok = True
 
     # 1. degeneracy
@@ -91,13 +89,48 @@ def main() -> int:
     c4 = gap > 0.05
     ok &= c4
     lines.append(f"4. tercile win rates: {[f'{w:.3f}' for w in wrs]} (max gap {gap:.3f}) — {'PASS' if c4 else 'FAIL (flat profile: gap <= 0.05)'}")
-
     lines.append("")
-    lines.append(f"**VERDICT: {'USABLE — may launch' if ok else 'COLLAPSED — do NOT launch or restart without rebuilding'}**")
+    return lines, ok
+
+
+def main() -> int:
+    print("=== Pre-launch calibration report ===")
+    lines = ["# Pre-Launch Calibration Report", ""]
+
+    # --- ACTIVE mapping: gate_v2 on the scored train population ---
+    calib2 = load_calibration_v2()
+    df = pl.read_parquet(str(COMPARE_PARQUET)).filter(
+        pl.col("cfg") == "v2_ewma"
+    ).filter(pl.col("ts_ms") < SPLIT_MS)
+    print(f"v2 validation sample: {len(df)} train quotes")
+    is_up = df["market_id"].str.slice(-1) == "0"
+    z = df["z"].to_numpy()
+    fair_cal = np.array([calib2(zz, up) for zz, up in zip(z, is_up.to_numpy())])
+    won = df["won"].to_numpy().astype(float)
+    ask = df["ask"].to_numpy()
+    v2_lines, v2_ok = run_checks("ACTIVE gate_v2 (calibration_v2.npz)", fair_cal, won, ask)
+    lines += v2_lines
+
+    # --- RETIRED mapping: v1, checked for the record (must stay dead) ---
+    calib = load_calibration()
+    df1 = pl.read_parquet(str(SRC)).filter(pl.col("ts_ms") < LIVE_START_MS)
+    print(f"v1 validation sample: {len(df1)} pre-launch quotes")
+    fair1 = df1["fair"].to_numpy()
+    # NOTE: scored_quotes.parquet holds v1 fairs — this reproduces the exact
+    # input the retired calibration was built on.
+    fair_cal1 = np.array([calib(f) for f in fair1])
+    v1_lines, v1_ok = run_checks("RETIRED v1 (calibration.npz) — record only",
+                                 fair_cal1,
+                                 df1["won"].to_numpy().astype(float),
+                                 df1["ask"].to_numpy())
+    lines += v1_lines
+
+    lines.append(f"**VERDICT: {'USABLE — may launch' if v2_ok else 'COLLAPSED — do NOT launch or restart without rebuilding'}** "
+                 f"(active v2 gate; retired v1 gate is {'dead as expected' if not v1_ok else 'UNEXPECTEDLY ALIVE — investigate'})")
     OUT.write_text("\n".join(lines) + "\n")
     print("\n".join(lines[1:]))
     print(f"\nwrote {OUT}")
-    return 0 if ok else 1
+    return 0 if v2_ok else 1
 
 
 if __name__ == "__main__":

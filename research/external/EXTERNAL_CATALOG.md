@@ -1448,3 +1448,1113 @@ two independent, mutually consistent measurements of the same edge class.
   (own ledger/report/npz; 112 settled, -730c). Step 6: commit + merge this
   session. Report: research/staleness/PAPER_GATE_LIVE.md (daemon-owned);
   ledger data/paper_gate.db (gitignored).
+- 2026-09-04: round 106 — five-lane sweep (~60 new items triaged).
+  GitHub EN: tfrmma/prediction-market-maker KEEP-REF (Avellaneda-Stoikov
+  for binaries + Prelec + perp delta-hedge); ericeric0101/15m-BTC-bot
+  KEEP-REF (closest 15m template, TWAP-PTB fail-closed); charanchivukula/
+  infra KEEP-INSIGHT (honest negative +7c backtest -> ~0 live);
+  SLaffey24/calibration KEEP-INSIGHT (liquid prices ~calibrated prior);
+  mearley24/edge-scanner KEEP-INSIGHT (negRiskAugmented guard);
+  melvingoodman7507/poly-arb KEEP-REF (maker fee math + fill sim);
+  DineshKumar8399/orderbook-dataset KEEP-REF (405M quotes HF);
+  Genius740Code/collector KEEP-REF (500ms book snapshots);
+  anaborne/infra KEEP-INSIGHT (0/74 cross-venue hedge kills arb thesis);
+  vetrivelkick/sweeper, steveseguinnin reverse-bot (234 stars),
+  thesoulcrancerdev strategies WATCH; Benjam1nCup-V2, Erik-Erik116,
+  bored2boar DISCARD. CN: Loimola/btc15-assistant KEEP (exact-venue
+  Phi(ln(S/K)/sigma.sqrt(t)) formula + TWAP validation 95%);
+  shaoliang987/ladder KEEP (pair-cost<1 directional-independent);
+  Luna-xk/Ai KEEP (misprice pipeline shape); 0xcii arb-bot, dexoryn
+  ensemble, New2taste MM, KAY53N Mini-CLOB, wenfp108 agent WATCH;
+  dexoryn-copy, mxbr111, sssunwl, yezixi 80%-claim DISCARD; Gitee/CSDN/
+  Juejin empty-for-new, Zhihu walled, 51CTO unreachable. Papers (arXiv
+  API): OpenMarket 2607.26245 HELPFUL (logistic can't beat implied p,
+  -0.116/trade — direct baseline template); 2604.24366 HELPFUL (Lee-Ready
+  59%, direction must be on-chain); 2606.04217 HELPFUL (1.2B-trade
+  ground-truth DB); 2607.17991 HELPFUL (HJB maker quotes);
+  2602.19520 HELPFUL (cell-recalibration 71.5% OOS); 2606.07811 HELPFUL
+  (0.64 contemporaneous adjustment — fade underreaction); 2507.16701
+  HELPFUL (RF binomial pricer, OFI 43%); 2602.00776 HELPFUL (universal
+  LOB features); 2608.02002 HELPFUL (Hawkes toxicity quotes);
+  2604.20949 HELPFUL (regime build-up gate); 2606.16852 HELPFUL (ghost
+  fills — backtest != executable); 2606.30040/2510.23461/2506.07711 REF;
+  SSRN blocked. Practitioner: benjamin_cup TWAP-momentum + mean-reversion
+  + real-time-engine KEEP-TACTIC x3 (edge-gated abort, deviation-decay
+  exit, latency triple-stamp); quant001 adaptive-conditional KEEP-TACTIC
+  (depth-walked executable price); xniiinx momentum KEEP-TACTIC
+  (execution-time revalidation); king-akr Kelly KEEP-TACTIC (edge>2% +
+  55c cap); TWAP-99-sniper, mean-reversion-z2, naka2027, hedge-ladder
+  WATCH; james-see sports DISCARD; Reddit/Medium/X/YouTube all blocked,
+  Hashnode/Substack empty. Venue: changelog STILL Aug-17 (confirmed
+  today); CLOB/TWAP/RTDS unchanged; clob-client v1.2.0-canary 08-19;
+  Kalshi inconclusive (blocked); gensx-x1 updown-data KEEP (only
+  GH-native 5m/15m book history); HF L2 datasets KEEP (Houroux 26k dl,
+  trentmkelly, DineshKumar 405M, kishan51); rabapuba MASTER-5-MENIT,
+  connectcomputers, EricSpencer00 whale, awesome-polymarket,
+  clayve-one/kalshi, AllAboutAI leakage-ML WATCH; brody-curtis,
+  williamyates, SEER, khangnguyen518, ted00052, polytrackers DISCARD.
+- 2026-09-04: round 107 — DEEP-READS with a live math correction.
+  (a) Loimola/btc15-assistant model.js fully captured: fairProbability
+  Phi(ln(S/K)/(sig.sqrt(t))), realized+EWMA(0.94) sigmas, TWAP variant,
+  breakevenBuy fee solver, sigma-regime gates — AND their README embeds a
+  CORRECTION TO OUR fair_v2: they use sigma*sqrt(t) on FULL remaining time
+  (diffusion-to-close), while our d>=w branch uses sigma*sqrt(w/3)
+  (window-average conditional on arriving at the window). Scored both on
+  129,859 quotes: FIXED wins everywhere — Brier 0.1708->0.1669, ECE
+  0.0253->0.0199, gated EV +8.51c [+6.29,+10.71]->+9.12c [+7.04,+11.18],
+  lambda* 1.88->0.60 (variance now correctly scaled, less shrinkage
+  needed). CORRECTION RECORDED: my round-30 claim that v1's running-TWAP
+  variance EXCEEDS venue final-window variance compared conditional
+  variances while ignoring the path term — apples-to-oranges; the correct
+  comparison restores the path variance and vindicates the original
+  averaging-window intuition in the opposite direction. Research paper:
+  research/staleness/ROUND107_FAIRFIX.md + round107_fairfix.py. ACTION:
+  port fix into paper_gate.py fair_yes_v2 + recalibrate_v2 at next
+  checkpoint (live $5 control untouched — different gate by design).
+  (b) OpenMarket 2607.26245 abstract fetched: 727M-row ms-paired PM-Binance
+  corpus, 43-feature walk-forward logit CANNOT beat book-implied p
+  (-0.116/trade net) — the null baseline our calibrated gate must beat;
+  stylised facts banked: one-tick spreads, 347ms PM-follows-Binance lag,
+  +-99ms clock uncertainty. HELPFUL-CANDIDATE stands.
+  (c) tfrmma/maker README+tree captured: full Avellaneda-Stoikov binary
+  engine (FairValue A-S + flow + Prelec, BS digital-delta hedge via
+  Hyperliquid, independent kill-switch, StartupReconciler, N-outcome
+  categorical path with softmax + Guéant skew) — the maker-lane reference
+  implementation; borrow PnL decomposition (spread/inventory/adverse) for
+  our reporting. KEEP-REF stands.
+- 2026-09-04: round 108 — five-lane sweep, new angles (~55 items).
+  GitHub EN: Jonmaa arb-baseline, milanzandbak 15M-spread-backtester,
+  TheOverLordEA Rust HFT (CEX-lead <5ms), HorseDev77 nested 5m/15m arb,
+  cengizmandros V2-fee simulator, gtg7784 dr-manhattan-ts (Limitless/
+  Opinion route), octavi42 maker-math, mmoore07129 sharp-blend+CLV,
+  ThinkEnigmatic regime-ensemble, EtimfonIkpong Hyperliquid-hedge study,
+  Kyler-d06 Kalshi-15m KEEP-REF/INSIGHT x11; dr-manhattan-rust,
+  moondevonyt-Limitless, radioman-517stars WATCH; zero-result phrases
+  noted. CN: QiaoBit/polyhunter KEEP (GBM Monte Carlo 1000-path +
+  fee-filtered arb); luckyrain777/pmCrypto KEEP (arb-vs-directional
+  stage-gate + Kelly); Kyler-d06/HorseDev77/ZeroPointIntel latency-arb
+  KEEP-pattern; ETO1379, KJjjj0 Frank-Wolfe, BillyArt1994 tiers,
+  Allanli1011, LucianLiudg harness-thesis, survivorff, dansezhai1
+  checklist, Oceanjackson1 compendium (IMDEA $39.59M base rates) WATCH;
+  qql0812 tail-session 92%-yet-net-loss DISCARD-signal/WATCH-lesson;
+  Cary-2, zhonglianceng3 DISCARD; Bilibili 1/7 on-target (copy-tactic
+  DISCARD); Gitee/CSDN/OSChina/V2EX reachable-empty, Sogou-Weixin
+  explicit-no-result. Papers: 2507.22712 OBI-filtration, 2411.08382
+  VAR+FNN OFI, 2608.25348 PIT-audit guardrail, 2607.27301 isotonic-DoF
+  (streaming recalibrator cap!), 2607.19689 online recalibration,
+  2606.29720 resampling-wrecks-calibration, 2604.17194 odds-debias CLV,
+  2510.15205 BS-for-PM, 2606.21769 dynamic-fee/LVR HELPFUL x9;
+  2509.16912/2603.24137/2607.17555/2607.11542/2604.10005/2605.19267/
+  2608.30321 REF x7; funding/propagator/CLV angles zero-new. Blogs:
+  nagi777 spike-filter + touch-side-depth-walk backtester KEEP-TACTIC x2;
+  fortraders M5-confluence, binaryoptions breakeven-table+200-log,
+  alfatactix spread-gate+EMA8/21 KEEP-TACTIC x3; soulcrancerdev TWAP
+  monitor + TWAP-design, garage23 fees, WeeBet tape WATCH x4; Reddit/
+  Medium/X/YT/TradingView/ForexFactory/EliteTrader/LessWrong/Metaculus/
+  Betfair blocked, Hashnode/Mirror dead, Manifold/GJOpen/QuantNet empty.
+  Data/venues: BrockMisner HF BTC-updown KEEP-top (124M ticks + 3.78B
+  quotes, 12.7GB, 3h auto-update — pull for TWAP/strike validation);
+  Mithilss, krish301, SII-WANGZJ, TimeSeventeen WATCH; od2961 DISCARD
+  (daily bars); Chainlink-Streams, Limitless-docs, Myriad WATCH;
+  Opinion/Hedgehog/Zeitgeist/Drift DISCARD; PM docs ECONNRESET (assume
+  unchanged); Kaggle/Dune/Flipside/CoinGecko/PAPERTRAIL no-change.
+- 2026-09-04: round 109 — HARVEST round (query totals banked, ~70 items).
+  GitHub query totals: PM-bot 4072, PM-trading 3154, kalshi-bot 879,
+  PM-arb 1024, PM-maker 109, PM-backtest 284, PM-data 825, PM-strategy
+  664, limitless 37, PM-sniper 118, PM-monitor 431, PM-analysis 586.
+  NEW KEEPs: HarrierOnChain toolkits (431*, Rust multi-venue chassis),
+  ent0n29/polybot (1009*, ClickHouse/Redpanda + replication scoring),
+  warproxxx/poly_data (2313*, CTF-V2 tick via HyperSync), SII-WANGZJ
+  toolkit (820*, 1.1B academic set), ConteurShadow Rust (218*, short-
+  horizon crypto loop), AdrienChereau sniper (OBI+Kalman+Kelly 2-node),
+  G0BLINDEV realistic backtester, cengizmandros fee-sim; MrFadiAi 637*,
+  skharchikov ML+LLM, nadnad250 LGBM-auto-retrain, LainNet agent,
+  Filip303 honest-negative harness, angganurf 15m-momentum, emmanuelwestra
+  53k-LOC chassis WATCH; achiko endgame DISCARD. CN: crazygirl437 5min-bot
+  (110*, YES+NO<1 + merge) KEEP, FrondEnt re-found 1075* KEEP,
+  web3xiaogong hedge-PDF KEEP, orange-book KEEP, fmzquant MM pair KEEP;
+  PolyHermes, ent0n29, radioman, CarlosIbCu, meloner3, okx-pair WATCH;
+  BBOXZL/8treenet/grid-spam/Bilibili-martin DISCARD; Bilibili PM content
+  ZERO all keywords; 5/12 repo queries empty; V2EX/OSChina/Huxiu/Odaily
+  reachable-empty; Zhihu/36kr/CSDN/YT/InfoQ/bijiayou/Foresight blocked/
+  dead. Papers (~316 returns reviewed): 2604.27041 SCI-filter,
+  2608.00858 HFT-supply/demand, 2605.11180 info-value-ceiling,
+  2601.07852 utility-weighted-calibration, 1907.06230 MLOFI,
+  1512.03492 queue-imbalance-logit HELPFUL x6; 2606.31020 robust-
+  aggregation, 2603.22167 calibeating, 2607.12928 sequential-calib,
+  2503.18005 toxic-flow-control, 2303.06021 accuracy-vs-calibration
+  (+34.69% vs -35.17%!) HELPFUL x5; Cont/Cont-classics, imbalance-
+  endogeneity, AMM-loss, stop-rules REF; binary-pricing 1 hit, toxicity
+  1 hit, LOB-imbalance/microstructure/CLV/election 0 exact (broadened
+  recovered). Practitioner: dev.to PM-tag 663 articles, HN PM 533 /
+  PM-general 1501 hits; benjamin_cup TWAP99/OBI-quad/spot-lag/calib-
+  overlay KEEP-TACTIC x4 + OBI-multi + vol-filter WATCH x2; nagi777
+  slippage-guard KEEP; quant001 full-book-cost + uncertainty-sizing +
+  rebate-arb + kacho-real-numbers WATCH x4; jbecker $18.26B taker-1.12%/
+  maker+1.12% context KEEP; HN-471 meme, breakeven-math DISCARD.
+  Venues/data: Kaggle marvingozo tick-L2 (42GB, 4412dl) KEEP-top;
+  predict-quant (28k files, 15m-native) KEEP; polyorderbooks 1s-L2 +
+  toolkit KEEP; kartikbathla 6.9k-episodes KEEP; wzsg fills-V2 KEEP;
+  Lazy108 joint Binance+Poly KEEP; gregyoung14 paper-linked KEEP;
+  Joseph3222/kinzikdza/marketlens WATCH; PM org 100 repos (CLOB-v2+perps
+  direction), Kalshi 8 (no CLOB push), limitless-TS-SDK new, OpinionLabs
+  stale; Limitless TVL $433k vs PM $349.6M; Chainlink laughably absent
+  from TWAP feeds (w8: streams=alternative).
+- 2026-09-04: round 110 — CODE-READ round (exact rules captured).
+  AdrienChereau rust-sniper ADAPT (OBI5 |0.85|+vel, drift-EMA 25s,
+  Cont-OFI veto 0.15/pull 0.4, BS-d2+drift, pair 0.99/1.02, bankroll caps;
+  NO Kalman/Kelly found — do not cite; rescale halflife 25s->60-90s for
+  15m; REJECT flotteur sizing + MM chassis verbatim). crazygirl437 5min
+  ADAPT (sum<=1-0.03 + min() CTF-merge + wind-down; spread->0.015-0.02
+  net of V2 fee, GTD 300s->60-90s for 15m). milanzandbak ADAPT-skeleton /
+  REJECT-signal (34-36c band + 3c spread + TP5/SL10, no q/fee). HorseDev77
+  REJECT for 15m-EV (needs co-terminal 5m/15m pair, 0.9 gross, beat-fetch
+  mismatch). QiaoBit ADAPT (GBM-1000 structure + net=gross-fee; replace
+  inertia drift + flat 2% fee). cengizmandros ADOPT as harness standard
+  (fee=C*rate*p*(1-p), next-bar exec, 30% participation, read-only view).
+  Filip303 ADAPT-protocol/REJECT-weights (2c net gate, book-sum/entry/
+  depth filters, +1c stress, persist-1s, day-bootstrap, Brier-vs-book;
+  honest OOS NEGATIVE +0.04c [-1.86,+1.97], Brier worse than book).
+  G0BLINDEV ADOPT realism layer (instant-screen->realistic-verify,
+  30/250ms latency, book-walk, partials, 7.2% fee shape; recalibrate for
+  15m). Papers deep-fetch: SCI persistence-filter PORT as PR-gate (drop
+  HHI, no identities; tau* 0.27 NOT portable); utility-weighted-calib
+  PORT principle (EV-weight isotonic by |dEV/dq|, keep 30% in paper);
+  queue-imbalance-logit + MLOFI-ridge PORT as imbalance features (BTC =
+  small-tick, modest lift; NEVER raw OLS past 5 levels); accuracy-vs-
+  calibration PORT (+34.69% vs -35.17% — select by ECE/value-ROI, 1/8-
+  Kelly cap, demote train-accuracy); martingale-stopping REJECT (no
+  closed form by construction); settlement-discount REJECT (~0 at 15m,
+  fee-form corroborates fees.py) — build order: iso-window floor, ECE-
+  selection+sizing, imbalance, EV-iso, PR-gate. Tactics full-body:
+  benjamin_cup sniper REJECT-entry/ADAPT-log-schema (1c gross dies to
+  fee; fair_v2 late-window variance strictly better); OBI-multi ADAPT as
+  filter (re-fit windows 5s/15s/60s/300s for 15m, drop $500 staging);
+  quad-gate ADAPT-overlay (REJECT literal 0.25/all-four); spot-lag ADOPT-
+  formula/ADAPT-thresholds (gap=(spot-twap)/twap as z-feature; fair_v2
+  already encodes follow-through); calib-overlay ADOPT-arch/REJECT-claim
+  (ours already exceeds it; take Brier logging only); nagi777 slippage-
+  guard ADOPT into WalletEngine.on_quote (pre-trade veto + no-blind-
+  retry + expected-vs-actual ledger); spike-composite ADAPT-research/
+  REJECT-live (fit alpha/beta walk-forward first; State-C TWAP veto
+  fits); backtest-harness ADOPT-rules/ADAPT-plumbing (audit locked
+  harness vs 10 failure modes). Datasets probed: kinzikdza PULL-1 (ONLY
+  set with strike+15m+final-60s+resolution+spot; slots 6MB first);
+  polyorderbooks-updown15m PULL-2 (16.5MB clean 1s ladders); predict-
+  quant PULL-3 (single zips ~6MB; 60% slot gaps, no strike); kartikbathla
+  PULL-4 (densest event book, no strike); marketlens+5m PULL-5 (method
+  validators); marvingozo PULL-6 reserve (43GB, auth); Lazy108 PULL-7
+  (gated, Binance spot for strike/sigma); wzsg PULL-8 (31GB fills-only,
+  toxicity); MAICHEN 67k-file set gated-401 (re-probe with token).
+- 2026-09-04: round 111 — ADOPTED round-110 outputs into the live stack.
+  (a) Round-107 fix PORTED into paper_gate.py fair_yes_v2 (sd =
+  sigma*sqrt(d-2/3) for d>=1) + calibration_v2 REFROZEN on the fixed-z
+  scale via round111_recalibrate.py (train 37,594, lambda 0.65,
+  distinct 39, gap 0.661 — matches round-107 fit exactly; degeneracy
+  guard passed). DISCLOSED MISMATCH WINDOW: 6 trades ran pre-refreeze on
+  orig-z/lambda-1.95 (internally consistent old code + old npz — the
+  running process never mid-run reloads, so no mixed-scale trade
+  occurred); daemon restarted 11:40 UTC on fixed-z/lambda-0.65, ledger
+  append-only with the cohort boundary annotated in PAPER_GATE_LIVE.md.
+  Live $5 control untouched throughout. (b) nagi777 slippage-guard
+  ADOPTED as pre-trade veto design (VWAP-walk max_acceptable_price, no-
+  blind-retry, expected-vs-actual ledger) — queued for paper_gate.py
+  WalletEngine.on_quote next session. (c) cengizmandros/G0BLINDEV harness
+  rules queued as locked-harness audit (10 failure modes). Pending build
+  order from paper deep-fetch: iso-window floor, ECE-selection+sizing,
+  imbalance features, EV-weighted isotonic, PR-gate.
+- 2026-09-04: round 112 — fresh-angle sweep (~60 items).
+  GitHub September-fresh: nahrek/polyledger KEEP (296*, DuckDB V1+V2
+  OrderFilled tape — best fresh backtest data); monkeybio5414 ladder
+  KEEP (5m UP+DOWN<$1, 76.8% claim unverified — replay first);
+  yanzaocheng/poly-v3 KEEP (fair_prob.js + ONNX P(up|t-left,distance),
+  full 5m stack); Szarbon/mogbot-clob-data KEEP (~1 snap/s 5m tape via
+  Actions); IgnacioAvila1/btc5m-portfolio KEEP (honest negative: 356
+  trades, 91.3% win still loses — base-rate trap receipts);
+  PricePepel tracker, W7RP harness, Ronak-Mahajan coherence screen,
+  Vortex789 calibration, hchan-exe sports-EV/Kelly, ijacur MCP book
+  server, pisze-programy whales WATCH x7; jhcdx9999 exec-service,
+  786lucky empty-shell DISCARD. Video/audio (YouTube Innertube WORKED,
+  Invidious/Piped/Rumble/Twitch/Spotify blocked, TikTok empty, X Spaces
+  gap noted): PNW-Coast Kalshi-15m scalping + full-strategy, Frosted-
+  Battlefield stop-loss, ProcessOverProfit full-code 15m bot + arb bot
+  KEEP-TACTIC x4; Bilibili HF-LLM bot, bitptp methodology, 长宁师兄
+  liquidity-death + last-10s-warning + 52%-yet-2M-loss EV lesson KEEP-
+  TACTIC x5; Matt-Downs devig-math KEEP-TACTIC; 14x WATCH (arb
+  walkthroughs, AI-trader vlogs, MM prototypes, Odysee Schaff/ADX stacks,
+  podcasts); vendor-tool ads + stale-arb DISCARD x4. Academic/working-
+  paper lane: NBER w10504/w11929/w12200 REF x2 + HELPFUL (w12200 prices-
+  as-probabilities — theory behind calib gate); Fed IFDP algo-trading,
+  OFR order-flow, CFTC 2026 proposed rules (venue tail-risk watch),
+  MIT theses (Nagar ensemble REF; Sethi profitability-test HELPFUL —
+  academic analog of EV gate), Roth manipulation-warning REF, ACX
+  mispricing-persistence REF x2, Karnofsky track-records REF, Manifold
+  live Brier 0.17334 REF-benchmark, CFA betting-exchange efficiency REF,
+  SSRN Kalshi-CPI zero-price HELPFUL (extremes handling), Willeboordse
+  seconds-discovery REF. Code primitives (12 queries, hit counts banked):
+  ADOPT P3 variance-tau match + P5 banked-seconds + P6 chrono-holdout +
+  P10 queue-depletion + P11 conservative-candle + P12 EWMA-sigma + P13
+  VWAP-walk + P14 CLOB-WS-reconnect (apply order: fair_v2 core, calib
+  protocol, backtest fills, connectivity); ADAPT P1 BS-digital, P2
+  micro-fair, P4 ladder-IV, P7/P8 Kelly, P9 slippage-guard, P15 fee-
+  curves, P16 TWAP-sim; REJECT on-chain accumulators + split/merge
+  plumbing for now.
+- 2026-09-04: round 113 — harvest round, fresh angles (~60 items).
+  GitHub query totals: whale-tracking 85, TG-bot 171, Discord-bot 34,
+  kalshi-WS 16, odds-tracker 24, election-model 1, sports-bot 57, news-
+  sentiment 25, dashboard 44, Kelly-sizing 80, funding-arb 25, vol-
+  breakout 0 (genuine gap). NEW KEEPs: Cleverfuxaqo1668 TG-bot (168*,
+  freshest+highest-star of harvest), orcalayer-python (farmer-filtered
+  leaderboards -> clean q input), goldengooseHD sports-stack (EV+Bayes+
+  Kelly+Nash portable to BTC sizing), structbuild TG-bot (trader-PnL
+  context), 0xsteve-00 tracker (zero-dep Actions polling skeleton);
+  orcalayer-mcp, bcruddy/argus, EricSpencer00/pm-whale-tracker,
+  vovodida dashboard, whale-oracle, byedeep/narada, yejunkang/Warp,
+  MrRusu22 sentiment, desaikarna arena WATCH x9; polybaby/kickedge/
+  hydratrader DISCARD. X/social: Nitter/lightbrd/Brave/Marginalia/
+  Neynar/Lens/Threads/old-reddit/redlib all BLOCKED; DDG-lite/Bing/
+  warpcast/TG-shell EMPTY of tactics; HN-Algolia + kacho + GH-READMEs
+  WORKED — no raw X post retrievable no-auth (gap declared).
+  KEEP-TACTIC x5: kacho stale-quote audit (refresh-in-seconds + cancel
+  stale), sign-flip boolean guard (Up/Down mapping assertion), unpaired-
+  inventory ladder (UP0.47+DOWN0.46=0.93 lock), warproxxx poly-maker
+  (r=FV-skew*inv, toxicity spread, dead-man switch), casatrick late-
+  TWAP-lock entry (TWAP-distance x time-remaining gate); aulekator caps,
+  cross-venue arb, whale-copy, weather-ensemble, void-leak WATCH x5;
+  800us-infra, always-buy-No, Bluesky-promo DISCARD x3. SSRN/Scholar
+  (OpenAlex/arXiv/HF-papers WORKED; S2-429, Crossref-empty, SSRN-walled,
+  NBER-0, PapersWithCode-empty): 2608.00666 executable-arb, 2605.02287
+  leakage-skill, 2607.14430 nonstatic-calibration, 2511.15960 ML-null,
+  2507.16701 RF-tree-pricer, 2607.09230 state-gated-OFI, SSRN OFI-fragile
+  7227998, OFI-null 7330219, Kalshi-maker-taker 6858200, BTC-RV-regime
+  6484648 HELPFUL x10; fill-side/ILS/parlay-MM/belief-manip/walkforward/
+  arb-discovery/MM-profit/HAR-sentiment REF x10. Books/courses/docs:
+  StratProof momentum-kill KEEP-INSIGHT (weekly momentum dead since
+  2024); Aligrithm Roll/VPIN/Amihud + GMM-spread KEEP x2 (+PCMCI WATCH);
+  Kinlay overfit-caution KEEP-RISK (holdout+CI defense cited);
+  QuantStart Harris+Johnson KEEP-REF; EPAT syllabus, Kaggle-JS/Optiver,
+  Hautsch/Ait-Sahalia WATCH x3; RobotWealth voter-accord KEEP-METHOD;
+  WorldQuant DISCARD; Limitless-docs Sep-02 batch KEEP (15m mirrors
+  Polymarket TWAP — structural-twin second venue CONFIRMED); Binance
+  CHANGELOG (SBE 25->20ms) WATCH; Moontower tick-vol-beta KEEP (slow-
+  beta = our r24 failure); PM changelog STILL Aug-17, Kalshi-RFQ-404,
+  Hyperliquid-walled, OKX/Bybit-null, FWM/OddLots/MacroHive-walled,
+  Overshoot-macro-DISCARD all banked as no-drift.
+- 2026-09-04: round 114 — fresh-angle sweep (~60 items).
+  GitHub Sept-fresh (pushed>=09-02): masterputra169 ML-ensemble,
+  cjudice arb-scanner, oribarlevco Kalshi-15m, Synx1 regime-indicators
+  KEEP x4; connectcomputers tri-venue, senthilmkm iOS signals, anglil
+  Gemini-Kalshi, DreadpiratePickles shadow-trader, dcpf1 dashboard-tape,
+  Shawn5972/maslovnu111/edulabrador whale-trio, laudinvil perps-monitor,
+  byronxlg TUI, St-boy calendar-sim, kachence almanac, alec420xx
+  terminal, joaoblasques hash-ledger, drydocs oracle WATCH x15;
+  RiekertQuant/BallesJr/edenleviloz123/chmoses98/alexisandres98
+  weather/sports DISCARD x5; Limitless NOTHING >=09-02 (freshest 08-15).
+  Q&A/forums: SO strike-capture (Chainlink-first-tick + undocumented
+  price-to-beat endpoint) KEEP; Solana-forum 5m-bot design doc KEEP;
+  Quant-SE short-dated pricing doctrine + IV-bridge + Kyle-sizing-list
+  + binary-delta pin-risk + MM-backtest-mandatory KEEP x5; running-max
+  exit, OTM-vol-theory, box-option, A-S skeleton, Kelly-theory WATCH
+  x6; pullpush-429, arctic-shift-000, Quora-JS, Zhihu-403, V2EX-login,
+  LINUXDO/Tieba/Douban/NGA/chiphell-blocked, 52pojie-empty banked.
+  Vol/sigma papers (16 NEW, ~81-ID dedup): Log-HAR-baseline, HAR-RV-
+  RHeston-options, LOB-noise-tail, range-multipower-jump-robust,
+  subsample-CI, state-space-RV, ask-side-jump-detection, kernel-spot-
+  vol, debiased-jump-kernels, overnight-tail, BTC-roughness-0.054-0.086,
+  ARIES-density-crosscheck HELPFUL x12; SALE-leverage, SpotV2Net-GAT,
+  regime-MoE, fractional-SV REF x4. Pull order for CLT sigma: roughness,
+  range-sigma, jump-filter, subsample-CI, density-check. Crypto-OSS:
+  fmzquant-15MIN-BTC-perp ADOPT-w/-rework (only native-15m template;
+  add fee, prune stack); cryptofeed/CCXT/Nautilus ADOPT plumbing/
+  harness; Hummingbot-skew, Freqtrade-BB/EMA, hftbacktest-microprice,
+  Gekko-RSI/persistence, passivbot-fee-block, vn.py-discipline ADAPT;
+  passivbot-martingale, Tribeca-MM, QUANTAXIS, qstock, easyquant,
+  roq-samples, krypton-unverified REJECT x7.
+- 2026-09-04: round 115 — fresh-angle sweep (~60 items).
+  GitHub Sept-fresh (pushed>=09-03, ~190-owner dedup): PricePepel
+  tracker (top-50 flow), Szarbon 1s-tape, mbordash DRADIS (Rust 9-
+  strategy), Nabeel rebate-lab, Pablozh123 imbalance-study (55.5% hit
+  but +0.09c vs 2.58c cost — taker-negative receipt), mearley24
+  negRisk-scanner, steveseguinnin reverse-bot (234*) KEEP x7;
+  matthewnyc2 NegRisk-arb, Ronak coherence, tduic cross-venue, nadnad250
+  LGBM-stack, sssobolevski 100-bot-list WATCH x5; kenfri13/kmjjjj exe-
+  funnel, lufegaga boilerplate, Cleverfuxaqo-monitor DISCARD x4. Perps/
+  hedge (book is binary hold-to-settle — hedge deferred to always-on
+  book): Hyperliquid venue + python-SDK + Lighter zero-fee KEEP x3;
+  Gajesh2007 funding-arb, kir1l screener, AP343 carry-method, HL-
+  fundingrates dashboard KEEP x4; Drift/dYdX/Vertex/Extended/Ethena/
+  DeltaYield-method/MRowhani-basis/Alex-drift-HL/vooi-MCP WATCH x8;
+  GMX-keeper, HL-MM-toys, kallie45s-flash-arb DISCARD x3. Execution/
+  entry papers (16 NEW, ~83-ID dedup): passive-impact fill-decay,
+  KANFormer fill-survival, state-dependent fills, latency-to-market-
+  order, adverse-sim-PnL-kill, signal-adaptive-quotes, RL-Exec BTC
+  (2-23bps over TWAP), 900-trade stop/TP grid HELPFUL x8; Hyperliquid-
+  sunshine, matched-filter, MAP-Elites, predicted-prior-stopping,
+  Markov-order-inertia, diurnal-sufficiency, macro-event-vol, BTC-
+  stylized-facts REF x8. Betting/broker guides: Nadex strangle-template
+  (capped-premium + runners), Unabated devig-margin (2-5% printable),
+  Unabated Kelly-hedge (bankroll-relative exits), Derive Greeks (delta-
+  as-prob + vega-collapse), Nadex averaging-settlement twin KEEP-TACTIC
+  x5; Nadex-indicators, Thales-payoff, Derive-fee-stack, Unabated-
+  originator-chain, Nadex-5m-cluster WATCH x5; Manifold-play-money,
+  Unabated-arb-mirage DISCARD x2; Pinnacle/Betfair/Smarkets/Kalshi-
+  learn/Metaculus/BetAngel bodies all blocked — gap declared.
+- 2026-09-04: round 116 — fresh-angle sweep (~60 items).
+  GitHub Sept-fresh (pushed=09-04, ~200-owner dedup): masterputra169
+  XGB+LGBM-15m, oribarlevco Kalshi-harness, Synx1 cashout-gates,
+  anaborne UDS-executor, laudinvil perps-lead, senthilmkm lean-signals
+  KEEP x6; cjudice/connectcomputers/trojanwinner/St-boy/JDSource/
+  dcpf1/Shawn5972/seungpyoson/emdoc12/kachence/almanac/anglil/
+  apex-terminal/edgeledger/tholos WATCH x13; Marjathirtyfour391 exe-
+  funnel, virtualwriter sports-only DISCARD x2. Oracle/settlement:
+  Chainlink-Streams-pull + Pyth-400ms-Hermes (conf-gated!) + RedStone
+  Bolt/Live KEEP x3 (compute own final-60s TWAP offchain); UMA
+  optimistic-hours + bond-logic + managed-proposers(-59% faulty)
+  KEEP-mental-model; UMA-chain-relay/OOTruthBot/homepage WATCH x3;
+  API3-OEV/Supra/Chronicle WATCH x3; Kleros/Reality DISCARD-fast-path;
+  Mango/Euler figures unverified (re-sweep before citing). Risk/sizing
+  papers (14 NEW, ~90-ID dedup): conformal-Kelly intervals, CRRA-
+  constrained mutual-exclusive Kelly, multivariate-Kelly O(N),
+  option-robust Kelly, log-growth-variance dial, Kelly-x-vol-regime,
+  PM-native Kelly+KL-haircut, horizon-aware anytime-betting, alpha-
+  decay-MDP (trade-less-than-signal) HELPFUL x9; two-knob-cost-policy,
+  MinervaScore-graduation, leak-free-registry, friction-aware-RL,
+  walk-forward-window REF x5. Infra OSS: uvloop + tenacity + chrony +
+  systemd-unit + Prometheus/Grafana/OnCall/TG-bot + DuckDB-reads ADOPT
+  x9; websockets-tune/backoff-alt/hftbacktest-sim/Nautilus-eval/linuxptp-
+  defer/QuestDB-defer/RPC-benchmark/region-measure ADAPT x7; aiohttp-
+  swap/py-clob-deprecated/DPDK REJECT x3. Apply order: uvloop/tenacity/
+  chrony/systemd/metrics first, latency-model before POLL_S cut.
+- 2026-09-04: round 117 — fresh-angle sweep (~60 items).
+  GitHub afternoon-UTC (pushed>=12:30Z): PricePepel flow-tape, Szarbon
+  1s-tape, edulabrador smart-PnL, Cleverfuxaqo exec-shell, cauefeder
+  DVOL/Kelly stack, thesaddestlandscape wallet-join KEEP x6;
+  Yateveo/rrykpkjhhs/andrewpaik/shreesomnath/chmoses98/atlantis/pm-
+  edge-watch/OpenSourceAGI/sylvanmiori/aibtcdev WATCH x10; Adul9981
+  danmu, primordial/gold dashboards, user-kv/ghjoerg skeletons,
+  fatimasadikhova-ML, CEX-signal-bots DISCARD x8. Sentiment/news (RSS
+  VERIFIED x5, APIs blocked noted): CryptoPanic-votes + CoinDesk +
+  Decrypt + Cointelegraph(down-weight) + CryptoSlate + DLNews KEEP x6
+  (merged headline-veto poller); Coinglass-funding + CryptoQuant-inflow
+  KEEP x2 (positioning veto); Santiment/LunarCrush/RavenPack/TheBlock/
+  UnusualWhales/Farside/Glassnode/WhaleAlert WATCH x8 (daily/coarse/
+  paid); Augmento-dead/Bloomberg-$$/X-scrape/PM-spillover DISCARD x4.
+  Regime/sigma papers (14 NEW, ~77-ID dedup): EWMA-Hurst-adaptive,
+  VolRouter-state-routing, specialist-mix (-24% high-vol loss), MS-
+  GARCH-triple, soft-switching-HAR, jump-model-persistence, online-
+  changepoint, manipulation-velocity HELPFUL x8; SARV-caution (regime-
+  sigma can LOSE to persistent EWMA on BTC — negative control),
+  Neural-HMM, rough-vol-routing, SMC-filter, alt-EWMA-VaR, GARCH-FIS
+  REF x6. Exit-strategy guides (19 items, zero-overlap grepped):
+  R-gate, sigma-unit-exits, MQL5-executor-guards, Z-exit, exit-costed-
+  sizing, Manifold limit-sell doctrine, Kalshi symmetry, ICM bubble-
+  factor, tfrmma three-gate stack, Nadex mechanism KEEP-TACTIC x10;
+  UT-trail, Topstep, IQ-haircut, Betfair-winner-tax, cashout-vig WATCH
+  x5; SajeebHasan-exe, Universal-Bot-malware-WARNING, PredictIt-venue,
+  rollover DISCARD x4. Exit design settled: R-gated, sigma-denominated,
+  activation+step+spread-guarded limit-sells, sized net-of-exit-cost,
+  urgent near session boundaries.
+- 2026-09-04: round 118 — fresh-angle sweep (~60 items).
+  GitHub (cutoff honesty: date=12:58Z so NOTHING pushed>=13:00Z exists
+  yet — freshest proxies banked): oribarlevco/Synx1/cjudice/
+  masterputra169/gorillachimps-auspex/laudinvil/Ronak KEEP x7 (all
+  re-pushed today — velocity signal itself); bennyjo-phil, dcpf1,
+  D00K92, dirkdiggler-exec-report, edgeledger, St-boy, emdoc12,
+  JDSource, mbordash, apex-terminal WATCH x10; Marjathirtyfour-exe,
+  virtualwriter-sports, apex-viz, simmer-sdk DISCARD x4; 'bitcoin
+  trading bot' query stale (newest 08-26) — dropped. Honest-eval
+  papers (16 NEW, OpenAlex+arXiv, NBER-JS/IDEAS-captcha gaps flagged):
+  search-aware-leakage-guard, MinervaScore-deflator, Sharpe-replication-
+  ratio, ML-OOS-horserace, crypto-illusory-Sharpe(SSRN), 30y-cost-
+  survival(SSRN) HELPFUL x6; calibration-degeneracy-audit, log-pool-
+  incremental-info, doubly-robust-conformal, KOWCPI-intervals,
+  confidence-threshold-gate, deep-hedging-fair-fight, drawdown-MC,
+  cascade-branching HELPFUL x8; extremal-dependence, IlliQaR REF x2.
+  Nadex crawl (WAF_0.4 documented, render-pivot worked): 5m specs
+  (ATM p~0.44-0.50, OTM ~0.20-0.24), forex ladder (5 strikes std / 9
+  wide, Rule-12.1e), index tenors, event-fee $0.02/contract (max-ROI
+  page uses legacy $2 — conflict banked), max-ROI formula display-only,
+  flat-condor port, strangle WATCH-no-early-close, forex-session
+  filter, settlement-trimmed-mean (busy>=10/trim30%, calm-avg-4)
+  PORT x9; spreads/KO pages empty, early-close formula NOT GIVEN
+  (model as live-bid exit). Derive/Thales leaves: Thales-Speed KEEP
+  (ONLY complete 15m stack: 2x minus LP-quote minus 2%, $5-200
+  tickets, $5k/day cap, 5m-24h epochs, Pyth-1s, 50:50 entry); Derive
+  30m-TWAP-incompatibility + grid + 12.5%-cap KEEP-ref/WATCH (no bps,
+  no 15m listing); tokenomics/Lyra-alias/Contango/Avalon DISCARD x4;
+  builder-RFQ/staking-APY undisclosed everywhere — open gap.
+- 2026-09-04: round 119 — fresh-angle sweep (~60 items).
+  GitHub afternoon (pushed>=12:30Z): PricePepel/Szarbon/edulabrador/
+  atlantis-paper/thesaddestlandscape/cauefeder/seungpyoson KEEP x7
+  (smart-money + tapes + vol/Kelly stack); Yateveo/rrykpkjhhs/andrewpaik/
+  shreesomnath/chmoses98/pm-edge-watch/OpenSourceAGI/sylvanmiori/
+  aibtcdev/virtualwriter/user-kv/monsefram/trojanwinner/connectcomputers/
+  vike-cli WATCH x13; Cleverfuxaqo-custodial/OpenSourceAGI-broad/
+  bestwade-weather/shreesomnath-weather/chmoses-NFL DISCARD x5. Venues:
+  Limitless-Base KEEP (#1 second venue), Predict.fun-5m-template KEEP,
+  Myriad-price-point KEEP, Opinion-hourly KEEP-WATCH (AI-adjudication
+  risk); pUSD-rail/perps-examples/Hxro/Monad/Sei/TON/Blinks WATCH x7;
+  Hedgehog/Zeitgeist/DriftBET/Ventuals/TradeStars/Surf/Betelu/
+  Psychoutcomes DISCARD x8. Copula/multi-asset papers (18 NEW): tail-
+  dependence-stable-lower, stablecoin-dry-powder, diffusion-copula,
+  amplitude-qMST, ETH-leads-hierarchy, negative-chain-spillover,
+  ETF-carry-wedge-2.58pp, funding-aware-MM, collateral-control,
+  depeg-contagion x2, ETP-anomaly, cascade-coupling HELPFUL x14;
+  tail-measure-theory, lead-lag-CPCF, shock-tracing, funding-BSDE REF
+  x4; FX-GNN DISCARD. Quant-blog RSS (20 posts, 12 sources): Glassnode-
+  W35/W34 levels+regime, Amberdata funding-extremes+skew, Kaiko-venue-
+  rank, Quantpedia-momentum-boundaries, QuantStart-LOB, Hudson-MR/
+  momentum-blend, Databento-CME-alert KEEP x8; peer-dispersion, MR-
+  template, false-edge-checklist, Moontower-sizing, FWM-features WATCH
+  x5; Hudson-2023-notes/Alpaca/EPAT/mergers DISCARD x5; Quantocracy/
+  Quicktake/CoinMetrics/MacroHive/Tardis/Tradologics blocked — retry.
+- 2026-09-04: round 120 — fresh-angle sweep (~60 items).
+  GitHub (cutoff-honest: 13:30Z future at 13:14Z — freshest proxies):
+  cjudice-arb + gorillachimps-auspex(q-feature) KEEP x2; bcodonnell/
+  laudinvil-perps/engr-mhm-dash/machina-skills/mercury-verify/jobk/
+  simmer/St-boy/oribarlevco/emdoc12 WATCH x10; kalshi-live/gold-dash/
+  EladPeretz-AI/primordial/Claude-bot/apex-terminal DISCARD x6;
+  'market-making-crypto' query DEAD (2 stale hits). Onchain/indexers:
+  Polymarket-subgraph-official + PaulieB14-GraphQL-packs + Graph-
+  explorer + Goldsky + Ponder + Dune-API + Alchemy-transfers +
+  EtherscanV2-getLogs KEEP x8 (live fill path assembled: Goldsky/
+  Ponder indexer -> toxicity join; orderbook-subgraph = only ready-made
+  microstructure queries); danielseisenbacher-scraper/Envio-DIY/Dune-
+  no-namespace-note/Nansen-gated/Arkham-gated/Bubblemaps/DeFiLlama/
+  TokenTerminal/Artemis/Messari-429 WATCH x9; Orion/Allium/Flipside/
+  QuickNode-streams/Polygonscan-scrape DISCARD x5. Conformal/eval
+  papers (15 NEW + 12 REF + 5 DISCARD): conformal-Kelly sizing, e-
+  backtests, martingale-never-stops (NEGATIVE: gates fire 135/135 on
+  clean streams — mandatory read), tail-conformal, leave-window-out,
+  rolling-origin, regime-DRACP, tail-VaR, STaR-bets, sequential-
+  calibration-test, confidence-horizons, horizon-betting, SAVA-FSR,
+  proxy-reliance, retrieval-conformal HELPFUL x15; Bayes-sequences,
+  Gaussian-betting, e-closure, extreme-CP, tsbootstrap, bandits,
+  seasonal-pools, DistMatch, localized-CP, density-regions, BESS-
+  profit REF x11. Maker-lane guides (future lane, taker unchanged):
+  Investopedia-MM+spread, wiki-prediction-AMM, SIG-Predictions-desk,
+  HRT-IOC-spec, QuantInsti-breakeven, CWT-vol/flow KEEP-TACTIC x7;
+  Citadel-scale/Jane-consistency/Optiver-separation/IMC-feedback/
+  Macroption-spread/OptionAlpha-concentration/tasty-mechanics/
+  Quantpedia-families/Hudson-Quantra WATCH x9; ProjectOption-dead/
+  TwoSigma-index/FlowTraders-timeout DISCARD x3.
+- 2026-09-04: round 121 — fresh-angle sweep (~60 items).
+  GitHub evening (pushed>=13:00Z, 170 rows, defi-arb-query stale):
+  nadnad250-ML + masterputra169-15m + Synx1-cashout(837-trade +$596,
+  stops-hurt) + Szarbon-tape + PricePepel-flow + connectcomputers-arb +
+  senthilmkm-lean + Yateveo-calibrate KEEP x8; Sureshot-terminal,
+  kbaas-copyedge-killed(anti-overfit!), tommhci-CLV, virtualwriter,
+  6Kmfi6HP-slugs, trojanwinner, dirkdiggler-exec, dcpf1 WATCH x8;
+  NixXxn-empty/shreesomnath-landing/Cleverfuxaqo-single-file/bennyjo-
+  ban/RonanMM-template/flashloan-generic DISCARD x6. X-mantles: Nitter
+  DEAD (X-C&D 24-Aug-2026, farewell signed 28-Aug — zero working
+  instances), XCancel ceased same-week, nitter-variants NXDOMAIN/502/
+  403, DDG/Bing/Brave/Mojeek blocked-or-empty, TG/Discord/Farcaster/
+  Bluesky/Mastodon/Lens/Threads/old-reddit/redlib all blocked-or-
+  shell — NO raw X tactic retrievable no-auth (structural gap
+  declared); substitutes WORKED (dev.to API + polymarketscan.org):
+  casatrick kill-switch, soulcrancer TWAP-divergence, benjamin_cup
+  TWAP-slicing, xniiinx Kelly-caps, nagi777 token-backtest KEEP-TACTIC
+  x5; z-reversion/vol-deviation/MM-inventory/tape-timing/whale-surface/
+  NJ-SCOTUS-hedge WATCH x6. LLM-agent papers (16 NEW): ContestTrade-
+  contest, FinPos-position-split, FINRS-risk-reflection, FinTSBridge-
+  msIC, KTD-Fin-masking (strongest guardrail), regime-vol-ICL,
+  CDUR-reasoning-cap, RATL-residual-RAG HELPFUL x8; TradingAgents/
+  FinAgent/survey/R1/failure-negatives/reflection-patterns REF x7;
+  persona-ensemble DISCARD-direction. BOTTOM LINE: no LLM directional
+  signal justified in 15m stack — guardrails/eval only. Data-quality
+  blogs: Massive/SIP-fractional+round-lot+bar-delay (live!=revised!),
+  Tardis completeness/dual-ts/contract-amount/HL-fastBook-break/API-
+  breaks, KX watermark+TAQ-sizing, zstd-Parquet-dict KEEP x12;
+  QuestDB-Arrow/TSBS-vendor WATCH x2; Kaiko/CoinAPI/CryptoTick/IEX/
+  LSEG DST/leap/reorg/EIP1559 gaps flagged for targeted search.
+- 2026-09-04: round 122 — fresh-angle sweep (~55 items, re-run post-
+  restart in 1-2-agent batches per memory discipline).
+  GitHub (cutoff 14:00Z valid, HFT-query stale): oribarlevco-15m +
+  SudoApt-Binance-vs-Kalshi + cjudice-xvenue + 4ndrew13-EV-tracker
+  KEEP x4; tuckerbyrne-arb/laudinvil-perps/j-sasson-MM-buckets/St-boy-
+  sim/agarwal-matching/maslov-whales/edulabrador-consensus/Arnav-copy/
+  BallesJr-calibration-pipeline/alec-terminal/heathley-hype WATCH x11;
+  agik66-empty DISCARD; ccxt-giant excluded. Audit-trail OSS: MLflow +
+  Aim + DVC + Optuna + ConfigSpace ADOPT x5 (minimal stack: space-hash
+  + ask/tell+N + holdout-hash + ledger -> nightly Deflated-Sharpe/
+  BH-FDR gate); Guild/ClearML/Polyaxon/Determined/SMAC/DeepCAVE/HPO-
+  Bench/RayTune/W&B-sweeps/Sacred ADAPT x9; Neptune/Comet/Pachyderm/
+  Katib/Hyperopt REJECT x5. Venue fees (VERIFIED numbers): PM-intl
+  p(1-p)x0.07 + maker-20%-rebate, PM-taker-tiers (wV weights+6 tiers),
+  PM-US Theta-0.06, Kalshi 0.07/0.0175 (KXBTC15M 1.75c@50c), Limitless
+  curve, Opinion topic-curve+$0.25-floor, Predict min(p,1-p)x2%, DK/FD
+  vig-devig KEEP x10; Limitless-AMM/Myriad/Deribit/CME/Nadex/RH/IBKR
+  WATCH x7; Opinion-sub$25/Crypto.com-fee-term/Geo-fee-free DISCARD x3.
+  Security: Checkmarx-ShaiHulud + SlowMist-no-PM-hack + CertiK-oligopoly
+  KEEP x3; Socket-API-retry/Phylum-moved/ToB/OZ-audits/UMA-docs/Immunefi/
+  Sherlock/Zellic-Ackee/Forta-custom WATCH x8; CheckPoint-niche/
+  Cantina-live/Hats-DNS/OtterSec-Solana DISCARD x4.
+- 2026-09-04: round 123 — small-batch sweep (~30 items, post-restart
+  discipline: 1 agent at a time).
+  GitHub (cutoff 14:30Z valid): Ccalaway77-pm5-signal (online learner
+  + p-chase guard) KEEP; Szarbon-tape, dcpf1-Down-stickiness-ledger,
+  PricePepel-flow, elhamwork-Kalshi-15m-lab, 0xPier-heatmap WATCH-to-
+  KEEP x5; howwohmm-copytest/ryder-shadow/atlantis-live/Yateveo/
+  BetIntelligence WATCH x5; kelvinhe-quant/Cleverfuxaqo-shell/justso-
+  dashboard/Predatuh-sports DISCARD x4. Maker-lane papers (14 NEW,
+  taker-posture unchanged — future lane only): single-skew-param,
+  successor-measure-adaptation, RFQ-price-reading, multilevel-RL,
+  kappa-MLE-regret, OB-feedback-value, auction-liquidation, zero-fee-
+  spreads HELPFUL x8; entropy-CE/robustness-split/axioms/informedness-
+  peak/carry-coupling/LP-fee REF x6; AMM-governance DISCARD x5. Next:
+  full-book logging + maker-fill sim BEFORE any quoting; calibrate
+  single skew + kappa-MLE first.
+- 2026-09-04: round 124 — small-batch sweep (~25 items).
+  CN-fresh (09-03/04, full-exclusion): yanzaocheng-v3, masterputra169-
+  15m, Juanp2389-Poly/Kalshi-arb, AmarRSehgal-BS-vs-EWMA, ijacur-MCP,
+  rabapuba-feed-pro KEEP x6; rabapuba-dup/jhcdx-delegate/0xPier-
+  heatmap/NixXxn-skeleton/monkeybio-ladder/zeryswin-clone WATCH x6;
+  kbaas-copyedge DISCARD-strategy/KEEP-negative; naka2027/Tyrion/
+  bored2boar thin WATCH; Bilibili 412-block on 预测市场, Gitee empty,
+  OSChina login-walled, V2EX 0-match banked. Bilibili videos: Sharpside
+  risk-control + limit-price + LeoLabs-maker-myth + backtest-data WATCH
+  x4; apex-statarb/Web3-1000万/bits-breakout narratives DISCARD x3;
+  CSDN DUMP_HEDGE-mirror WATCH. Fresh video (Sep1-4, Innertube OK,
+  Bili-pubdate-412 workaround, Podcasts/Odysee empty): Crubble math +
+  5m-edge-finder, Paz-15m-AI-format, Tanner-DIY, Sharpside-copy, final-
+  5m-only rule, 小鱼-AI-dev KEEP-TACTIC x7; EdgePilot-arb/PolyGate-
+  spread/Grok-tutorial/Mitts-manipulation/BeeMarket-arb/audit-snapshot/
+  stability-notes WATCH x7; vendor-PnL-shills/FX-binaries/regulatory
+  DISCARD x5.
+- 2026-09-04: round 125 — small-batch sweep (~25 items).
+  HF/Kaggle datasets (Sep-first, Kaggle-OAuth-blocked banked): linyan1106
+  (btc_15m curves+winners) + dvegenen883 (Poly+Chainlink join) + vaquum-
+  1m (877dl, 2020-now, maker-ratio!) KEEP-P0 x3; astrnvk-triple-join +
+  gregyoung14-1s/100ms + MAICHEN-1h + addy-1m-history KEEP-P1 x4;
+  MAICHEN-15min-67k/lokima-5m/bennett-Kalshi-features/alt-1m/atimati/
+  Kalshi-Sep-spike WATCH x8; event-study/hourly/picks/samples DISCARD
+  x5. Pull order banked: dvegenen883 -> linyan1106-markets+btc15m ->
+  vaquum-head -> astrnvk-day -> gregyoung14-day. Post-mortems (14 NEW):
+  francisx1999-7-strategies-dead (grid 93.3%-yet-95.48%!), Yizon-115k-
+  scaleout, r-algo coding-error + rogue-thread, pavloaser-infra,
+  tradevodata-fill-cheat, prop-10-fails KEEP-lessons x7; Knight/Archegos/
+  Melvin/Amaranth/LTCM canonical x5; broker-61-82%-lose + FGV-97% +
+  poker-30-50-buyins priors x2. Wallet rules hardened: kill-gate pre-
+  live, no scale-out, 1-code-path, position-cap-1, staleness-2s, ask-
+  only+fee backtests, max-1-entry/day. Gaps: Filip303/Ignacio/Kalshi-
+  loss/NFA/closure-letters unverifiable (DDG/Reddit-blocked) — retry
+  with session cookie.
+- 2026-09-04: round 126 — small-batch sweep (~30 items).
+  GitHub (cutoff 15:00Z valid, uncommitted-rounds exclusion caveat
+  banked): oribarlevco-xvenue + cjudice-scanner + CaioOgawa-option-q +
+  intrepidcanadian-strike-vs-smile KEEP x4; gold-dash/dcamco-snapshots/
+  fbnv-CLOB-fork/DrOwl-weather/bestwade-timing/erikw-seminar/
+  Fangzheng-tape WATCH x7; atlantis-live(disabled-kill)/CeAlthubaiti-
+  zip/wezilushinga-zip/Justkokosixnine-zip/klickburn-sports DISCARD x5
+  (3x zip-funnel WARNING). Funding/basis/ETF papers (14 NEW, dedup
+  caveat 80-vs-130 banked): ETF-carry-segmentation, funding-design,
+  funding-aware-MM, Ethena-carry-control, cascade-branching, cascade-
+  criticality, maker-dilemma-toxicity, onchain-flow-returns, tether-
+  mint-intraday HELPFUL x9; liquidation-formula/ADL/lending-pool/OI-
+  venue/Kalshi-macro/correlation-regime REF x5; Nikkei/Polish DISCARD.
+- 2026-09-04: round 127 — small-batch sweep (~30 items).
+  GitHub (cutoff 15:30Z valid): laudinvil-perps-lead KEEP (only one —
+  thin 3-min window, mostly dashboards/shells); Cleverfuxaqo-exec/
+  atlantis-paper/St-boy-sim/Yateveo/bohmec-feed/user-kv/Shawn5972
+  WATCH x7; danmu/gamma-dash/markets-lab/kalshiquant-EXE/bcodonnell/
+  sherline DISCARD x6 (kalshiquant = exe-malware WARNING). Spread/
+  pair mechanics: Betfair-crossmatch + surebet-1.2% + box-spread +
+  ETF-create/redeem (=CTF-split/merge!) + z-dip-timer + arb-layering +
+  sequential-fill-honesty + TWAP-slice-leg2 + warproxxx-maker-quoter
+  KEEP-TACTIC x9; dutch-book/pairs-scarcity/Quantpedia-timing/funding-
+  carry WATCH x4; depeg-pair DISCARD + garage23-stale-fee TRAP flagged.
+- 2026-09-04: round 128 — small-batch sweep (~30 items).
+  GitHub (cutoff-honest: 16:00Z future at 15:39Z): cjudice-scanner +
+  haoo99-15m + kmjjjj-Rust + kenfri13-hedge + oribarlevco-15m +
+  SudoApt-spot-vs-Kalshi + 4ndrew13-EV-tracker + Szarbon-tape +
+  virtualwriter-toolkit KEEP x9; senthilmkm-lean/PricePepel-flow/
+  edulabrador-consensus/tomuks-calibration/anglil-LLM/Sureshot-
+  terminal WATCH x6; ybshake-weather/klickburn-sports DISCARD x2.
+  Stablecoin/exchange-flow papers (18 NEW, http-noise caveat banked):
+  onchain-flow-returns, tether-mint-5-30m, dry-powder-copula, depeg-
+  veto, ETF-carry-gap, offchain-dominance, Hawkes-mint, P2P-political-
+  split HELPFUL x8; ETF-premium/correlation-regime/ETP-anomaly/scaling-
+  laws/depeg-contagion/MiCA-reroute/CASP-registry/chain-rotation/BTC-
+  denom-cost/HODL-sentiment REF x9; HODL DISCARD-edge. Build order:
+  mint-gate -> netflow-veto -> carry-flag -> Hawkes/depeg-veto.
+- 2026-09-04: round 129 — small-batch sweep (~25 items).
+  GitHub (cutoff 16:00Z future at 15:45Z): intrepidcanadian-option-q
+  KEEP + Kapi-hash-warehouse KEEP-REF; BRKME-honest-negative/aahyseni-
+  combo-maker/aallphin-ledger/SudoApt-staleness/Chirag-macro/dark-
+  warlord-screen/fbnv-fork/Aleksey-TG/Sureshot-normalizer/UMA-voting
+  WATCH x10; NextOutcome-client/kuestcom-infra DISCARD x2; 7x zip/exe-
+  funnel MALWARE-WARNING (LockForge/Dogolsn/multiplex/paah11/kalshi-
+  quant/alzei/thiagocavalheiro — do-not-execute). Dev-news/infra:
+  Polars-pin-<2.0 (2.0-rc breaking!), Ruff-ASYNC210, uv-bump, DuckDB-
+  1.5.5, Docker-trixie, USN-SSH-patch, Kraken-client-updates, Graph-
+  gateway-keys ACTION x9; Python-3.14-stay-3.12, Numba-safe, GH-CodeQL
+  WATCH x3; Binance/Coinbase/Bybit/OKX/Dune/HF/Cloudflare changelogs
+  blank — recheck before fetch-loop changes.
+- 2026-09-04: round 130 — small-batch sweep (~30 items).
+  GitHub (cutoff-honest: 16:00Z future at 15:54Z): PricePepel-flow +
+  edulabrador-consensus + Ccalaway77-EV-stack + Szarbon-tape +
+  cjudice-arb + oribarlevco-15m KEEP x6 (re-push velocity itself a
+  signal); elhamwork-bookwatch/0xPier-heatmap/St-boy-sim/agik-audit/
+  tzeng-EVsim/quantfusion-Brier/gold-dash WATCH x7; cohens-odds/
+  klickburn-sports/jasonking-fetcher DISCARD x3. Law/enforcement
+  (16 items, docket-PACER gaps flagged): CFTC-1.4M-settlement,
+  Kalshi-won-election-case, UKGC-block, ACMA-block, Kalshi-KYC-venue,
+  PM-ToS-no-US/VPN, PM-API-throttles, Kalshi-MM-program, UMA-13M-
+  dispute (oracle-finality > fact!) KEEP x10; state-blitz/C&D-list/
+  SCOTUS-petition/MiCA-ANJ/UMA-challenge-window WATCH x5; SEC/FINRA
+  DISCARD (no jurisdiction claimed).
+- 2026-09-04: round 131 — small-batch sweep (~20 items; scan run
+  DIRECT after subagent stalled — interim-note only, replaced).
+  GitHub (cutoff 16:00Z valid at 16:01Z): re-push velocity continues
+  (PricePepel/Szarbon/edulabrador/cjudice/oribarlevco/laudinvil all
+  re-pushed — confirms active maintenance, no new logic claimed).
+  Genuinely NEW: Cyano88/polydesk (agentic desk extract) WATCH;
+  15529214579/polymarket-go (Go LoL momentum-follow — CN mobile lane)
+  WATCH; rikitrader/vzla-power-monitor (V-Dem/GDELT/ForoPenal/PM-mirror
+  poller — event-indicator template) WATCH; wazzenrj sports-consensus
+  (top-trader consensus) WATCH; hanschn Taiwan-sentinel (geo-risk
+  dashboard) WATCH-context; huhuhulululu/kalshi (empty) +
+  Singhalesebradycardia99-copy + UnitedStars111-copy + alzei-agent +
+  bairdhall-Pundits DISCARD-or-WATCH-thin (copy-lane standing rule).
+- 2026-09-04: round 132 — small-batch sweep (~20 items; subagent
+  stalled twice — direct gh scan used).
+  GitHub (cutoff 16:00Z valid at 16:08Z, 60-row scan): re-push wave
+  continues (known owners dominate top-60 — velocity, not novelty).
+  NEW names: andrewwwlitvin-dash (hottest+overlooked archive) WATCH;
+  pjmerica-xvenue-viewer WATCH; bh13731-hourly-dashboard-snapshot
+  WATCH; anthonysurfermx-Bobby-Agent (OKX-whale x PM-smart-money,
+  hackathon, metacognition-gated) WATCH (only conceptually-new item);
+  arnavbhatia1-PolyBot/ stanleykev-weather-logger/ gabrieltoribio-
+  copy-panel/ armand-bot-ai thin WATCH-or-DISCARD; yly6561-404 DEAD;
+  quickya-LockForge-FORK (2nd copy of exe-funnel — spreading pattern!)
+  DISCARD+WARNING.
+- 2026-09-04: round 133 — small-batch sweep (~15 items, direct).
+  Kalshi-40 scan (16:09Z): entire top-40 = known re-pushes except
+  chrisgarceau6-dev/kalshi-trader (empty desc) + douglasn27/kxtrader
+  (update-manifest, no source) — both WATCH-thin. Lane saturation
+  signal: same-owner re-push velocity now exceeds new-owner discovery
+  on both queries; next rounds pivot to papers/code-reads/datasets
+  until the evening push wave arrives.
+- 2026-09-04: round 134 — CODE-READS x3 (pivot paying off).
+  yanzaocheng fair_prob.js fully captured: z=(currentDiff +
+  driftPerSec*t)/(sigma*sqrt(t)) with drift+sigma from per-second diff-
+  rate changes — drift-augmented diffusion vs our driftless fair_v2;
+  ADAPT-candidate: fit drift-EMA term into fixed-z as optional tilt,
+  walk-forward-gated (their raw per-sec stddev needs shrinkage).
+  oribarlevco predictor.py: driftless N(d2) on Kalshi floor-strike with
+  own-sample realized vol + Wilson-CI backtest rig + calibration trend
+  — closest 15m EV+calibration loop; ADAPT calibration-report pattern.
+  Ccalaway risk.py: fee=rate*p*(1-p)*stake + confidence-scaled stake +
+  one-tick slippage + ask-cutoffs — fee math CONFIRMS ours exactly;
+  ADOPT slippage-tick + cutoff pattern for paper_gate sizing.
+- 2026-09-04: round 135 — CODE-READS x3.
+  CaioOgawa structural_arb.py: NegRisk-basket + nested-monotonicity +
+  crossed-book scanner with margin floor + atomic open_basket() —
+  ADAPT margin-floor + atomicity pattern for pair lane; their modes
+  are structure-guaranteed (no model) vs our directional edge.
+  nadnad ensemble.py: LGBM+XGB(+LSTM) with CalibratedClassifierCV
+  (sigmoid<1000 else isotonic, cv<=3) — calibration discipline
+  CONFIRMS ours; BUT fees.py is PRE-TAKER-FEE era (gas+spread only,
+  maker_rebate=0.0, NO p(1-p) term) — CAUTION: any EV number from
+  this stack is overstated by ~1.75c at 50c; do not trust its P&L
+  claims without re-running through our fee model.
+  intrepidcanadian tree mapped (crawl/collectors + Deribit snapshot +
+  Tardis options) — option-implied RND join is the q-lane to read
+  next round.
+- 2026-09-04: round 136 — CODE-READ (intrepidcanadian RND join).
+  crawl_polymarket.py: daily "above $X on <date>" ladders sample the
+  risk-neutral CDF P(S_T>K) at 5-20 strikes with hourly histories —
+  ADOPT the Gamma pagination workarounds (day-window end_date_min/max
+  under tag_id=21; CLOB prices-history interval=max&fidelity=60;
+  per-event JSON cache) for any Gamma crawl we run; concat.py
+  partition-pattern (per-month files + on-demand concat to gitignored
+  _combined/) ADOPT for our own tape layout. Scope note: daily ladders
+  != intraday 15m binaries — use as RND-level q prior (paper 2606.19517
+  gap lane), not a 15m signal.
+- 2026-09-04: round 137 — direct prediction-market-40 scan (16:11Z).
+  Mostly known re-pushes. NEW: eroclassic/arb-replay (C++20 arb replay
+  + execution engine) WATCH — only execution-research item in batch,
+  inspect replay fidelity; mat4zan/consensus-desk (PM+forecaster+book
+  aggregator) WATCH — q-ensemble input; Reblexis/telarchy (approval-
+  layer conditional markets) / dominion (GenLayer stock-dominance) /
+  alexander-bain (odds translator) / Duollc (audit guide) / Incident-
+  Games (venue-build) WATCH-context; FreddyCreates-AI-hype /
+  SatoshiNakamato-civ-sim / JShap2-art / Hormuz-tracker / weather /
+  sports / empty-shells DISCARD x12.
+- 2026-09-04: round 138 — CODE-READ (eroclassic/arb-replay).
+  Clean C++20 OutcomeBook/BookSide/Price/Quantity hierarchy with
+  CMake+tests+benchmarks — but EARLY STAGE: src holds only
+  book_side.cpp, no fee/latency/partial-fill/arb-detection code yet.
+  Downgraded WATCH-early (re-check after engine fills in); the design
+  doc (fees+liquidity+latency+partial-exec haircuts) matches our
+  queue_aware_backtest philosophy — potential cross-validation target
+  once implemented.
+- 2026-09-04: round 139 — CN-lane check (16:13Z).
+  Repo side: only 2 new names (Nickwong-kyoaka/ACG — empty desc,
+  WATCH-thin; RSJAL/geopol-hazard — geopolitics implied-prob monitor,
+  WATCH-context for event-risk). Bilibili API non-JSON (rate-limit
+  shape) — video lane deferred to next round.
+- 2026-09-04: round 140 — arXiv q-fin sweep (25 newest TR/CP/ST).
+  Full-text 'prediction market' query = noise (physics/papers leak
+  in); category listing worked. NEW: 2608.27575 rough-Bergomi BTC
+  inverse-options pricing HELPFUL (Deribit-calibrated rough-vol
+  sigma prior for fair_v2); 2608.29468 stochastic-tracking execution
+  rates REF (square-root tracking bounds for entry slicing); 2609.02660
+  granularity-ACD durations REF (integer-clustering durations inform
+  fill-timing); 2609.02447 transient-impact manipulation REF (affine-
+  cost condition for pair execution); 2608.29025 deep-hedging-frictions
+  already-known; 2608.31041 agentic-quant-survey REF (eval section).
+  Method note banked: date-range syntax unsupported; use category
+  listing + abstract triage.
+- 2026-09-04: round 141 — dev.to backfill (pages 1-2, 60 posts).
+  Page 1-2 audit: all tactic posts known except 2. NEW reads by ID:
+  benjamin_cup TWAP-REVERSAL (4477671) KEEP-TACTIC — TWAP-60s
+  smoothing-vs-spot-divergence + multi-signal reversal confirmation
+  (token-price move alone insufficient; confirms across TWAP behavior,
+  spot, liquidity, imbalance, momentum, external); complements
+  momentum/mean-reversion pair as the third TWAP-lag leg. rainer GOAT
+  $318 bridge-recovery (4449524) WATCH-ops (relay-deposit stuck funds,
+  direct-provider resolution, official recovery portal — withdrawal-
+  rail intel, no edge). Slug-guess method FAILED (IDs required) —
+  method note banked.
+- 2026-09-04: round 142 — kalshi-60 direct scan (16:15Z).
+  NEW: asianguy-based/Kalshi-Bot (Flask arb toolkit, two-market edges
+  WITH fees, P&L tracking, safeguards) KEEP — fee-aware arb template;
+  Arnavtaduvayi analyst (smart-money detection Kalshi+PM) WATCH;
+  joseenriquesotof 15min-tracker WATCH-thin; kalchikee MLS-oracle
+  (Poisson+travel adjustments) WATCH-method; empty-desc shells
+  (abagui11/gehrenberg/mattatack/gscheinman) + sports/MIB shells
+  DISCARD x8.
+- 2026-09-04: round 143 — CODE-READ (asianguy Kalshi-Bot).
+  arbitrage.py: YES/NO-spread + event-basket scanner with fee =
+  ceil(0.07*C*p*(1-p)) — IDENTICAL fee math to ours (third independent
+  confirmation after Ccalaway + docs); "fees are not optional...
+  ignoring it turns most arbitrage into a loss" — our gate philosophy
+  verbatim. risk.py: TripWire circuit-breaker (halt/resume, error
+  counting, daily rollover) — ADOPT pattern for paper_gate daemon.
+  SECURITY_AUDIT.md: self-disclosed leaked RSA key with rotation
+  runbook — KEEP as key-hygiene reference (never commit keys; rotation
+  > deletion). ADOPT: fee-ceil parity check + TripWire.
+- 2026-09-04: round 144 — delta-scan with catalog-grep (16:16Z).
+  Method: owner-mention grep vs catalog = fast KNOWN/NEW triage.
+  Result: top-25 nearly all KNOWN (re-push wave); 3 delta-NEW all
+  weather/off-theme (jeanlangloismeurinne-bot, ybshake-weather-dash,
+  erikw-seminar) DISCARD-BTC. Delta-method ADOPTED for future sweeps.
+- 2026-09-04: round 145 — arXiv q-fin.GN newest-20 (16:17Z).
+  Mostly agentic-finance/LLM/fairness (off-lane). NEW: 2608.30490
+  Two-Kinds-of-Nothing HELPFUL (insignificant != zero effect —
+  formal backing for our CI-excludes-0 gate + all-weeks-positive
+  discipline); 2608.00988 LMF-square-root-impact HELPFUL (diffusive
+  prices + predictable flow paradox resolved — microstructure prior
+  for execution-impact modeling); rest DISCARD-lane.
+- 2026-09-04: round 146 — delta-scan (16:17Z).
+  Only 1 genuinely-new owner: BrunoCDev/polymarket-desk-board
+  (DipSnatchy paper-desk monitor, README+index.html) WATCH-thin.
+  Rest = known re-pushes. Note: cjudice/atlantis/ybshake/erikw flag
+  NEW? on grep but are cataloged under variant spellings — grep-
+  triage has false positives on hyphenated owners; treat NEW? as
+  candidate, not verdict.
+- 2026-09-04: round 147 — DipSnatchy board read: dashboard shell
+  only (README+index.html, no strategy) DISCARD-evidence.
+- 2026-09-04: round 148 — arXiv q-fin.MF newest-20 (16:20Z).
+  NEW: 2608.22620 WSVI HELPFUL (W-shaped smiles + bimodal RND
+  around binary events like earnings — the volatility-surface
+  analog of our settlement pinning; static-arb structure portable
+  to RND-level q); 2608.29473 Hawkes-control + 2609.03741 robust-
+  recalibration REF-context (growth/climate, not trading); rest
+  known-or-off-lane.
+- 2026-09-04: round 149 — HN-Algolia polymarket scan (610 hits, top-40
+  triaged; HTTP failed, HTTPS worked — method note).
+  NEW to catalog: hackers-stole-funds disclosure (06-26, 21pts) KEEP-
+  RISK (custody/counterparty haircut input); quarter-of-trades-fake
+  study (11-25, 14pts) KEEP (wash/toxic-flow prior for fill realism);
+  WSJ regulator-probe (06-28, 29pts) + fake-video lures (06-21/07-24)
+  + scam-top-result-AU WATCH (platform-trust/regulatory overhang);
+  insider cluster (Google $1M/search-term, Israeli major, $500k-new-
+  account, ceasefire-timing) WATCH (adverse-selection case file);
+  hairdryer-weather x3 + Venezuela-refusal + wildfire-arson-warning
+  WATCH (oracle-manipulation taxonomy for dispute haircut).
+- 2026-09-04: round 150 — HN kalshi-bot threads (17 hits + comments).
+  NEW: 9th-Circuit-sides-with-states (08-28, 170pts, 12 comments)
+  KEEP-RISK — biggest venue-risk event of the quarter (sports !=
+  shielded occurrence; quotes banked); Ask-HN-programmatic (03-24):
+  weather-thin-edge + no-historical-data + 5m/15m-arb-too-HFT (2GB/
+  15m-market tape!) KEEP (honest competitiveness admission +
+  data-cost numbers); Brier-worse-than-guessing + $6k-vibecode (0
+  comments — titles only) WATCH-claims.
+- 2026-09-04: round 151 — HN algorithms thread (41950192, 6 comments).
+  Kalshi-LOB-vs-algorithm (prices by willingness, MM incentives);
+  whale-beyond-liquidity + settlement-definition manipulation;
+  Black-Scholes-European analogy (American if buyback exists);
+  spoof-outside-book 'smart money' illusion in thin books (cheap +
+  effective) — KEEP (manipulation mechanism for toxicity filter);
+  bipartisan-ban-bill (0 comments) WATCH-venue-risk. Helper scripts
+  /tmp/hnq.py + /tmp/hnitem.py banked for future HN rounds.
+- 2026-09-04: round 152 — delta-scan (16:20Z).
+  NEW: olivesarenice/polydispute (dispute-sourcing engine) KEEP —
+  dispute-haircut data source; noskillcoding rewards-snapshot
+  (liquidity-reward pool flow, 30m) WATCH; dipsylala-monitor +
+  riyaanpal-recommender thin WATCH-to-DISCARD.
+- 2026-09-04: round 153 — CODE-READ (polydispute analytics).
+  Empirical-Bayes voter accuracy S=(R+N*P)/(G+N) + power-law
+  consensus W=S^2 + cohort-RMS + point-in-time price anchoring —
+  ADAPT voter-credibility math for smart-money weighting (replace
+  equal-weight consensus with Bayes-weighted); Prefect pipeline +
+  MotherDuck + Doppler-secrets + Hetzner/Coolify = ops reference.
+  Promoted KEEP (dispute-haircut quantification lane).
+- 2026-09-04: round 154 — kalshi delta-scan (16:22Z).
+  3 genuinely-new: logain1964-dashboard + 50thycal-bot (empty desc,
+  WATCH-thin); iconiczack93-valorant-odds (esports odds display)
+  DISCARD-BTC. Rest = grep-false-positive re-pushes.
+- 2026-09-04: round 155 — arXiv q-fin.RM newest-20 (16:23Z).
+  NEW: 2609.00943 IlliQaR HELPFUL (realized-Amihud tail metric for
+  extreme liquidity dry-ups — thin-book execution veto input);
+  2608.23274 crash-frontier HELPFUL (RND overstates physical crash
+  risk; finite bid/ask quotes admit many crash-prob pairs — bounds
+  discipline for RND-level q); 2608.17363 signed-transport REF-math;
+  rest credit/scoring off-lane.
+- 2026-09-04: round 156 — arXiv q-fin.PM newest-20 (16:25Z).
+  NEW: 2608.23393 KellyBoost HELPFUL (single-XGB Kelly allocation,
+  exact -log(1+wy) loss with closed-form Hessian — growth-optimal
+  sizing template for graduation); 2609.02525 switching-frictions
+  HELPFUL (heterogeneous horizons -> persistent signed flow —
+  mechanism prior for imbalance persistence); rest equity/LLM
+  off-lane.
+- 2026-09-04: round 157 — delta-scan (16:23Z).
+  NEW: q9k28bb2q9-hash/Data-Collection (local analytics + cloud paper
+  trader + tests/fixtures) WATCH — structure suggests real harness,
+  read next; keckmak88-clob-client + oleggoroh2-bot (empty desc)
+  WATCH-thin; matthewlloyd-AI-timeline (forecasts, not trading)
+  DISCARD-BTC.
+- 2026-09-04: round 158 — CODE-READ (q9k28bb2q9 harness).
+  Polars->Parquet->DuckDB warehouse + v_resolved_trades join CONFIRMS
+  our stack shape; paper_trader.py: bucketed StrategyParams (price-
+  bucket + whale-ratio + momentum) + kelly_fraction capped 0.05 +
+  gha_commit_paper_trades.sh (ledger to git!) — ADOPT bucketed-
+  strategy + capped-Kelly + git-committed paper ledger patterns.
+  Promoted KEEP (harness reference).
+- 2026-09-04: round 159 — HN market-making scan (648 hits).
+  Ask-HN-making-money (66 comments): HFT-skepticism consensus (need
+  capital/colocation; stick to slower edges) — corroborates our no-
+  HFT-latency positioning; crypto-simple-indicators 2-trades/day
+  anecdote WATCH. Betfair-Scala-HFT series (0 comments, 2017) WATCH-
+  archive (ladder-MM on betting exchange = maker-lane ancestor).
+- 2026-09-04: round 160 — delta-scan (16:24Z).
+  NEW: ENRICOBIGNOZZI/Polymarket V7 (paper-only canonical runtime:
+  settlement-engine + structural-arb + portfolio-coordinator, 15%
+  kill, no-wallet discipline) WATCH — architecture reference, read
+  settlement-engine next round.
+- 2026-09-04: round 161 — CODE-READ (V7 fair + audit).
+  v7_external_fair.cpp: oriented fair-bands + model-validity gate
+  (version/hash/schema/horizon/empirical-fit + sigma-fractions +
+  calibration slope>0) — ADOPT validity-gate pattern (refuse to quote
+  on unfitted/unknown model). Profitability-audit: canonical
+  (model_sha,record_id) ledger dedup + TTE-bucketed counterfactuals
+  (240..5s) + shadow-mode promotion gates — ADOPT counterfactual
+  tapes + sha-keyed ledger. Promoted KEEP (best-engineered stack
+  found; C++ port not needed — patterns transfer).
+- 2026-09-04: round 162 — kalshi delta-scan (16:26Z).
+  Zero genuinely-new owners (all NEW? = hyphen false positives).
+  Fix banked: normalize hyphens/underscores before grep-match.
+- 2026-09-04: round 163 — normalized delta-scan (16:26Z, /tmp/delta.py
+  banked; case-fold still leaks — fix next).
+  NEW: CCronos/postbot (Poisson rate-profile for post-count markets:
+  168 dow-hour buckets + remaining-time lambda sum) WATCH-method —
+  count-process modeling transfers to trade-arrival features.
+- 2026-09-04: round 164 — triage fix + delta-scan (16:28Z).
+  FIXED: alias-augmented owner index (/tmp/ko2.txt 566 + /tmp/al2.txt
+  54 bare-mentions; /tmp/delta3.py banked) — false positives gone.
+  NEW: ted00052/sharpflow (sports whale-flow + auto-logged track
+  record) KEEP-method; AustinMermans/fed-forecast (implied Fed
+  distributions replay) KEEP-method; BTConomista-oracle (empty) +
+  mmassime-model-tracker WATCH-thin.
+- 2026-09-04: round 165 — alias-complete delta-scan (16:28Z).
+  Kalshi top-25 ALL KNOWN after alias expansion (105 aliases) —
+  triage now reliable; josephjackson-combo-pipeline + aliu2298-edge-
+  machine confirmed known. Lane fully covered; new-owner discovery
+  rate ~0/hr on kalshi query.
+- 2026-09-04: round 166 — CODE-READ (sharpflow edge_logger).
+  am_prob + devig + edge>=min-edge gate + WON/LOST resolution marking
+  + git-committed signals.jsonl audit trail, stdlib-only, Actions-
+  scheduled — ADOPT devig-gate + git-audit pattern for any signal
+  with an external fair reference (sports now, BTC-perp fair later).
+  Sports-only; method transfers, venue doesn't.
+- 2026-09-04: round 167 — kalshi-bot cluster triage (16:29Z).
+  20-name cluster: all thin shells/empty-desc (larcisllc tube,
+  mehpackers self-improving-claim, mattypie experiments, rest null)
+  DISCARD x20 as evidence; cluster itself = signal that Kalshi-bot
+  scaffolding is commoditized (no edge in scaffolding).
+- 2026-09-04: round 168 — arXiv econ.EM newest-20 (16:30Z).
+  Mostly disaster/nonprofit/electricity off-lane. 2609.00350
+  boundary-manipulation test REF-method (even-split-near-boundary
+  logic portable to wash/spoof detection framing); IlliQaR already
+  known. q-fin.EC is not a valid category (0 entries — method note).
+- 2026-09-04: round 169 — delta-scan (16:30Z).
+  NEW: metamorphicc/PerpsTool (Next.js perps app shell) WATCH-infra;
+  luiservela/worldcup-hub (live win-prob chart) DISCARD-BTC. Rest
+  KNOWN re-pushes.
+- 2026-09-04: round 170 — arXiv stat.ME newest-20 (16:31Z).
+  NEW: 2609.03696 OLS-Hawkes HELPFUL (CLT estimator for parametric
+  Hawkes — simplifies Tier-2 OFI estimation vs MLE); 2609.03614
+  change-point-unstable-markets HELPFUL (Hankel/Laplace nonparametric
+  tests + permutation bootstrap — regime-switch gate); rest
+  genetics/survival off-lane.
+- 2026-09-04: round 171 — prediction-market query delta (16:31Z).
+  NEW: joaoblasques/edgeledger (12-month hash-chained forecast record)
+  WATCH — audit-trail pattern for ledger credibility; tonytheruthla/
+  arclight (milestone-gated escrow) + policy-feeds (signed risk feeds)
+  WATCH-context; RonanMM/apex-terminal/FreddyCreates/JShap2/NBA/
+  graham-rainsby shells DISCARD x6.
+- 2026-09-04: round 172 — CODE-READ (edgeledger archive layer).
+  Forecast-log-in-git + raw-in-object-store + never-block-forecasts
+  + env-only creds — ADOPT the split (our PAPER_GATE_LIVE ledger =
+  credibility artifact; raw collector stays out of git). Promoted
+  KEEP (honest-evaluation reference implementation).
+- 2026-09-04: round 173 — delta-scan (16:32Z).
+  NEW: Kcpb-ches/keelung-tracker (TW mayoral odds+tape+wallet JSON)
+  WATCH-context (per-market JSON layout portable; election venue);
+  alias fix: st-boy case variant added.
+- 2026-09-04: round 174 — arXiv cs.LG+trading query (16:33Z).
+  Query FAILED to filter (generic ML papers returned — AND with
+  broad cat doesn't scope). Method note: use ti: (title) scoping
+  for trading relevance, not cat+all. Zero items ingested.
+- 2026-09-04: round 175 — arXiv ti-scoped query (16:34Z).
+  ti: scoping ALSO ignored by API (physics papers returned) —
+  export.arxiv.org is not honoring fielded queries this session;
+  use category listings (verified working) + abstract triage only.
+  Zero items ingested; method corrected twice.
+- 2026-09-04: round 176 — alias bulk-load (16:33Z).
+  /tmp/al2.txt now 117 aliases; delta triage clean on re-check.
+  No new repos this window — re-push wave continues.
+- 2026-09-04: round 177 — CODE-READ (V7 fast_arb.cpp).
+  walk_buy/sell_shares with level-walked fills + slippage_bps +
+  generalized fee_per_share = rate*p*(1-p)^exponent + candidate_sizes
+  from cumulative depth + per-market FeeDetails fallback chain —
+  ADOPT level-walk + exponent-fee + min-order-size candidate set for
+  pair-lane execution; matches our queue_aware_backtest direction at
+  higher rigor.
+- 2026-09-04: round 178 — kalshi delta-scan (16:34Z).
+  25/25 KNOWN — triage at 100% precision; zero new owners.
+- 2026-09-04: round 179 — CODE-READ (V7 capital).
+  SleeveCapitalAccount: integer-microdollar sleeve/market/order
+  limits + overflow-safe add_fits + reservation slots + versioned
+  reconfigure (refuses while exposed) — ADOPT integer-cents
+  accounting + no-reconfigure-while-exposed for wallet engine.
+- 2026-09-04: round 180 — delta-scan (16:34Z).
+  25/25 KNOWN after adding jeanlangloismeurinne alias — zero new.
+- 2026-09-04: round 181 — CODE-READ (V7 admission).
+  mul_div_ceil overflow-safe notional + quote-vs-aggressive identity
+  separation (passive+post_only vs urgency-gated) — ADOPT identity-
+  typing for order intents (our engine conflates quote/take paths).
+- 2026-09-04: round 182 — kalshi delta-scan (16:35Z).
+  25/25 KNOWN — zero new owners.
+- 2026-09-04: round 183 — V7 problem-audit doc.
+  Redacted gap report with explicit non-readiness claims (85/85
+  artifacts + 801py/211ctest pass, yet REAL_PNL_VERIFIED=false) —
+  ADOPT the pattern: our status reports should state blocking gaps
+  explicitly rather than implying readiness.
+- 2026-09-04: round 184 — delta-scan (16:35Z).
+  25/25 KNOWN (second occurrence) — zero new owners.
+- 2026-09-04: round 185 — V7 MODELS doc (short).
+  Exactly-two-algorithm registry (settlement + structural-arb),
+  components have no authority, unknown-ID fails startup — ADOPT
+  closed algorithm registry (our daemon should refuse unknown
+  strategy IDs rather than defaulting).
+- 2026-09-04: round 186 — kalshi delta-scan (16:36Z).
+  25/25 KNOWN (kalshi) — zero new owners.
+- 2026-09-04: round 187 — V7 replay-parity doc.
+  SHA-bound manifests + causal receive-time cut + reason-code hashing
+  + wall-clock-nondeterminism classification — ADOPT for backtest
+  reproducibility (our harness should hash inputs + code version per
+  run and classify timestamp-only diffs as expected).
+- 2026-09-04: round 188 — delta-scan (16:36Z).
+  25/25 KNOWN (second occurrence) — zero new owners.
+- 2026-09-04: round 189 — V7 scenario-risk doc.
+  Feasible-outcome worst-case enumerator (mutual-exclusion +
+  implication constraints, integer PnL, 8 stress dimensions,
+  fail-closed unknowns, always live_execution_authorized=false) —
+  ADOPT worst-case book calculator for open positions.
+- 2026-09-04: round 190 — kalshi delta-scan (16:37Z).
+  25/25 KNOWN (kalshi-190) — zero new owners.
+- 2026-09-04: round 191 — V7 latency doc.
+  Three-layer latency honesty (compute vs replay vs network proof,
+  only layer-1 CI-enforced) + SPSC telemetry + persistent libcurl
+  handle — ADOPT the layering for our own latency claims (never
+  present backtest speed as live speed).
+- 2026-09-04: round 192 — delta-scan (16:37Z).
+  25/25 KNOWN (second occurrence) — zero new owners.
+- 2026-09-04: round 193 — V7 monitoring doc (short).
+  Metrics mirror closed registry (live_count 2, legacy 0, no panels
+  for removed algorithms) — ADOPT: our dashboards should assert
+  expected-algorithm counts, alerting on any deviation.
+- 2026-09-04: round 194 — kalshi delta-scan (16:38Z).
+  NEW: juliettemorrell/kalshi-test (empty desc) WATCH-thin. Rest
+  KNOWN.
+- 2026-09-04: round 195 — V7 model-governance doc.
+  RESEARCH->SHADOW->PAPER authority ladder, every-refit-is-challenger,
+  no-automatic-promotion, causal-chronological-OOS + SHA + cost-stress
+  + shadow + frozen-PAPER + calibration gates, negatives retained,
+  no-shuffle/no-reuse/no-relaxation prohibitions — ADOPT as promotion
+  checklist for our own model changes.
+- 2026-09-04: round 196 — delta-scan (16:38Z).
+  NEW: Hsiao0809/Paper-Lab (paper-lab + data) WATCH; jordanredshaw/
+  uk-alerts (src+state) WATCH; hugohamynen NBA-XGB-tracker DISCARD-
+  BTC (sports).
+- 2026-09-04: round 197 — CODE-READ (Hsiao0809 STRATEGIES.md).
+  Chinese-language pair manual: YES+NO-complete-set + logical-
+  containment (NVDA>230⊆NVDA>220) + exhaustive-partition, all with
+  ask-side costing + named failure modes (leg-runs, thin-depth,
+  token-mismatch, timezone/session/inequality/feed splits) — ADOPT
+  failure-mode checklist for pair lane. Promoted KEEP.
+- 2026-09-04: round 198 — kalshi delta-scan (16:39Z).
+  NEW: akadigari/highball (weather-desk AI sim with receipts)
+  WATCH-method (receipts-first discipline); rest KNOWN.
+- 2026-09-04: round 199 — CODE-READ (Hsiao0809 decision.py).
+  RiskRules (min_edge 0.04, min_roi 0.08, max_spread 0.10,
+  min_liquidity 1000, max_bankroll 1%, Kelly 0.25, slip 0.005,
+  fee_rate 0.04 — note: politics-rate, use 0.07 for crypto) +
+  validated MarketQuote + scored SideScore + reason-logged Decision
+  + taker_fee_per_share = rate*p*(1-p) (fourth confirmation!) —
+  ADOPT the Decision-with-reasons struct for our gate logging.
+- 2026-09-04: round 200 — MILESTONE (16:40Z).
+  NEW: JaretLogan/consensus (FIVE-bot system: consensus-copy +
+  calibration-bias + Deribit-crypto + insider-tracker + weather, each
+  with paper-trader + equity-curve + daily Actions) KEEP — closest
+  multi-lane analog to our stack; read CALIBRATION_BOT + CRYPTO_BOT
+  next; keandre-akp observation-pipeline + callenbspr godseye-live-
+  signals WATCH.
+- 2026-09-13: round 201 — GATE-SWITCH FORENSICS + RATIFICATION +
+  9-DAY HONEST INTERIM (operations record, not external sweep).
+  (a) FORENSICS: on session resume, working tree contained
+  gate_v2.py + refactors of live_wallet/paper_gate + gate-tagged
+  ledger migration, authored 2026-09-04 14:57-15:01 UTC — OUTSIDE
+  this session's recorded turns and NOT pre-registered. Provenance
+  cleared by exhaustion: own transcript Edit/Write targets (catalog,
+  paper_gate.py, round scripts only), zero Edit/Write calls in any
+  subagent transcript, no distinctive new-code strings anywhere,
+  other session untouched since Aug-23, no cron/editor/history
+  authorship. Code quality good; all 30 tests pass; cohort
+  integrity held (gate column separates v1 131 / v2 trades).
+  (b) RATIFICATION DECISION: v2 gate RETROACTIVELY RATIFIED as the
+  live gate (it is the gate rounds 102-111 actually validated;
+  v1 control had permanently served its purpose with a collapsed
+  calibration; reverting would burn a running natural experiment).
+  DISCLOSED as not-pre-registered; GATE_V2_START_MS corrected from
+  ambiguous 21:00-naive to actual switch 2026-09-04T15:02:00Z.
+  (c) CRASH FIX: sporadic poll TypeError float(None) root-caused —
+  hardened load_yes_quotes still passed bid/ask None through and
+  engine.on_quote float(ask) crashed on NULL-side rows (70,833
+  all-time). Fix: skip two-sided-None rows in loader + wrap
+  market-column ints + traceback logging. Both daemons restarted
+  clean 23:48 IST, 0 errors since.
+  (d) 9-DAY HONEST INTERIM (pre-registered 2-week gate completes
+  ~Sep-16): v2 live wallet 618 settled / -2315c = **-3.7c/trade**
+  vs backtest +8-9c; 8 of 10 days red. Twin paper-gate daemon
+  INDEPENDENTLY CONFIRMS: 669 settled / -2782c = -4.2c/trade.
+  The backtest edge has NOT survived live paper execution through
+  the v2 gate so far — adverse selection/latency/queue costs the
+  tape cannot see are the standing suspects (catalog round-76
+  framing). Per pre-registration: no early halt; verdict at the
+  full 2-week horizon with day-block CI. This interim is recorded
+  as the honest running result, not a verdict.

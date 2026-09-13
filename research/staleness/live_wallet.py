@@ -1,9 +1,11 @@
 """Live paper wallet — the controlled $5 test, run forward.
 
-PRE-REGISTERED RULES (frozen 2026-09-02, mirror research/staleness/wallet_sim.py v3):
+RULES (v2 gate, effective 2026-09-04 — supersedes the frozen 2026-09-02 v1
+rules below; the v1 gate ran 130 trades on a collapsed calibration with
+constant fair_cal=0.737 and is retired, trades kept in-ledger tagged v1):
   Envelope : $5.00 allowance, reset at each UTC midnight (day = independent trial).
   Entry    : YES-side quote of an Up/Down market; gate
-             gap_cal = fair_cal - ask > 0.07*ask*(1-ask)  [same as CALIBRATED_RETEST]
+             gap_cal = fair_cal - ask > 0.07*ask*(1-ask)
              1 contract per trade; cost = ask + ceil-cent order fee.
   Capacity : ONE concurrent position; ONE entry per epoch (asset, open_ms, hz)
              — never both sides; skip signals while a position is open.
@@ -11,19 +13,26 @@ PRE-REGISTERED RULES (frozen 2026-09-02, mirror research/staleness/wallet_sim.py
              sizing was shown to concentrate capital in the failing deep tail).
   Exit     : hold to settlement against OFFICIAL resolutions from the collector;
              positions unresolved 2h past close are marked unresolved (no PnL).
+  Fair     : gate_v2 — venue-accurate final-60s TWAP settlement, log-space z
+             with round-107 mid-window variance fix, EWMA(30m halflife) sigma.
+  Calibration: train-only lambda + isotonic, frozen in calibration_v2.npz
+             (lambda 0.65, n_fit 37,594, 62 distinct x values).
+             Refits ONLY at declared checkpoints, never intra-run.
+  Freshness: only quotes with ts within 30s of processing time are tradable
+             (no backfill-trading stale signals after downtime).
+  Ledger   : data/paper_wallet.db (SQLite, append-only trades), report:
+             research/staleness/WALLET_LIVE.md. Every trade tagged with the
+             gate version that fired it (gate=v1|v2) so cohorts never mix.
+
+PRE-REGISTERED RULES (frozen 2026-09-02, v1 — RETIRED 2026-09-04):
   Fair     : CLT Asian digital on Binance 1m klines (strike = epoch-open 1m open,
              running TWAP mean, sigma = r24 * sqrt(pi/2)) — mirrors audit.py.
   Calibration: isotonic fair->P(win) fit ONCE on scored quotes before
              LIVE_START (2026-09-02 00:00 UTC), frozen in calibration.npz.
-             Refits ONLY at declared weekly checkpoints (--build-calibration),
-             never intra-run.
-  Freshness: only quotes with ts within 30s of processing time are tradable
-             (no backfill-trading stale signals after downtime).
-  Ledger   : data/paper_wallet.db (SQLite, append-only trades), report:
-             research/staleness/WALLET_LIVE.md.
 
 DECISION GATE (pre-registered): live per-contract EV with day-block CI after
->= 2 weeks, all-weeks-positive discipline, before any capital discussion.
+>= 2 weeks on the v2 gate, all-weeks-positive discipline, before any capital
+discussion. The v2 clock starts at the gate switch below (GATE_V2_START_MS).
 """
 from __future__ import annotations
 
@@ -40,6 +49,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO))
 
 from quantbtc.fees import order_fee
 
@@ -48,6 +58,13 @@ LEDGER_DB = REPO / "data" / "paper_wallet.db"
 RAW = REPO / "data" / "raw"
 CALIBRATION = REPO / "research" / "staleness" / "calibration.npz"
 REPORT = REPO / "research" / "staleness" / "WALLET_LIVE.md"
+
+GATE_VERSION = "v2"
+# Actual v2 switch time (service restart onto the gate_v2 pipeline), UTC.
+# The switch itself was made outside this session's recorded turns (2026-09-04
+# 14:57-15:01 UTC window) and ratified post-hoc at round 200 with cohort
+# integrity intact (131 v1 trades tagged, v2 trades from 15:01:50 UTC).
+GATE_V2_START_MS = int(np.datetime64("2026-09-04T15:02:00").astype("datetime64[ms]").astype(int))
 
 LIVE_START_MS = int(np.datetime64("2026-09-02T00:00:00").astype("datetime64[ms]").astype(int))
 ALLOWANCE_CENTS = 500
@@ -76,6 +93,7 @@ CREATE TABLE IF NOT EXISTS trades (
   won INTEGER,
   pnl_cents INTEGER,
   settled_ts_ms INTEGER,
+  gate TEXT NOT NULL DEFAULT 'v1',
   UNIQUE(market_id, entry_ts_ms)
 );
 CREATE TABLE IF NOT EXISTS wallet_meta (k TEXT PRIMARY KEY, v TEXT);
@@ -112,6 +130,11 @@ def load_calibration():
 
 
 # ---------------- fair value (mirrors audit.py) ----------------
+# NOTE (2026-09-04): KlineCache + fair_yes below are the RETIRED v1 gate
+# (price-space z units bug + collapsed calibration). Kept so the v1 trade
+# history stays interpretable and --build-calibration still reproduces the
+# frozen calibration.npz. Live trading uses gate_v2 (EwmaKlineCache +
+# fair_yes_v2 + load_calibration_v2).
 
 class KlineCache:
     """Rolling kline window per symbol. Re-reads the last few hour-files each
@@ -227,10 +250,19 @@ class WalletEngine:
     def _day_of(self, ts_ms: int) -> str:
         return datetime.fromtimestamp(ts_ms / 1000, tz=timezone.utc).strftime("%Y-%m-%d")
 
-    def on_quote(self, market: dict, quote: dict, fair: float | None) -> dict:
+    def on_quote(self, market: dict, quote: dict, fair) -> dict:
         """Decide on one yes-side quote. Returns action dict:
         {action: skip|trade, reason, trade?}
+
+        fair is either a calibrated-probability float (legacy callers pass
+        the pre-calibrated prob with an identity calib) or a
+        {"fair": float|None, "gate": str} dict from the gate_v2 pipeline,
+        in which case the trade is tagged with the gate version.
         """
+        if isinstance(fair, dict):
+            gate, fair = fair.get("gate", GATE_VERSION), fair.get("fair")
+        else:
+            gate = GATE_VERSION
         ts = int(quote["ts_ms"])
         day = self._day_of(ts)
         if day != self.day:
@@ -245,7 +277,7 @@ class WalletEngine:
         ask = float(quote["ask"])
         if not (0.01 < ask < 0.99) or quote["bid"] is None or ask <= quote["bid"]:
             return {"action": "skip", "reason": "bad_quote"}
-        if fair is None:
+        if fair is None or not np.isfinite(fair):
             return {"action": "skip", "reason": "no_fair"}
         fee_unrounded = FEE_RATE * ask * (1 - ask)
         gap = fair - ask
@@ -270,7 +302,7 @@ class WalletEngine:
             "open_ms": int(market["open_time_ms"]), "close_ms": int(market["close_time_ms"]),
             "is_up_market": int(market["is_up_market"]),
             "ask": ask, "fair_cal": fair_cal, "gap_cal": gap_cal,
-            "cost_cents": cost_c, "entry_day": day,
+            "cost_cents": cost_c, "entry_day": day, "gate": gate,
         }
         self.position = trade
         return {"action": "trade", "trade": trade}
@@ -299,6 +331,11 @@ def open_ledger() -> sqlite3.Connection:
     conn = sqlite3.connect(str(LEDGER_DB))
     conn.row_factory = sqlite3.Row
     conn.executescript(_DDL)
+    # migrate pre-v2 ledgers: tag all existing rows with the retired gate
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(trades)").fetchall()]
+    if "gate" not in cols:
+        conn.execute("ALTER TABLE trades ADD COLUMN gate TEXT NOT NULL DEFAULT 'v1'")
+        conn.execute("UPDATE trades SET gate='v1' WHERE gate IS NULL")
     conn.commit()
     return conn
 
@@ -307,11 +344,11 @@ def record_trade(conn: sqlite3.Connection, t: dict) -> None:
     conn.execute(
         """INSERT OR IGNORE INTO trades
            (entry_ts_ms, market_id, asset, hz_s, open_ms, close_ms, is_up_market,
-            ask, fair_cal, gap_cal, cost_cents, entry_day, status)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?, 'open')""",
+            ask, fair_cal, gap_cal, cost_cents, entry_day, gate, status)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?, 'open')""",
         (t["entry_ts_ms"], t["market_id"], t["asset"], t["hz_s"], t["open_ms"],
          t["close_ms"], t["is_up_market"], t["ask"], t["fair_cal"], t["gap_cal"],
-         t["cost_cents"], t["entry_day"]),
+         t["cost_cents"], t["entry_day"], t.get("gate", GATE_VERSION)),
     )
     conn.commit()
 
@@ -345,22 +382,37 @@ def load_yes_quotes(conn: sqlite3.Connection, since_ms: int) -> list[dict]:
     ).fetchall()
     out = []
     for r in rows:
+        try:
+            ts_ms = int(r["ts_ms"])
+            horizon_s = int(r["horizon_s"])
+            open_ms = int(r["open_time_ms"])
+            close_ms = int(r["close_time_ms"])
+            bid = None if r["bid"] is None else float(r["bid"])
+            ask = None if r["ask"] is None else float(r["ask"])
+        except (TypeError, ValueError):
+            continue  # malformed quote row: skip, never crash the daemon
+        if r["market_id"] is None or r["side"] is None:
+            continue
+        # a quote missing either side is untradeable — skip it here so the
+        # engine's float(ask) can never see None (the round-200 crash-loop)
+        if bid is None or ask is None:
+            continue
         is_up = r["market_id"].endswith("-0")
         want = "up" if is_up else "down"
         if r["side"] != want:
             continue
         out.append({
-            "ts_ms": int(r["ts_ms"]), "market_id": r["market_id"],
-            "side": r["side"], "bid": r["bid"], "ask": r["ask"],
-            "asset": r["asset"], "horizon_s": int(r["horizon_s"]),
-            "open_time_ms": int(r["open_time_ms"]), "close_time_ms": int(r["close_time_ms"]),
+            "ts_ms": ts_ms, "market_id": r["market_id"],
+            "side": r["side"], "bid": bid, "ask": ask,
+            "asset": r["asset"], "horizon_s": horizon_s,
+            "open_time_ms": open_ms, "close_time_ms": close_ms,
             "is_up_market": is_up,
         })
     return out
 
 
 def poll_cycle(conn: sqlite3.Connection, ledger: sqlite3.Connection, engine: WalletEngine,
-               cache: KlineCache, state: dict) -> None:
+               cache, calib, state: dict) -> None:
     now_ms = int(time.time() * 1000)
     watermark = state.get("watermark", LIVE_START_MS - 60_000)
     quotes = load_yes_quotes(conn, watermark - 60_000)
@@ -384,8 +436,9 @@ def poll_cycle(conn: sqlite3.Connection, ledger: sqlite3.Connection, engine: Wal
             continue
         cache.refresh(sym)
         cd = cache.get(sym)
-        fair = fair_yes(cd, q["open_time_ms"], q["horizon_s"], q["ts_ms"], q["is_up_market"]) if cd else None
-        decision = engine.on_quote(q, q, fair)
+        z = fair_yes_v2(cd, q["open_time_ms"], q["horizon_s"], q["ts_ms"]) if cd else None
+        fair = calib(z, q["is_up_market"]) if z is not None else None
+        decision = engine.on_quote(q, q, {"fair": fair, "gate": GATE_VERSION})
         if decision["action"] == "trade":
             t = decision["trade"]
             record_trade(ledger, t)
@@ -445,7 +498,7 @@ def restore_state(ledger: sqlite3.Connection, engine: WalletEngine) -> None:
         engine.seen_epochs.add((r["asset"], r["open_ms"], r["hz_s"]))
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     spent = ledger.execute(
-        "SELECT COALESCE(SUM(cost_cents),0) s FROM trades WHERE entry_day=? AND status='open'", (today,)
+        "SELECT COALESCE(SUM(cost_cents),0) s FROM trades WHERE entry_day=?", (today,)
     ).fetchone()["s"]
     paid_back = ledger.execute(
         """SELECT COALESCE(SUM(CASE WHEN won=1 THEN 100 ELSE 0 END),0) s
@@ -462,6 +515,7 @@ def restore_state(ledger: sqlite3.Connection, engine: WalletEngine) -> None:
             "close_ms": r["close_ms"], "is_up_market": bool(r["is_up_market"]),
             "ask": r["ask"], "fair_cal": r["fair_cal"], "gap_cal": r["gap_cal"],
             "cost_cents": r["cost_cents"], "entry_day": r["entry_day"],
+            "gate": r["gate"] if "gate" in r.keys() else "v1",
         }
         print(f"[wallet] restored open position {r['market_id']} (entry {r['entry_day']})", flush=True)
     print(f"[wallet] restored: {len(rows)} historical trades, day_wallet={engine.day_wallet_cents}c", flush=True)
@@ -477,22 +531,34 @@ def main() -> None:
         build_calibration()
         return
 
-    calib = load_calibration()
+    sys.path.insert(0, str(REPO))
+    from research.staleness import gate_v2 as _gate_v2  # noqa: E402
+
+    EwmaKlineCache, load_calibration_v2 = _gate_v2.EwmaKlineCache, _gate_v2.load_calibration_v2
+    globals()["fair_yes_v2"] = _gate_v2.fair_yes_v2
+
+    calib = load_calibration_v2()
     conn = sqlite3.connect(str(COLLECTOR_DB))
     conn.row_factory = sqlite3.Row
     ledger = open_ledger()
-    engine = WalletEngine(calib)
+    # gate_v2 pipeline calibrates from z-scores (side-aware) before calling
+    # on_quote — the engine gets the pre-calibrated prob with an identity
+    # mapping. Its raw and calibrated gates check the same condition twice.
+    engine = WalletEngine(lambda f: float(f))
     restore_state(ledger, engine)
-    cache = KlineCache()
+    cache = EwmaKlineCache()
     state: dict = {"watermark": LIVE_START_MS - 60_000, "processed": set(),
                    "last_report_day": None}
-    print(f"[wallet] live from {datetime.fromtimestamp(LIVE_START_MS/1000, tz=timezone.utc)} "
+    print(f"[wallet] live gate_v2 (fair_v2 fixed-z + lambda + isotonic) from "
+          f"{datetime.fromtimestamp(LIVE_START_MS/1000, tz=timezone.utc)} "
           f"allowance={ALLOWANCE_CENTS}c/day, 1 contract/trade, serial", flush=True)
     while True:
         try:
-            poll_cycle(conn, ledger, engine, cache, state)
+            poll_cycle(conn, ledger, engine, cache, calib, state)
         except Exception as exc:
-            print(f"[wallet] poll error: {exc!r}", flush=True)
+            import traceback
+            print(f"[wallet] poll error: {exc!r}\n"
+                  + traceback.format_exc(), flush=True)
         if args.once:
             break
         time.sleep(POLL_S)
