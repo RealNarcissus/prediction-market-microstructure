@@ -2811,3 +2811,18 @@ two independent, mutually consistent measurements of the same edge class.
   discipline. Other PM-listing: EVaR-parity tempered-stable,
   dependence-uncertainty majorization QUEUED; rest known
   (cross-impact/entropic-factor/BOCPD-recalibration) or off-lane.
+- 2026-09-14: round 217 — q-fin.TR re-listing (SAME 8 papers as
+  round-210, no new submissions — freshness confirmed) + HN
+  search-by-date (1505 hits) + RobotWealth.
+  NEW HN: **CFTC moots rules to stop prediction markets giving
+  AFFILIATES advantages [pdf] (09-02)** — federal rulemaking aimed
+  exactly at the insider/self-trading cluster (rounds 112/215);
+  Robinhood x Crypto.com prediction-markets deal (09-08) — venue
+  landscape expansion; "America's new national pastime" (09-06) —
+  mainstream adoption marker; Building Indices from Prediction
+  Markets (08-30) — index-construction methodology QUEUED.
+  RobotWealth: "To Trend or Not To Trend? (Wrong question)"
+  QUEUED (framing critique relevant to our directional lane);
+  "The Metamorphosis" + "For The Love of The Game" WATCH; rest
+  known from round-125. No-yield on TR listing; PM-verdict clock
+  unchanged (Sep-18 15:02 UTC).
