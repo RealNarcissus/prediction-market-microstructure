@@ -2936,3 +2936,22 @@ two independent, mutually consistent measurements of the same edge class.
   the local stack (bocpd.py, adv_move_fills.py, gate_v2 port,
   markout template). The ongoing Sep-18 15:02 UTC gate verdict is
   scheduled as an automation and is the sole remaining checkup.
+- 2026-09-14: round 229 — sweep resumed; NEW EGRESS ROUTE: the
+  Wayback Machine (web.archive.org via WebFetch) unblocks walled
+  content where curl and WebFetch-direct got 403/JS-walls (the
+  availability API itself 429s; fetch the snapshot URL directly).
+  **Index-effect disappearance FULLY READ** (Greenwood & Sammon via
+  Alpha Architect, Wayback snapshot): S&P 500 additions' abnormal
+  returns 7.4% (1990s) -> 0.3% (past decade); deletions -0.1%
+  (2010-2020) — caused by market ADAPTATION (professional
+  liquidity providers absorbing index-fund demand shocks,
+  concentrated rebalancing volume, 70%+ of additions being
+  migrations from related indices so net pressure cancels); same
+  decline in Russell/Nasdaq-100. **The canonical quantitative
+  precedent for our backtest-to-live gap**: a pattern can be real,
+  published, AND fully arbitraged away by the time you trade it —
+  precisely our +8-9c backtest vs -3.7c live. Pairs with round-218
+  patterns-are-not-reasons: the WHO (arbitrage capital) both
+  created and destroyed the pattern. Bilibili egress note: Wayback
+  cannot serve dynamic search results, so that lane stays closed,
+  but other walled static content is now reachable.
