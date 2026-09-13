@@ -2670,3 +2670,7 @@ two independent, mutually consistent measurements of the same edge class.
   BRTI/Chainlink-vs-Binance basis check on our own tape.
   Also: artyomderkach-bit/kalshi-15m-MM (backtest/bot split)
   WATCH-arch; Razorrka/edge (MC settlement SPA) WATCH-thin.
+- 2026-09-14: round 209 — blocked-lane sweep: arXiv API third
+  retry STILL down (28-byte empty feed); Bilibili cate API returns
+  0 items (rate-limit shape, known pattern). No-yield round; both
+  lanes queued for retry.
