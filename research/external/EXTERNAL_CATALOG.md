@@ -2826,3 +2826,27 @@ two independent, mutually consistent measurements of the same edge class.
   "The Metamorphosis" + "For The Love of The Game" WATCH; rest
   known from round-125. No-yield on TR listing; PM-verdict clock
   unchanged (Sep-18 15:02 UTC).
+- 2026-09-14: round 218 — QUEUED READS DONE.
+  **CFTC "Conflicts and Affiliations" proposed rule** (FR 2026-15948,
+  Aug-06, via federalregister.gov API — the PDF behind round-217's
+  headline): conflicts-of-interest requirements for DCMs/SEFs/DCOs
+  regarding affiliate relationships (FCM affiliates, affiliated
+  principal trading firms) + impartiality safeguards incl.
+  resource-sharing (staffing/tech/office-space) restrictions.
+  Relevance: if Kalshi/Polymarket-US are DCMs, proprietary flow by
+  the venue or affiliated PTFs on their own markets faces new
+  restrictions — bears directly on "who is on the other side of
+  our fills" and on the affiliate-advantage cluster (rounds
+  112/215/217). Federal Register API works where the PDF wall
+  blocked; method banked.
+  **RobotWealth "To Trend or Not To Trend? (Wrong question)"
+  KEEP-METHOD**: patterns are not reasons — mean-reversion/trend/
+  momentum are LABELS not edges; an edge needs a WHO (who is on
+  the other side, what structural cause persists; e.g. forced
+  price-insensitive sellers). Applied honestly: our fair_v2 gate
+  had stats (+8-9c backtest) but the WHY was only a presumption
+  (faster than the slowest quoters, round-76) — and the live
+  verdict (pending Sep-18) plus brti-edge's 1% skill say the
+  presumed why does not survive contact with execution. The
+  bakeoff lane's burden is exactly this: find the WHO before
+  trusting any pattern.
