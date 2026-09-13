@@ -2644,3 +2644,29 @@ two independent, mutually consistent measurements of the same edge class.
   wrapper layer, not in the sim. arXiv API STILL down (0-byte).
   Verdict: KEEP-REF stands — top-actionable external find; port
   the adverse-move-at-fill measurement into our exit/gate design.
+- 2026-09-14: round 208 — **KEEP-CORNERSTONE: aurascoper/brti-edge**
+  (Kalshi 15m across 9 tickers; live PAUSED 2026-05-17). An
+  independent team converged on OUR wall and decomposed it cleaner:
+  (1) 285 filled trades, $51.25 -> ~$18 bankroll (-65%) — same
+  direction as our v2 live -3.7c/trade; (2) **BRTI >> Binance as
+  settlement proxy: 168/188 window-mean disagreements matched Kalshi
+  (89.4%, p=1.27e-30)** — hard evidence the settlement feed differs
+  from Binance (Polymarket analog: track Chainlink, not Binance —
+  validates our strike-basis lane); (3) **NO post-hoc transform of
+  fair_yes=Phi(z) clears a live-edge gate: Gaussian/clip/logistic/
+  Student-t all within +-0.01 Brier of climatology 0.250 on filled
+  trades, best skill 0.93% vs 5% gate** — the SAME null our live
+  results show, from walk-forward. Their conclusion: "calibration
+  is not the bottleneck — new features are" -> Layer1/Layer2
+  bakeoff (spot-perp basis, OFI, basis-change) scored prospectively
+  vs settlement; plus a maker-replay harness (30h WS capture;
+  dumb two-sided policy REJECTED on robustness; BTC_YES_LATE_ASIA_v1
+  pre-registered awaiting holdout). Reconciles our backtest-vs-live
+  divergence: fair-alone skill ~1% on taken trades; book slack does
+  not survive execution. OUR ACTIONS QUEUED: (a) treat our v2-gate
+  2-week verdict with their skill-1% number as the null expectation;
+  (b) feature-bakeoff lane (basis/OFI) replaces fair-transform
+  search; (c) adverse-move-at-fill measurement (round 207) +
+  BRTI/Chainlink-vs-Binance basis check on our own tape.
+  Also: artyomderkach-bit/kalshi-15m-MM (backtest/bot split)
+  WATCH-arch; Razorrka/edge (MC settlement SPA) WATCH-thin.
