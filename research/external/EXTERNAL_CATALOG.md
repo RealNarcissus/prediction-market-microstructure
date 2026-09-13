@@ -2674,3 +2674,23 @@ two independent, mutually consistent measurements of the same edge class.
   retry STILL down (28-byte empty feed); Bilibili cate API returns
   0 items (rate-limit shape, known pattern). No-yield round; both
   lanes queued for retry.
+- 2026-09-14: round 210 — BLOCKED-LANE WORKAROUNDS + gap-window
+  papers. **arXiv API still down (4th retry, 14 bytes) but the
+  LISTING PAGE works** (arxiv.org/list/q-fin.TR/recent via WebFetch,
+  8 papers — method fix banked: use listing pages while the API
+  is out). Bilibili still 0 items with UA header (5th try).
+  NEW papers: **2609.11614 Moret & Lillo, Robust MM under
+  Regime-Switching Order Flow HELPFUL** — C51 distributional-DQN
+  MM beats A-S/GLFT under regime-switching flow; the load-bearing
+  state = Bayesian online change-point filter over directional
+  flow bias + queue-adjusted quote-exposure imbalance (sim-only,
+  zero-intelligence LOB); portable to our taker gate as a
+  regime feature, not just maker. **2609.07989 Jebali, Regimes in
+  the Order Flow HELPFUL** — BOCPD + 2 extensions tested on NASDAQ
+  signed flow; the concrete detector for the feature-bakeoff lane
+  brti-edge queued (pairs with our round-170 change-point tests).
+  2609.10543 privacy-subsidy REF-context; 2609.06085 explainable-DL
+  REF; 2609.04917 AI-profitability-limits queued; 'brti' GitHub
+  query = name-collision junk (birthdays) except known mattypie
+  cluster. Net: the two HELPFULs give the bakeoff lane its first
+  two concrete detectors.
