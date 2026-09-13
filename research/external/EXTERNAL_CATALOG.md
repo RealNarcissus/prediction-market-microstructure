@@ -2971,3 +2971,20 @@ two independent, mutually consistent measurements of the same edge class.
   the author (betas unstable; direct modeling helps on average
   but is a big if). arXiv cycle still ~4h out; re-listing in
   round 231.
+- 2026-09-14: round 231 — cycle STILL pending (19:44 UTC); used
+  the round on the Turnleaf #QuantLinkADay meta-index (2023
+  vintage, hundreds of papers, classified by topic; links stripped
+  in extraction — titles+dates banked). CRYPTOGRAPHY-category
+  harvest, most on-lane: **Crypto Wash Trading: Direct vs
+  Indirect Estimation** (05-Dec — pairs with the quarter-fake-
+  trades study, toxicity prior), **Optimal Trading in AMMs with
+  Deep Learning** (05-Apr — maker lane), Statistical properties
+  of BTC/USD volume (06-Apr), Short-Term Volatility Prediction
+  (07-Apr), Forecasting Crypto Vol via stat+ML (11-Apr) and ML+
+  Rough Volatility crypto-winter (11-Nov) — four sigma-model
+  candidates, Reconciling OI with Traded Volume in Perps
+  (31-Oct), Segmenting BTC Transactions for Direction Prediction
+  (15-May), Silkswap asymmetric AMM (16-Feb). Macro lane (Crypto
+  Cycle vs US Monetary Policy etc.) REF-context. Index banked as
+  a source for targeted title-hunts; arXiv re-listing still
+  round 232 (~00:00 UTC).
