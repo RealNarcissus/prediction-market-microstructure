@@ -2739,3 +2739,20 @@ two independent, mutually consistent measurements of the same edge class.
   二元期权) BOTH 0 items — 6th/7th attempts; endpoint degraded for
   this network, lane CLOSED pending a different egress. kalshi-
   settlement GitHub scan: 3 old thin shells WATCH-thin.
+- 2026-09-14: round 213 — stat.ME listing (25 papers: financial-
+  extremes networks 2609.11575, ES factor models 2609.10587,
+  threshold-displacement adequacy test 2609.11091 queued; rest
+  bio/survey off-lane) + **ADVERSE-MOVE-AT-FILL IMPLEMENTED**
+  (adv_move_fills.py, LinusWeigand template on our own ledger).
+  First measurement, 566 settled v2 trades with tape markouts:
+  +30s mean -1.63c / median -2.00c / adverse frac 0.567; +60s
+  -0.53c; +120s +0.36c (partial recovery); adverse-magnitude
+  survival at +60s: p50 9c, p90 27c, p99 67c. INTERPRETATION:
+  immediate adverse selection at our fills is MODEST (~1.6c,
+  comparable to the ~1.75c fee) — it explains only ~3c of the
+  ~12c backtest-to-live shortfall; the balance points at (a)
+  the backtest edge itself being overstated (stale-quote artifact
+  our freshness gate now prevents taking — consistent with brti-
+  edge skill-1% null) and (b) dispersion (p90 adverse 27c) rather
+  than mean drift. Research paper: ADV_MOVE_FILLS.md. Bakeoff
+  lane now has BOTH detectors running (BOCPD flow-bias + markout).
