@@ -2796,3 +2796,18 @@ two independent, mutually consistent measurements of the same edge class.
   owner suing over unauthorized use) matters for settlement-source
   licensing. Kalshi $750M raise at $40B valuation (08-16) banked.
   Our scans: spread/CN queries all-known this round.
+- 2026-09-14: round 216 — q-fin.PM listing (9 papers) + Quantocracy
+  digest REACHED (was blocked round-119; shows rotating snapshot,
+  older content — method note). **2609.09588 Signal Correlation, IC,
+  and PnL Dependence HELPFUL** (Nunes, math.ST): exact decomposition
+  — fixed-signal PnL = return dispersion x Pearson IC; orth
+  component = partial correlation; **non-identifiability theorem:
+  neither signal-correlation nor IC bounds or orders PnL** without
+  transverse-geometry constraints; ensemble combination rules +
+  inference under temporal dependence; reproduction code in
+  appendix. Direct scoring math for the feature bakeoff: our
+  day-block EV is the PnL measure and CANNOT be proxied by feature
+  IC — detectors must be scored on realized EV per the round-208
+  discipline. Other PM-listing: EVaR-parity tempered-stable,
+  dependence-uncertainty majorization QUEUED; rest known
+  (cross-impact/entropic-factor/BOCPD-recalibration) or off-lane.
