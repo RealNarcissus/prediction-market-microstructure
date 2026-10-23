@@ -1,12 +1,9 @@
 # quant-btc — pricing and falsifying short-horizon crypto Up/Down binaries
 
+![CI](https://github.com/RealNarcissus/prediction-market-microstructure/actions/workflows/ci.yml/badge.svg)
 ![Status](https://img.shields.io/badge/status-research%20concluded-blue)
 ![Python](https://img.shields.io/badge/python-3.11%2B-4477AA)
-![Tests](https://img.shields.io/badge/tests-85%20passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-green)
-
-<!-- After pushing to GitHub, replace the static badges above with the real one:
-     ![CI](https://github.com/<you>/quant-btc/actions/workflows/ci.yml/badge.svg) -->
 
 An end-to-end microstructure research program on 5-minute / 15-minute
 BTC/ETH/SOL **Up/Down binary prediction markets** (Jupiter Prediction,
