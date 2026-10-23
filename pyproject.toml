@@ -1,17 +1,23 @@
 [project]
 name = "quantbtc"
 version = "0.1.0"
-description = "Short-horizon direction model vs Jupiter Up/Down (paper trading research)"
+description = "Short-horizon microstructure research on crypto Up/Down binary markets: fair value, calibration, and a pre-registered live falsification"
 requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.27",
     "websockets>=12.0",
     "polars>=1.0",
     "pyyaml>=6.0",
+    "numpy>=1.26",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+research = [
+    "scipy>=1.11",
+    "scikit-learn>=1.4",
+    "matplotlib>=3.8",
+]
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -22,4 +28,5 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 markers = ["integration: hits live network APIs (deselect with '-m \"not integration\"')"]

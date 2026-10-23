@@ -1,12 +1,40 @@
+# --- data (collected market data + ledgers; regenerate locally, never commit) ---
 data/
-__pycache__/
-*.pyc
-.venv/
-.env
-*.egg-info/
 reports/
 research/results.db
-research/__pycache__/
-.zcode/
-research/staleness/__pycache__/
 research/staleness/scored_quotes.parquet
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# --- test / type / lint caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- secrets & environment ---
+.env
+.env.*
+
+# --- local agent/session tooling state ---
+.zcode/
+.agents/
+.codex/
+docs/superpowers/
+
+# --- editors / OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp

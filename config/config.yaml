@@ -22,6 +22,9 @@ storage:
   parquet_dir: data/raw
 
 research:
-  # Herdr frozen canonical dataset — referenced by path, never copied/mutated
-  data_5m: /home/charleton/Desktop/agentProjects/Herdr/quant-btc/data/processed/btcusdt-usdtm-5m.parquet
-  data_15m: /home/charleton/Desktop/agentProjects/Herdr/quant-btc/data/processed/btcusdt-usdtm-15m.parquet
+  # Frozen canonical Herdr dataset (2025-08..2026-08 Binance perp 5m/15m bars,
+  # ~561k rows) — NOT redistributed in this repo. Place your copy under
+  # data/external/herdr/ (see README "Data") or point these paths at it.
+  # Referenced by path only; never copied or mutated.
+  data_5m: data/external/herdr/btcusdt-usdtm-5m.parquet
+  data_15m: data/external/herdr/btcusdt-usdtm-15m.parquet
