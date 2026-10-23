@@ -119,6 +119,7 @@ def train_models(bars_1m: pl.DataFrame, out_dir: str | Path) -> dict[str, float]
 
 class PaperLedger:
     def __init__(self, path: str | Path):
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
         self.conn = sqlite3.connect(path)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(
